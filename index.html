@@ -30,19 +30,19 @@
       padding: 0 24px;
     }
 
-    /* Шапка */
+    /* Шапка — яркая фиолетовая */
     .navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      background: rgba(255, 255, 255, 0.7);
+      background: linear-gradient(135deg, #4a148c, #7b1fa2);
       backdrop-filter: blur(20px);
       border-radius: 80px;
       padding: 16px 32px;
       margin-top: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      box-shadow: 0 8px 32px rgba(99, 40, 149, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 32px rgba(99, 40, 149, 0.3);
     }
 
     .logo {
@@ -68,26 +68,20 @@
       font-size: 2rem;
       font-weight: 800;
       letter-spacing: -0.5px;
-      background: linear-gradient(145deg, #632895, #8b5fbf);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #ffffff;
     }
 
     .logo-text .brand .small-t {
       font-size: 1.6rem;
-      -webkit-text-fill-color: #8b5fbf;
-      background: none;
-      text-transform: lowercase;
+      color: #ffe63b;
     }
 
     .logo-text .sub {
       font-size: 0.7rem;
       font-weight: 500;
-      color: #6c6f8a;
+      color: rgba(255, 255, 255, 0.7);
       letter-spacing: 1px;
       text-transform: uppercase;
-      -webkit-text-fill-color: #6c6f8a;
     }
 
     .nav-links {
@@ -99,7 +93,7 @@
 
     .nav-links a {
       text-decoration: none;
-      color: #2b2d42;
+      color: #ffffff;
       transition: 0.2s;
       font-size: 1rem;
       cursor: pointer;
@@ -113,7 +107,7 @@
       left: 0;
       width: 0;
       height: 2px;
-      background: #632895;
+      background: #ffe63b;
       transition: 0.3s;
     }
 
@@ -122,13 +116,13 @@
     }
 
     .nav-links a:hover {
-      color: #632895;
+      color: #ffe63b;
     }
 
     .btn-outline {
       background: transparent;
-      border: 2px solid #632895;
-      color: #632895;
+      border: 2px solid #ffffff;
+      color: #ffffff;
       padding: 10px 24px;
       border-radius: 40px;
       font-weight: 600;
@@ -138,9 +132,9 @@
     }
 
     .btn-outline:hover {
-      background: #632895;
-      color: white;
-      box-shadow: 0 8px 20px rgba(99, 40, 149, 0.25);
+      background: #ffffff;
+      color: #4a148c;
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.25);
       transform: translateY(-2px);
     }
 
@@ -445,7 +439,7 @@
       margin-top: 4px;
     }
 
-    /* Листовка / баннер */
+    /* Баннер со скидкой */
     .flyer {
       background: linear-gradient(135deg, #632895, #7b3dae, #8b5fbf);
       border-radius: 48px;
@@ -768,6 +762,8 @@
       border: 2px solid rgba(99, 40, 149, 0.08);
       transition: 0.2s;
       cursor: pointer;
+      display: flex;
+      flex-direction: column;
     }
 
     .course-card-modal:hover {
@@ -797,24 +793,26 @@
     .course-card-modal p {
       color: #4a4e6b;
       font-size: 0.95rem;
+      flex: 1;
     }
 
-    .course-card-modal .course-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 16px;
-      margin-top: 14px;
-      font-size: 0.8rem;
-      color: #2b2d42;
-      border-top: 1px solid rgba(99, 40, 149, 0.08);
-      padding-top: 14px;
-    }
-
-    .course-card-modal .course-meta span {
-      background: #f5f0fa;
-      padding: 4px 14px;
+    .course-card-modal .course-enroll-btn {
+      margin-top: 16px;
+      padding: 10px 0;
+      background: linear-gradient(135deg, #632895, #7b3dae);
+      color: white;
+      border: none;
       border-radius: 40px;
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.25s;
+      width: 100%;
+    }
+
+    .course-card-modal .course-enroll-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(99, 40, 149, 0.25);
     }
 
     .course-card-modal .course-tag {
@@ -826,6 +824,7 @@
       font-size: 0.75rem;
       padding: 4px 16px;
       border-radius: 40px;
+      align-self: flex-start;
     }
 
     .no-results {
@@ -922,36 +921,6 @@
       color: #2b2d42;
       margin: 16px 0 24px;
       line-height: 1.6;
-    }
-
-    .detail-info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin: 20px 0;
-    }
-
-    .detail-info-item {
-      background: #f5f0fa;
-      padding: 16px;
-      border-radius: 16px;
-      border-left: 4px solid rgb(255, 228, 56);
-    }
-
-    .detail-info-item label {
-      font-size: 0.8rem;
-      color: #6c6f8a;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .detail-info-item .value {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #632895;
     }
 
     .detail-enroll {
@@ -1425,9 +1394,6 @@
       .courses-grid-modal {
         grid-template-columns: 1fr;
       }
-      .detail-info-grid {
-        grid-template-columns: 1fr;
-      }
       .detail-modal {
         padding: 24px;
       }
@@ -1451,6 +1417,42 @@
       }
       .age-categories {
         grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .age-category-card {
+        padding: 20px 12px;
+      }
+      .age-category-card .age-icon {
+        font-size: 2.2rem;
+      }
+      .age-category-card .age-title {
+        font-size: 1.1rem;
+      }
+      .age-category-card .age-sub {
+        font-size: 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .age-categories {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .age-category-card {
+        padding: 16px 10px;
+        border-radius: 20px;
+      }
+      .age-category-card .age-icon {
+        font-size: 1.8rem;
+      }
+      .age-category-card .age-title {
+        font-size: 1rem;
+      }
+      .age-category-card .age-sub {
+        font-size: 0.7rem;
+      }
+      .courses-grid-modal {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -1471,7 +1473,7 @@
       <ul class="nav-links">
         <li><a onclick="goHome()">Главная</a></li>
         <li><a onclick="openModal()">Курсы</a></li>
-        <li><a onclick="openAbout()">О насс</a></li>
+        <li><a onclick="openAbout()">О нас</a></li>
         <li><a onclick="openContacts()">Контакты</a></li>
         <li><a onclick="openGallery()">Галерея</a></li>
       </ul>
@@ -1538,7 +1540,7 @@
       </div>
     </div>
 
-    <!-- Листовка -->
+    <!-- Баннер со скидкой -->
     <div class="flyer">
       <div>
         <h2>📬 Присоединяйся!</h2>
@@ -1547,7 +1549,7 @@
       </div>
       <div class="flyer-tag">
         <span>📌</span>
-        <p>«Школа нового поколения»<br>листовка 2026</p>
+        <p>«Школа нового поколения»<br>скидка 10%</p>
       </div>
     </div>
 
@@ -1578,14 +1580,8 @@
         <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
 
-      <!-- Карточки возрастов -->
+      <!-- Карточки возрастов (Все курсы — в конце) -->
       <div class="age-categories" id="ageCategories">
-        <!-- Карточка "Все курсы" -->
-        <div class="age-category-card" onclick="selectAge('all')" style="border-color: #632895; background: linear-gradient(135deg, #f5f0fa, #ede5f5);">
-          <span class="age-icon">🌟</span>
-          <div class="age-title">Все курсы</div>
-          <div class="age-sub">Полный каталог направлений</div>
-        </div>
         <div class="age-category-card" onclick="selectAge('3-5')">
           <span class="age-icon">🧸</span>
           <div class="age-title">3–5 лет</div>
@@ -1605,6 +1601,12 @@
           <span class="age-icon">🎯</span>
           <div class="age-title">10–17 лет</div>
           <div class="age-sub">ОГЭ · программирование · английский</div>
+        </div>
+        <!-- Все курсы — в конце -->
+        <div class="age-category-card" onclick="selectAge('all')" style="border-color: #632895; background: linear-gradient(135deg, #f5f0fa, #ede5f5);">
+          <span class="age-icon">🌟</span>
+          <div class="age-title">Все курсы</div>
+          <div class="age-sub">Полный каталог направлений</div>
         </div>
       </div>
 
@@ -1630,32 +1632,6 @@
       </div>
       <div class="detail-sub" id="detailSub">Подзаголовок</div>
       <div class="detail-desc" id="detailDesc">Описание курса</div>
-      <div class="detail-info-grid">
-        <div class="detail-info-item">
-          <label>📅 Длительность</label>
-          <div class="value" id="detailDuration">—</div>
-        </div>
-        <div class="detail-info-item">
-          <label>👨‍🏫 Преподаватель</label>
-          <div class="value" id="detailTeacher">—</div>
-        </div>
-        <div class="detail-info-item">
-          <label>📊 Уровень</label>
-          <div class="value" id="detailLevel">—</div>
-        </div>
-        <div class="detail-info-item">
-          <label>💰 Стоимость</label>
-          <div class="value" id="detailPrice">—</div>
-        </div>
-        <div class="detail-info-item">
-          <label>🕐 Расписание</label>
-          <div class="value" id="detailSchedule">—</div>
-        </div>
-        <div class="detail-info-item">
-          <label>👥 Группа</label>
-          <div class="value" id="detailGroup">—</div>
-        </div>
-      </div>
       <button class="detail-enroll" onclick="openForm()">📝 Записаться на курс</button>
     </div>
   </div>
@@ -1748,7 +1724,8 @@
         <h3>🌐 Социальные сети</h3>
         <div class="social-links">
           <a href="https://vk.ru/start.tuapse" target="_blank"><span>💙</span> VK</a>
-          <a href="https://vk.ru/start.tuapse" target="_blank"><span>📱</span> Telegram</a>
+          <a href="https://wa.me/message/6QXBBGDWYBHSN1" target="_blank"><span>💚</span> WhatsApp</a>
+          <a href="https://max.ru/id232200209248_biz" target="_blank"><span>📱</span> MAX</a>
         </div>
         <h3>🗺️ Мы на карте</h3>
         <div class="map-container">
@@ -1896,14 +1873,7 @@
         title: "LEGO курс",
         sub: "Конструирование · Игра · Развитие",
         desc: "Увлекательные занятия с LEGO для самых маленьких. Развиваем мелкую моторику, пространственное мышление и творческие способности через игру.",
-        meta: ["3–5 лет", "1.5 ч/нед"],
         tag: "раннее развитие",
-        duration: "8 месяцев",
-        teacher: "Петрова Анна Сергеевна",
-        level: "3–5 лет (начальный)",
-        price: "от 3 500 ₽ / месяц",
-        schedule: "вторник, четверг 10:00–11:30",
-        group: "до 6 человек",
         category: "3-5"
       },
       {
@@ -1912,14 +1882,7 @@
         title: "LEGO-конструирование",
         sub: "Сборка · Моделирование · Творчество",
         desc: "Создание моделей из LEGO, развитие инженерного мышления и навыков конструирования. Работаем с инструкциями и придумываем свои проекты.",
-        meta: ["3–5 лет", "1.5 ч/нед"],
         tag: "конструирование",
-        duration: "8 месяцев",
-        teacher: "Петрова Анна Сергеевна",
-        level: "3–5 лет (начальный)",
-        price: "от 3 500 ₽ / месяц",
-        schedule: "среда, пятница 10:00–11:30",
-        group: "до 6 человек",
         category: "3-5"
       },
       {
@@ -1928,14 +1891,7 @@
         title: "Развитие речи",
         sub: "Логопедия · Словарный запас · Общение",
         desc: "Занятия по развитию речи: расширение словарного запаса, правильное произношение, составление рассказов и общение в группе.",
-        meta: ["3–5 лет", "1 ч/нед"],
         tag: "речь",
-        duration: "8 месяцев",
-        teacher: "Смирнова Екатерина Павловна, логопед",
-        level: "3–5 лет (начальный)",
-        price: "от 3 200 ₽ / месяц",
-        schedule: "понедельник, среда 11:30–12:30",
-        group: "до 6 человек",
         category: "3-5"
       },
       {
@@ -1944,14 +1900,7 @@
         title: "Математика",
         sub: "Счёт · Логика · Формы",
         desc: "Первые шаги в математике: изучение цифр, счёт, геометрические фигуры, логические задачи и сравнение предметов в игровой форме.",
-        meta: ["3–5 лет", "1 ч/нед"],
         tag: "математика",
-        duration: "8 месяцев",
-        teacher: "Ковалёва Ольга Николаевна",
-        level: "3–5 лет (начальный)",
-        price: "от 3 200 ₽ / месяц",
-        schedule: "вторник, четверг 11:30–12:30",
-        group: "до 6 человек",
         category: "3-5"
       },
       {
@@ -1960,14 +1909,7 @@
         title: "Творчество",
         sub: "Рисование · Лепка · Аппликация",
         desc: "Развитие творческих способностей через рисование, лепку и аппликацию. Работаем с разными материалами и техниками.",
-        meta: ["3–5 лет", "1.5 ч/нед"],
         tag: "творчество",
-        duration: "8 месяцев",
-        teacher: "Васильева Мария Дмитриевна",
-        level: "3–5 лет (начальный)",
-        price: "от 3 200 ₽ / месяц",
-        schedule: "пятница 10:00–11:30",
-        group: "до 8 человек",
         category: "3-5"
       },
 
@@ -1978,14 +1920,7 @@
         title: "Подготовка к школе",
         sub: "Чтение · Письмо · Математика",
         desc: "Комплексная подготовка к школе: обучение чтению, письму, основам математики и логики. Занятия в игровой форме с учетом возрастных особенностей.",
-        meta: ["5–7 лет", "2 ч/нед"],
         tag: "дошкольная подготовка",
-        duration: "9 месяцев",
-        teacher: "Семёнова Анна Владимировна",
-        level: "5–7 лет (базовый)",
-        price: "от 4 000 ₽ / месяц",
-        schedule: "понедельник, среда 16:00–18:00",
-        group: "до 8 человек",
         category: "5-7"
       },
       {
@@ -1994,14 +1929,7 @@
         title: "Изостудия",
         sub: "Рисование · Композиция · Акварель",
         desc: "Развитие художественных способностей: рисунок, живопись, композиция. Учимся работать с акварелью, гуашью и карандашами.",
-        meta: ["5–7 лет", "1.5 ч/нед"],
         tag: "искусство",
-        duration: "8 месяцев",
-        teacher: "Козлова Анна Андреевна",
-        level: "5–7 лет (базовый)",
-        price: "от 3 800 ₽ / месяц",
-        schedule: "вторник, четверг 16:00–17:30",
-        group: "до 8 человек",
         category: "5-7"
       },
       {
@@ -2010,14 +1938,7 @@
         title: "Английский язык",
         sub: "Игровой английский · Первые слова",
         desc: "Знакомство с английским языком через игры, песни и сказки. Изучаем алфавит, первые слова и простые фразы.",
-        meta: ["5–7 лет", "1.5 ч/нед"],
         tag: "английский",
-        duration: "9 месяцев",
-        teacher: "Алексеева Екатерина Андреевна",
-        level: "5–7 лет (начальный)",
-        price: "от 4 200 ₽ / месяц",
-        schedule: "среда, пятница 16:00–17:30",
-        group: "до 8 человек",
         category: "5-7"
       },
       {
@@ -2026,14 +1947,7 @@
         title: "Робототехника",
         sub: "Сборка · Программирование · Механика",
         desc: "Первые шаги в робототехнике: сборка простых механизмов, знакомство с основами программирования и механики.",
-        meta: ["5–7 лет", "1.5 ч/нед"],
         tag: "роботы",
-        duration: "8 месяцев",
-        teacher: "Кузнецов Максим Игоревич",
-        level: "5–7 лет (начальный)",
-        price: "от 4 500 ₽ / месяц",
-        schedule: "вторник, четверг 17:30–19:00",
-        group: "до 6 человек",
         category: "5-7"
       },
       {
@@ -2042,14 +1956,7 @@
         title: "Программирование",
         sub: "Scratch · Алгоритмы · Логика",
         desc: "Знакомство с основами программирования через Scratch. Развиваем логическое мышление и учимся создавать свои первые проекты.",
-        meta: ["5–7 лет", "1.5 ч/нед"],
         tag: "программирование",
-        duration: "8 месяцев",
-        teacher: "Смирнов Алексей Дмитриевич",
-        level: "5–7 лет (начальный)",
-        price: "от 4 500 ₽ / месяц",
-        schedule: "понедельник, среда 17:30–19:00",
-        group: "до 8 человек",
         category: "5-7"
       },
 
@@ -2060,14 +1967,7 @@
         title: "Английский язык",
         sub: "Грамматика · Разговор · Чтение",
         desc: "Изучение английского языка: грамматика, разговорная практика, чтение и аудирование. Подготовка к школьной программе и международным экзаменам.",
-        meta: ["7–10 лет", "2 ч/нед"],
         tag: "английский",
-        duration: "9 месяцев",
-        teacher: "James Wilson (носитель) + ассистент",
-        level: "7–10 лет (базовый)",
-        price: "от 5 000 ₽ / месяц",
-        schedule: "понедельник, четверг 16:00–18:00",
-        group: "до 8 человек",
         category: "7-10"
       },
       {
@@ -2076,14 +1976,7 @@
         title: "Русский язык",
         sub: "Грамотность · Литература · Сочинение",
         desc: "Углублённое изучение русского языка: орфография, пунктуация, развитие речи и работа с текстами. Подготовка к олимпиадам.",
-        meta: ["7–10 лет", "2 ч/нед"],
         tag: "русский",
-        duration: "9 месяцев",
-        teacher: "Петрова Светлана Владимировна",
-        level: "7–10 лет (базовый)",
-        price: "от 4 200 ₽ / месяц",
-        schedule: "вторник, пятница 16:00–18:00",
-        group: "до 10 человек",
         category: "7-10"
       },
       {
@@ -2092,14 +1985,7 @@
         title: "Математика",
         sub: "Алгебра · Геометрия · Логика",
         desc: "Основы математики: арифметика, геометрия, логические задачи. Подготовка к олимпиадам и углубленное изучение предмета.",
-        meta: ["7–10 лет", "2 ч/нед"],
         tag: "математика",
-        duration: "9 месяцев",
-        teacher: "Иванова Елена Петровна, к.ф.-м.н.",
-        level: "7–10 лет (базовый)",
-        price: "от 4 500 ₽ / месяц",
-        schedule: "вторник, четверг 16:00–18:00",
-        group: "до 8 человек",
         category: "7-10"
       },
       {
@@ -2108,14 +1994,7 @@
         title: "Робототехника",
         sub: "Сборка · Программирование · Arduino",
         desc: "Создание роботов на платформах LEGO Mindstorms и Arduino. Участие в соревнованиях и хакатонах. Изучение механики и электроники.",
-        meta: ["7–10 лет", "2 ч/нед"],
         tag: "роботы",
-        duration: "8 месяцев",
-        teacher: "Кузнецов Максим Игоревич",
-        level: "7–10 лет (средний)",
-        price: "от 5 000 ₽ / месяц",
-        schedule: "пятница 16:00–18:00",
-        group: "до 6 человек",
         category: "7-10"
       },
       {
@@ -2124,14 +2003,7 @@
         title: "Программирование",
         sub: "Python · Scratch · Web",
         desc: "Изучение программирования: от Scratch до Python. Создание игр, веб-страниц и чат-ботов. Развитие алгоритмического мышления.",
-        meta: ["7–10 лет", "2 ч/нед"],
         tag: "программирование",
-        duration: "9 месяцев",
-        teacher: "Смирнов Алексей Дмитриевич",
-        level: "7–10 лет (средний)",
-        price: "от 5 200 ₽ / месяц",
-        schedule: "среда, пятница 17:00–19:00",
-        group: "до 10 человек",
         category: "7-10"
       },
       {
@@ -2140,14 +2012,7 @@
         title: "Изостудия",
         sub: "Рисование · Живопись · Digital",
         desc: "Художественная студия: академический рисунок, живопись, цифровая иллюстрация. Участие в выставках и конкурсах.",
-        meta: ["7–10 лет", "2 ч/нед"],
         tag: "искусство",
-        duration: "8 месяцев",
-        teacher: "Козлова Анна Андреевна",
-        level: "7–10 лет (базовый)",
-        price: "от 4 000 ₽ / месяц",
-        schedule: "среда 16:00–18:00, суббота 11:00–13:00",
-        group: "до 10 человек",
         category: "7-10"
       },
 
@@ -2158,14 +2023,7 @@
         title: "Английский язык + ОГЭ",
         sub: "Грамматика · ОГЭ · Разговор",
         desc: "Интенсивная подготовка к ОГЭ по английскому языку: грамматика, лексика, аудирование, чтение и письмо. Разбор экзаменационных заданий.",
-        meta: ["10–17 лет", "2 ч/нед"],
         tag: "ОГЭ",
-        duration: "9 месяцев",
-        teacher: "James Wilson (носитель) + ассистент",
-        level: "10–17 лет (подготовка к ОГЭ)",
-        price: "от 5 500 ₽ / месяц",
-        schedule: "понедельник, четверг 18:00–20:00",
-        group: "до 8 человек",
         category: "10-17"
       },
       {
@@ -2174,14 +2032,7 @@
         title: "Русский язык + ОГЭ",
         sub: "Сочинение · Изложение · Тесты",
         desc: "Подготовка к ОГЭ по русскому языку: разбор всех типов заданий, написание сочинений и изложений, работа над критериями оценивания.",
-        meta: ["10–17 лет", "2 ч/нед"],
         tag: "ОГЭ",
-        duration: "8 месяцев",
-        teacher: "Николаева Татьяна Алексеевна",
-        level: "10–17 лет (подготовка к ОГЭ)",
-        price: "от 4 800 ₽ / месяц",
-        schedule: "среда 17:00–19:00, суббота 11:00–13:00",
-        group: "до 10 человек",
         category: "10-17"
       },
       {
@@ -2190,14 +2041,7 @@
         title: "Математика + ОГЭ",
         sub: "Алгебра · Геометрия · ОГЭ",
         desc: "Целенаправленная подготовка к ОГЭ по математике: разбор всех разделов, решение типовых задач, работа над ошибками и стратегия выполнения экзамена.",
-        meta: ["10–17 лет", "2 ч/нед"],
         tag: "ОГЭ",
-        duration: "8 месяцев",
-        teacher: "Громов Андрей Сергеевич, к.ф.-м.н.",
-        level: "10–17 лет (подготовка к ОГЭ)",
-        price: "от 5 000 ₽ / месяц",
-        schedule: "вторник, четверг 17:00–19:00",
-        group: "до 8 человек",
         category: "10-17"
       },
       {
@@ -2206,14 +2050,7 @@
         title: "Программирование",
         sub: "Python · JavaScript · Web · Data",
         desc: "Углублённое программирование: Python, JavaScript, веб-разработка, анализ данных. Работа над реальными проектами и подготовка к олимпиадам.",
-        meta: ["10–17 лет", "2–3 ч/нед"],
         tag: "программирование",
-        duration: "9 месяцев",
-        teacher: "Смирнов Алексей Дмитриевич",
-        level: "10–17 лет (продвинутый)",
-        price: "от 5 500 ₽ / месяц",
-        schedule: "среда, пятница 17:00–19:00",
-        group: "до 10 человек",
         category: "10-17"
       },
       {
@@ -2222,14 +2059,7 @@
         title: "Изостудия",
         sub: "Рисование · Digital · Композиция",
         desc: "Продвинутая художественная студия: академический рисунок, живопись, цифровая иллюстрация, подготовка к поступлению в художественные вузы.",
-        meta: ["10–17 лет", "2 ч/нед"],
         tag: "искусство",
-        duration: "9 месяцев",
-        teacher: "Козлова Анна Андреевна",
-        level: "10–17 лет (продвинутый)",
-        price: "от 4 500 ₽ / месяц",
-        schedule: "среда 16:00–18:00, суббота 11:00–13:00",
-        group: "до 10 человек",
         category: "10-17"
       }
     ];
@@ -2297,15 +2127,13 @@
       }
 
       container.innerHTML = filtered.map(c => `
-        <div class="course-card-modal" onclick="openDetail(${c.id})">
+        <div class="course-card-modal">
           <div class="course-icon">${c.icon}</div>
           <h3>${c.title}</h3>
           <div class="sub">${c.sub}</div>
-          <p>${c.desc.substring(0, 80)}${c.desc.length > 80 ? '...' : ''}</p>
-          <div class="course-meta">
-            ${c.meta.map(m => `<span>${m}</span>`).join('')}
-          </div>
+          <p>${c.desc}</p>
           <span class="course-tag">${c.tag}</span>
+          <button class="course-enroll-btn" onclick="openForm()">📝 Записаться</button>
         </div>
       `).join('');
     }
@@ -2382,26 +2210,6 @@
       closeContacts();
       closePolicy();
       closeGalleryModal();
-    }
-
-    function openDetail(courseId) {
-      const course = coursesData.find(c => c.id === courseId);
-      if (!course) return;
-
-      currentCourseId = courseId;
-
-      document.getElementById('detailIcon').textContent = course.icon;
-      document.getElementById('detailTitle').textContent = course.title;
-      document.getElementById('detailSub').textContent = course.sub;
-      document.getElementById('detailDesc').textContent = course.desc;
-      document.getElementById('detailDuration').textContent = course.duration;
-      document.getElementById('detailTeacher').textContent = course.teacher;
-      document.getElementById('detailLevel').textContent = course.level;
-      document.getElementById('detailPrice').textContent = course.price;
-      document.getElementById('detailSchedule').textContent = course.schedule;
-      document.getElementById('detailGroup').textContent = course.group;
-
-      document.getElementById('detailModal').classList.add('active');
     }
 
     function submitForm(e) {
