@@ -11,7 +11,7 @@
   <style>
     /* ============================================================
        КАРТИНКИ ДЛЯ ЗАМЕНЫ:
-       1. Логотип: замените "logo.png" на путь к вашему логотипу
+       1. Логотип: замените "logo_v2.png" на путь к вашему логотипу
        2. Фото школы: замените "school-building.jpg" на путь к фото
        3. Фото галереи: массив GALLERY_IMAGES в скрипте внизу файла
        ============================================================ */
@@ -19,16 +19,16 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --ink: #241638;        /* почти-чёрный фиолетовый — основной текст */
+      --ink: #241638;
       --ink-2: #14092B;
-      --muted: #6E6288;      /* приглушённый текст */
-      --grape: #632895;      /* фирменный фиолетовый */
+      --muted: #6E6288;
+      --grape: #632895;
       --grape-soft: #8B5FBF;
-      --night: #251543;      /* тёмный «космос» */
+      --night: #251543;
       --night-2: #2E1B58;
-      --sun: #FFD84A;        /* фирменный жёлтый */
+      --sun: #FFD84A;
       --sun-dark: #C79A11;
-      --cream: #F7F1E3;      /* тёплая «бумага» */
+      --cream: #F7F1E3;
       --cream-2: #EFE5CE;
       --paper: #FFFFFF;
       --line: rgba(36, 22, 56, .12);
@@ -94,11 +94,15 @@
       background: transparent; border: 2px solid var(--ink); color: var(--ink);
       padding: 11px 22px; border-radius: 100px;
       font-family: var(--font-d); font-weight: 600; font-size: .8rem;
-      cursor: pointer; transition: .25s;
+      cursor: pointer;
+      /* магнитные кнопки: сдвиг задаётся переменными из JS */
+      transform: translate(var(--mx, 0px), var(--my, 0px)) translateY(var(--lift, 0px));
+      transition: transform .22s ease, background .25s, color .25s, box-shadow .25s;
     }
     .btn-outline:hover {
+      --lift: -2px;
       background: var(--ink); color: var(--cream);
-      transform: translateY(-2px); box-shadow: 0 8px 20px rgba(36, 22, 56, .25);
+      box-shadow: 0 8px 20px rgba(36, 22, 56, .25);
     }
 
     /* ================= КНОПКИ ================= */
@@ -106,6 +110,8 @@
       display: inline-flex; align-items: center; justify-content: center; gap: 10px;
       font-family: var(--font-d); font-weight: 600; border: none; cursor: pointer;
       border-radius: 100px; text-decoration: none;
+      /* магнитные кнопки: сдвиг задаётся переменными из JS */
+      transform: translate(var(--mx, 0px), var(--my, 0px)) translateY(var(--lift, 0px));
       transition: transform .18s ease, box-shadow .18s ease, background .25s, color .25s;
     }
     .btn-sun {
@@ -113,8 +119,8 @@
       padding: 16px 30px; font-size: .92rem;
       box-shadow: 0 6px 0 var(--sun-dark);
     }
-    .btn-sun:hover { transform: translateY(-3px); box-shadow: 0 9px 0 var(--sun-dark); }
-    .btn-sun:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--sun-dark); }
+    .btn-sun:hover { --lift: -3px; box-shadow: 0 9px 0 var(--sun-dark); }
+    .btn-sun:active { --lift: 2px; box-shadow: 0 2px 0 var(--sun-dark); }
 
     /* ================= ГЕРОЙ (тёмный «космос») ================= */
     .hero {
@@ -195,7 +201,7 @@
     .planet-b { width: 20px; height: 20px; background: var(--sun); bottom: 18%; left: 5%; animation: float 5.5s 1s ease-in-out infinite; }
     @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
 
-    .rocket-wrap { position: relative; z-index: 2; transition: transform .35s ease-out; }
+    .rocket-wrap { position: relative; z-index: 2; transition: transform .35s ease-out; cursor: pointer; }
     .rocket-float { animation: float 6s ease-in-out infinite; }
     .rocket { width: clamp(170px, 24vw, 250px); height: auto; display: block; filter: drop-shadow(0 26px 24px rgba(0, 0, 0, .35)); }
     .flame { transform-box: fill-box; transform-origin: 50% 0; animation: flick .55s ease-in-out infinite; }
@@ -252,6 +258,16 @@
       background: var(--ink); color: var(--cream);
       padding: 16px 26px; border-radius: 100px; font-weight: 600; font-size: 1rem;
       position: relative; z-index: 1; box-shadow: 0 5px 0 rgba(20, 9, 43, .35);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .seasonal-badge:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 0 rgba(20, 9, 43, .35);
+    }
+    .seasonal-badge:active {
+      transform: translateY(2px) scale(0.97);
+      box-shadow: 0 2px 0 rgba(20, 9, 43, .35);
     }
     .seasonal-badge span { font-size: 1.4rem; }
 
@@ -297,14 +313,14 @@
     }
     .about-quote p { font-size: 1.15rem; font-style: italic; color: #F3EDDE; font-weight: 500; position: relative; z-index: 1; }
 
-    /* ================= ПРЕИМУЩЕСТВА (полоса с разделителями) ================= */
+    /* ================= ПРЕИМУЩЕСТВА ================= */
     .features {
       display: grid; grid-template-columns: repeat(4, 1fr);
       gap: 1px; background: var(--line);
       border: 1px solid var(--line); border-radius: 28px; overflow: hidden;
       margin: 0 0 34px;
     }
-    .feature-item { background: var(--paper); padding: clamp(24px, 3vw, 36px) clamp(18px, 2.5vw, 30px); transition: background .3s; }
+    .feature-item { background: var(--paper); padding: clamp(24px, 3vw, 36px) clamp(18px, 2.5vw, 30px); transition: background .3s, transform .3s; }
     .feature-item:hover { background: var(--cream); }
     .f-num { font-family: var(--font-d); font-weight: 700; font-size: .78rem; color: var(--muted); letter-spacing: 2px; transition: color .3s; }
     .feature-item:hover .f-num { color: var(--grape); }
@@ -489,9 +505,9 @@
     .age-icon {
       width: 58px; height: 58px; margin: 0 auto 12px; border-radius: 50%;
       background: var(--paper); border: 1px solid var(--line);
-      display: grid; place-items: center; font-size: 1.65rem; transition: background .28s;
+      display: grid; place-items: center; font-size: 1.65rem; transition: background .28s, transform .28s;
     }
-    .age-category-card:hover .age-icon { background: var(--sun); }
+    .age-category-card:hover .age-icon { background: var(--sun); transform: rotate(-8deg) scale(1.1); }
     .age-title { font-family: var(--font-d); font-weight: 600; font-size: 1rem; }
     .age-sub { color: var(--muted); font-size: .8rem; margin-top: 6px; line-height: 1.45; }
     .age-category-card--all { background: var(--night); border-color: var(--night); }
@@ -530,7 +546,7 @@
     .course-card-modal {
       background: var(--paper); border: 1.5px solid var(--line);
       border-radius: 20px; padding: 22px; cursor: pointer;
-      transition: .25s; display: flex; flex-direction: column;
+      transition: transform .25s, border-color .25s, box-shadow .25s; display: flex; flex-direction: column;
     }
     .course-card-modal:hover {
       transform: translateY(-5px); border-color: var(--grape);
@@ -539,9 +555,9 @@
     .course-icon {
       width: 46px; height: 46px; border-radius: 14px;
       background: var(--cream); border: 1px solid var(--line);
-      display: grid; place-items: center; font-size: 1.3rem; margin-bottom: 12px; transition: background .25s;
+      display: grid; place-items: center; font-size: 1.3rem; margin-bottom: 12px; transition: background .25s, transform .25s;
     }
-    .course-card-modal:hover .course-icon { background: var(--sun); }
+    .course-card-modal:hover .course-icon { background: var(--sun); transform: rotate(-8deg) scale(1.08); }
     .course-card-modal h3 { font-family: var(--font-d); font-weight: 600; font-size: .98rem; line-height: 1.3; margin-bottom: 6px; }
     .course-card-modal .sub {
       color: var(--grape); font-size: .74rem; font-weight: 700;
@@ -617,7 +633,9 @@
       width: 74px; height: 74px; border-radius: 50%; background: var(--sun);
       display: grid; place-items: center; font-size: 2rem; margin: 0 auto 18px;
       box-shadow: 0 6px 0 var(--sun-dark);
+      animation: sIconPop .5s cubic-bezier(.2, .7, .3, 1.4);
     }
+    @keyframes sIconPop { 0% { transform: scale(0) rotate(-30deg); } 100% { transform: scale(1) rotate(0); } }
     .form-success h3 { font-family: var(--font-d); font-weight: 700; font-size: 1.2rem; margin-bottom: 8px; }
     .form-success p { color: var(--muted); }
 
@@ -664,12 +682,167 @@
     .policy-modal .info-content { font-size: .92rem; line-height: 1.8; }
     .policy-modal .info-content h3 { font-size: .98rem; }
 
-    /* ================= АНИМАЦИИ ================= */
+    /* ================= БАЗОВЫЕ АНИМАЦИИ ================= */
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { transform: translateY(34px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
     .pre-reveal { opacity: 0; transform: translateY(26px); transition: opacity .65s ease, transform .65s cubic-bezier(.2, .7, .25, 1); }
     .pre-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* ================= НОВЫЕ ИНТЕРАКТИВЫ ================= */
+
+    /* полоса прогресса скролла */
+    .progress-bar {
+      position: fixed; top: 0; left: 0; height: 4px; width: 0;
+      background: linear-gradient(90deg, var(--sun), #FFB300);
+      z-index: 999; border-radius: 0 4px 4px 0;
+    }
+
+    /* каскадный вход героя */
+    @keyframes heroIn { from { opacity: 0; transform: translateY(26px); } }
+    .hero-content > * { animation: heroIn .65s cubic-bezier(.2, .7, .25, 1) backwards; }
+    .hero-badge { animation: heroIn .65s .05s cubic-bezier(.2, .7, .25, 1) backwards, badgePulse 3.2s 1.8s ease-in-out infinite; }
+    .hero-content h1 { animation-delay: .16s; }
+    .hero-content .lead { animation-delay: .3s; }
+    .hero-content .btn { animation-delay: .42s; }
+    .hero-content .hero-stats { animation-delay: .54s; }
+    .hero-visual { animation: heroIn .8s .22s cubic-bezier(.2, .7, .25, 1) backwards; }
+    @keyframes badgePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 216, 74, 0); }
+      50% { box-shadow: 0 0 0 10px rgba(255, 216, 74, .08); }
+    }
+
+    /* буст ракеты по клику */
+    .rocket-wrap.boost .rocket-float { animation: boost 1.05s cubic-bezier(.34, .6, .36, 1); }
+    @keyframes boost {
+      0% { transform: translateY(0) scale(1); }
+      40% { transform: translateY(-72px) scale(1.14); }
+      72% { transform: translateY(8px) scale(.97); }
+      100% { transform: translateY(0) scale(1); }
+    }
+    .rocket-wrap.boost .flame { animation: flickBig .16s linear infinite; }
+    @keyframes flickBig { 0%, 100% { transform: scaleY(1.7); } 50% { transform: scaleY(1.1); } }
+
+    /* кометы в герое */
+    .comet {
+      position: absolute; pointer-events: none; z-index: 1;
+      width: 120px; height: 3px; border-radius: 3px;
+      background: linear-gradient(90deg, #FFF 0%, rgba(255, 216, 74, .95) 25%, rgba(255, 216, 74, 0) 100%);
+      filter: drop-shadow(0 0 6px rgba(255, 216, 74, .8));
+      opacity: 0; animation: cometFly 1.4s cubic-bezier(.2, .6, .4, 1) forwards;
+    }
+    @keyframes cometFly {
+      0% { opacity: 0; transform: rotate(var(--ang, 25deg)) translateX(0) scaleX(.4); }
+      15% { opacity: 1; }
+      100% { opacity: 0; transform: rotate(var(--ang, 25deg)) translateX(var(--dist, 480px)) scaleX(1); }
+    }
+
+    /* искры по клику */
+    .spark {
+      position: absolute; pointer-events: none; z-index: 4;
+      background: var(--sun);
+      clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+      animation: sparkFly .7s cubic-bezier(.2, .7, .3, 1) forwards;
+    }
+    @keyframes sparkFly {
+      from { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+      to { transform: translate(var(--dx, 0), var(--dy, 60px)) rotate(var(--rot, 180deg)) scale(.1); opacity: 0; }
+    }
+
+    /* рябь на кнопках */
+    .ripple-host { position: relative; overflow: hidden; }
+    .ripple {
+      position: absolute; border-radius: 50%;
+      background: rgba(36, 22, 56, .22);
+      transform: scale(0); pointer-events: none;
+      animation: rippleAnim .65s ease-out forwards;
+    }
+    .ripple--light { background: rgba(247, 241, 227, .45); }
+    @keyframes rippleAnim { to { transform: scale(var(--rs, 16)); opacity: 0; } }
+
+    /* покачивание бейджа «Успей…» */
+    .seasonal-badge { animation: wiggle 3.2s ease-in-out 1s infinite; }
+    @keyframes wiggle {
+      0%, 14%, 100% { transform: rotate(0deg); }
+      3% { transform: rotate(-2.5deg); }
+      6% { transform: rotate(2deg); }
+      10% { transform: rotate(-1.2deg); }
+    }
+
+    /* Анимация для бейджа при клике — "взрыв" */
+    .seasonal-badge.pop {
+      animation: popBadge 0.6s cubic-bezier(.34, 1.56, .64, 1) forwards;
+    }
+    @keyframes popBadge {
+      0% { transform: scale(1) rotate(0deg); }
+      20% { transform: scale(1.2) rotate(-5deg); }
+      40% { transform: scale(0.9) rotate(3deg); }
+      60% { transform: scale(1.1) rotate(-2deg); }
+      80% { transform: scale(0.95) rotate(1deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+
+    /* Анимация конфетти-звёздочек для бейджа */
+    .badge-sparkle {
+      position: absolute;
+      pointer-events: none;
+      font-size: 1.2rem;
+      animation: sparkleFly 0.8s cubic-bezier(.2, .7, .3, 1) forwards;
+      z-index: 10;
+    }
+    @keyframes sparkleFly {
+      0% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
+      100% { opacity: 0; transform: translate(var(--dx, 0), var(--dy, -80px)) scale(0) rotate(var(--rot, 180deg)); }
+    }
+
+    /* Анимация частиц (эмодзи) */
+    .badge-particle {
+      position: fixed;
+      pointer-events: none;
+      font-size: 1.8rem;
+      z-index: 1500;
+      animation: particleFly 1s cubic-bezier(.2, .7, .3, 1) forwards;
+    }
+    @keyframes particleFly {
+      0% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
+      100% { opacity: 0; transform: translate(var(--px, 0), var(--py, -120px)) scale(0) rotate(var(--rot, 360deg)); }
+    }
+
+    /* каскадное появление преимуществ */
+    .features.is-visible .feature-item { animation: popIn .55s cubic-bezier(.2, .7, .3, 1.15) backwards; }
+    .features.is-visible .feature-item:nth-child(2) { animation-delay: .1s; }
+    .features.is-visible .feature-item:nth-child(3) { animation-delay: .2s; }
+    .features.is-visible .feature-item:nth-child(4) { animation-delay: .3s; }
+
+    /* каскадное появление карточек курсов */
+    .courses-grid-modal.fresh .course-card-modal {
+      animation: cardIn .5s cubic-bezier(.2, .7, .3, 1) backwards;
+      animation-delay: calc(var(--i, 0) * 45ms);
+    }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(16px) scale(.97); } }
+
+    /* линия в заголовке галереи «прорисовывается» */
+    .gallery-section .head-line { transform: scaleX(0); transform-origin: left; transition: transform .9s .35s cubic-bezier(.2, .7, .25, 1); }
+    .gallery-section.is-visible .head-line { transform: scaleX(1); }
+
+    /* кнопка «наверх» */
+    .to-top {
+      position: fixed; right: 22px; bottom: 22px; z-index: 900;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--night); color: var(--sun);
+      border: 1px solid rgba(255, 255, 255, .15);
+      font-size: 1.35rem; cursor: pointer;
+      box-shadow: 0 12px 28px rgba(36, 22, 56, .3);
+      opacity: 0; transform: translateY(90px) scale(.6);
+      transition: transform .4s cubic-bezier(.2, .7, .3, 1.2), opacity .3s, background .25s;
+      pointer-events: none;
+    }
+    .to-top.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .to-top.show:hover { transform: translateY(-5px) scale(1.06); background: var(--ink); }
+    .to-top.launch {
+      transform: translateY(-140px) scale(.5) rotate(-14deg); opacity: 0;
+      transition: transform .55s cubic-bezier(.4, 0, .8, .4), opacity .5s .1s;
+    }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -707,6 +880,7 @@
       .age-sub { font-size: .68rem; }
       .footer { flex-direction: column; text-align: center; justify-content: center; gap: 14px; }
       .footer-links { justify-content: center; }
+      .to-top { width: 48px; height: 48px; right: 14px; bottom: 14px; font-size: 1.1rem; }
     }
     @media (max-width: 480px) {
       .features { grid-template-columns: 1fr; }
@@ -716,6 +890,9 @@
   </style>
 </head>
 <body>
+  <!-- Полоса прогресса чтения -->
+  <div class="progress-bar" id="progressBar"></div>
+
   <div class="container">
 
     <!-- Навигация -->
@@ -756,7 +933,7 @@
           <div class="orbit-wrap ow2"><div class="orbit o2"><span class="sat sat-b"></span></div></div>
           <div class="planet planet-a"></div>
           <div class="planet planet-b"></div>
-          <div class="rocket-wrap">
+          <div class="rocket-wrap" title="Псс… нажми на меня!">
             <div class="rocket-float">
               <svg class="rocket" viewBox="0 0 220 270" aria-hidden="true">
                 <g transform="rotate(42 110 135)">
@@ -804,8 +981,11 @@
       <div class="seasonal-left">
         <span class="seasonal-tag">🌸 Сезонные предложения</span>
         <h3>Скидка 15% на все курсы при записи до конца месяца! 🎁</h3>
+        <!-- Сюда потом можно вставить информацию о временных курсах -->
       </div>
-      <div class="seasonal-badge"><span>🔥</span>Успей забронировать место!</div>
+      <div class="seasonal-badge" id="seasonalBadge" onclick="openFormWithAnimation(event)">
+        <span>🔥</span>Успей забронировать место!
+      </div>
     </section>
 
     <!-- О нас (краткий блок на главной) -->
@@ -864,7 +1044,7 @@
       </div>
       <div class="flyer-tag">
         <span class="flyer-pin">📌</span>
-        <span class="flyer-big">−10%</span>
+        <span class="flyer-big" id="flyerBig">−10%</span>
         <p>«Школа нового поколения»<br>скидка 10%</p>
       </div>
     </section>
@@ -1080,8 +1260,6 @@
         <h3>2. Основные понятия, используемые в Политике</h3>
         <p>2.1. Автоматизированная обработка персональных данных — обработка персональных данных с помощью средств вычислительной техники.</p>
         <p>2.2. Блокирование персональных данных — временное прекращение обработки персональных данных (за исключением случаев, если обработка необходима для уточнения персональных данных).</p>
-        <!-- ⚠️ Ваш файл обрезался на этом месте. Вставьте сюда оставшийся
-             текст вашей Политики конфиденциальности из старой версии сайта. -->
       </div>
     </div>
   </div>
@@ -1093,6 +1271,9 @@
       <img id="galleryModalImg" src="" alt="Фото из галереи">
     </div>
   </div>
+
+  <!-- Кнопка «наверх» -->
+  <button class="to-top" id="toTop" aria-label="Наверх" title="Взлетаем!">🚀</button>
 
   <script>
     /* ============================================================
@@ -1132,6 +1313,10 @@
     let currentAge = 'all';
     let currentCourse = null;
 
+    /* флаги: уважаем «уменьшить анимации» и работаем только с мышкой */
+    const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const FINE = window.matchMedia('(pointer: fine)').matches;
+
     /* ---------- блокировка скролла страницы ---------- */
     function anyOverlayActive() {
       return !!document.querySelector('.modal-overlay.active, .detail-overlay.active, .form-overlay.active, .info-overlay.active, .gallery-modal-overlay.active');
@@ -1146,13 +1331,16 @@
     }
 
     /* ---------- модалка курсов ---------- */
+    let freshTimer = null;
     function openModal() {
       showAgeCategories();
       document.getElementById('coursesModal').classList.add('active');
+      startPhCycle();
       lockBody();
     }
     function closeModal() {
       document.getElementById('coursesModal').classList.remove('active');
+      stopPhCycle();
       unlockBody();
     }
     function selectAge(key) {
@@ -1162,6 +1350,11 @@
       document.getElementById('categoryCourses').classList.add('active');
       document.getElementById('searchInput').value = '';
       filterCategoryCourses();
+      /* каскадное появление карточек */
+      const cc = document.getElementById('coursesContainer');
+      cc.classList.add('fresh');
+      clearTimeout(freshTimer);
+      freshTimer = setTimeout(() => cc.classList.remove('fresh'), 1200);
       document.querySelector('#coursesModal .modal').scrollTop = 0;
     }
     function showAgeCategories() {
@@ -1170,6 +1363,7 @@
       document.getElementById('searchInput').value = '';
     }
     function filterCategoryCourses() {
+      document.getElementById('coursesContainer').classList.remove('fresh');
       const q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
       const list = COURSES
         .filter(c => currentAge === 'all' || c.ages.includes(currentAge))
@@ -1182,8 +1376,8 @@
         box.innerHTML = '<div class="no-results">😕 Ничего не нашлось. Попробуйте изменить запрос.</div>';
         return;
       }
-      box.innerHTML = list.map(c => `
-        <article class="course-card-modal" data-id="${c.id}">
+      box.innerHTML = list.map((c, i) => `
+        <article class="course-card-modal" data-id="${c.id}" style="--i:${i}">
           <span class="course-icon">${c.icon}</span>
           <h3>${c.title}</h3>
           <div class="sub">${c.sub}</div>
@@ -1191,6 +1385,7 @@
           ${c.tag ? `<span class="course-tag">${c.tag}</span>` : ''}
           <button class="course-enroll-btn" type="button">Записаться</button>
         </article>`).join('');
+      addTilt(box.querySelectorAll('.course-card-modal'));
     }
 
     /* клики по карточкам курсов (кнопка — запись, карточка — детали) */
@@ -1223,6 +1418,85 @@
       document.getElementById('formModal').classList.add('active');
       lockBody();
     }
+
+    /* ---------- Новая функция: открытие формы с анимацией от бейджа ---------- */
+    function openFormWithAnimation(event) {
+      // Получаем бейдж и его позицию
+      const badge = document.getElementById('seasonalBadge');
+      const rect = badge.getBoundingClientRect();
+
+      // Анимация "поп" для бейджа
+      badge.classList.remove('pop');
+      void badge.offsetWidth; // Перезапускаем анимацию
+      badge.classList.add('pop');
+
+      // Создаём частицы (эмодзи) из бейджа
+      const emojis = ['🔥', '⭐', '✨', '🌟', '💫', '🎯', '📚', '🚀'];
+      const particleCount = 15;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'badge-particle';
+        particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+        // Случайный разлёт
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 80 + Math.random() * 120;
+        const px = Math.cos(angle) * distance;
+        const py = Math.sin(angle) * distance - 60;
+
+        // Позиция от центра бейджа
+        const startX = rect.left + rect.width / 2 + (Math.random() - 0.5) * 60;
+        const startY = rect.top + rect.height / 2 + (Math.random() - 0.5) * 20;
+
+        particle.style.cssText = `
+          left: ${startX}px;
+          top: ${startY}px;
+          --px: ${px}px;
+          --py: ${py}px;
+          --rot: ${(Math.random() * 720 - 360)}deg;
+          font-size: ${1.2 + Math.random() * 1.2}rem;
+        `;
+
+        document.body.appendChild(particle);
+
+        // Удаляем частицу после анимации
+        setTimeout(() => particle.remove(), 1100);
+      }
+
+      // Создаём звёздочки (sparkles) вокруг бейджа
+      for (let i = 0; i < 8; i++) {
+        const sparkle = document.createElement('span');
+        sparkle.className = 'badge-sparkle';
+        sparkle.textContent = ['✦', '✧', '⭐', '✨'][Math.floor(Math.random() * 4)];
+
+        const angle = (i / 8) * Math.PI * 2 + Math.random() * 0.3;
+        const dist = 40 + Math.random() * 50;
+        const dx = Math.cos(angle) * dist;
+        const dy = Math.sin(angle) * dist - 30;
+
+        const startX = rect.left + rect.width / 2 + (Math.random() - 0.5) * 20;
+        const startY = rect.top + rect.height / 2 + (Math.random() - 0.5) * 10;
+
+        sparkle.style.cssText = `
+          left: ${startX}px;
+          top: ${startY}px;
+          --dx: ${dx}px;
+          --dy: ${dy}px;
+          --rot: ${(Math.random() * 360)}deg;
+          font-size: ${0.8 + Math.random() * 0.8}rem;
+        `;
+
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 900);
+      }
+
+      // Открываем форму с небольшой задержкой (чтобы анимация успела начаться)
+      setTimeout(() => {
+        openForm();
+      }, 300);
+    }
+
     function closeForm() {
       document.getElementById('formModal').classList.remove('active');
       unlockBody();
@@ -1234,6 +1508,7 @@
 
       document.getElementById('enrollForm').style.display = 'none';
       document.getElementById('formSuccess').classList.add('show');
+      fireConfetti(); /* 🎉 салют в честь заявки */
     }
 
     /* ---------- о нас / контакты / политика ---------- */
@@ -1303,6 +1578,7 @@
 
     /* ---------- лёгкий параллакс за курсором ---------- */
     (function initParallax() {
+      if (!FINE || REDUCED) return;
       const hero = document.querySelector('.hero');
       const rocket = document.querySelector('.rocket-wrap');
       const ow2 = document.querySelector('.ow2');
@@ -1350,16 +1626,264 @@
       els.forEach(el => io.observe(el));
     })();
 
-    /* ---------- бегущая строка: дублируем содержимое для бесшовной прокрутки ---------- */
+    /* ---------- бегущая строка: дублируем для бесшовности ---------- */
     (function () {
       const t = document.getElementById('marqueeTrack');
       if (t) t.innerHTML += t.innerHTML;
     })();
 
-    /* ---------- тень шапки при скролле ---------- */
-    window.addEventListener('scroll', () => {
-      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
-    }, { passive: true });
+    /* ================= НОВЫЕ ИНТЕРАКТИВЫ ================= */
+
+    /* --- прогресс скролла + кнопка «наверх» --- */
+    (function initScrollFx() {
+      const bar = document.getElementById('progressBar');
+      const toTop = document.getElementById('toTop');
+      let launching = false;
+      function onScroll() {
+        const y = window.scrollY;
+        document.getElementById('navbar').classList.toggle('scrolled', y > 10);
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (max > 0 ? (y / max * 100) : 0) + '%';
+        if (!launching) toTop.classList.toggle('show', y > 500);
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      toTop.addEventListener('click', () => {
+        launching = true;
+        toTop.classList.add('launch');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => { launching = false; toTop.classList.remove('launch', 'show'); }, 900);
+      });
+    })();
+
+    /* --- искры (звёздочки) --- */
+    function spawnSparks(x, y, host, count) {
+      if (REDUCED) return;
+      const colors = ['#FFD84A', '#FFFFFF', '#8B5FBF'];
+      for (let i = 0; i < count; i++) {
+        const s = document.createElement('span');
+        s.className = 'spark';
+        const ang = Math.random() * Math.PI * 2;
+        const dist = 34 + Math.random() * 70;
+        const size = 5 + Math.random() * 5;
+        s.style.cssText = `left:${x - size / 2}px;top:${y - size / 2}px;width:${size}px;height:${size}px;` +
+          `--dx:${(Math.cos(ang) * dist).toFixed(1)}px;--dy:${(Math.sin(ang) * dist).toFixed(1)}px;` +
+          `--rot:${(Math.random() * 360) | 0}deg;background:${colors[i % colors.length]}`;
+        host.appendChild(s);
+        s.addEventListener('animationend', () => s.remove());
+        setTimeout(() => s.remove(), 900);
+      }
+    }
+
+    /* --- клик по герою = сноп искр; клик по ракете = буст --- */
+    (function initHeroFx() {
+      const hero = document.querySelector('.hero');
+      if (!hero) return;
+      hero.addEventListener('click', e => {
+        if (e.target.closest('.rocket-wrap')) return; /* у ракеты свой эффект */
+        const r = hero.getBoundingClientRect();
+        spawnSparks(e.clientX - r.left, e.clientY - r.top, hero, 9);
+      });
+      const rw = document.querySelector('.rocket-wrap');
+      if (rw) rw.addEventListener('click', e => {
+        e.stopPropagation();
+        if (rw.classList.contains('boost')) return;
+        rw.classList.add('boost');
+        const hr = hero.getBoundingClientRect();
+        const rr = rw.getBoundingClientRect();
+        spawnSparks(rr.left - hr.left + rr.width / 2, rr.bottom - hr.top - 10, hero, 16);
+        setTimeout(() => rw.classList.remove('boost'), 1150);
+      });
+    })();
+
+    /* --- кометы --- */
+    (function initComets() {
+      const hero = document.querySelector('.hero');
+      if (!hero || REDUCED) return;
+      function spawn() {
+        if (!document.hidden && hero.getBoundingClientRect().bottom > 0) {
+          const c = document.createElement('span');
+          c.className = 'comet';
+          c.style.top = (4 + Math.random() * 55) + '%';
+          c.style.left = (-8 + Math.random() * 38) + '%';
+          c.style.setProperty('--ang', (12 + Math.random() * 32).toFixed(1) + 'deg');
+          c.style.setProperty('--dist', (320 + Math.random() * 300) | 0 + 'px');
+          hero.appendChild(c);
+          c.addEventListener('animationend', () => c.remove());
+          setTimeout(() => c.remove(), 1800);
+        }
+        setTimeout(spawn, 3200 + Math.random() * 4200);
+      }
+      setTimeout(spawn, 2000);
+    })();
+
+    /* --- 3D-наклон карточек за курсором --- */
+    function applyTilt(el, e, max) {
+      max = max || 7;
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - .5;
+      const py = (e.clientY - r.top) / r.height - .5;
+      el.style.transform = `perspective(700px) rotateX(${(-py * max).toFixed(2)}deg) rotateY(${(px * max).toFixed(2)}deg) translateY(-4px)`;
+    }
+    function addTilt(els) {
+      if (!FINE || REDUCED) return;
+      els.forEach(el => {
+        if (el.dataset.tilt) return;
+        el.dataset.tilt = '1';
+        el.addEventListener('mousemove', e => applyTilt(el, e));
+        el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+      });
+    }
+    addTilt(document.querySelectorAll('.age-category-card, .feature-item'));
+
+    /* наклон фото галереи (делегирование, т.к. элементы создаются динамически) */
+    (function galleryTilt() {
+      const grid = document.getElementById('galleryGrid');
+      if (!grid || !FINE || REDUCED) return;
+      let last = null;
+      grid.addEventListener('mousemove', e => {
+        const it = e.target.closest('.gallery-item');
+        if (last && last !== it) { last.style.transform = ''; }
+        if (it) { applyTilt(it, e, 6); last = it; }
+      });
+      grid.addEventListener('mouseleave', () => { if (last) { last.style.transform = ''; last = null; } });
+    })();
+
+    /* --- магнитные кнопки --- */
+    (function initMagnets() {
+      if (!FINE || REDUCED) return;
+      document.querySelectorAll('.btn, .btn-outline').forEach(el => {
+        el.addEventListener('mousemove', e => {
+          const r = el.getBoundingClientRect();
+          const dx = e.clientX - (r.left + r.width / 2);
+          const dy = e.clientY - (r.top + r.height / 2);
+          el.style.setProperty('--mx', (dx * .22).toFixed(1) + 'px');
+          el.style.setProperty('--my', (dy * .25).toFixed(1) + 'px');
+        });
+        el.addEventListener('mouseleave', () => {
+          el.style.setProperty('--mx', '0px');
+          el.style.setProperty('--my', '0px');
+        });
+      });
+    })();
+
+    /* --- рябь при клике на кнопки --- */
+    (function initRipple() {
+      if (REDUCED) return;
+      const SEL = '.btn, .btn-outline, .course-enroll-btn, .detail-enroll, .form-submit, .back-btn';
+      document.addEventListener('click', e => {
+        const b = e.target.closest(SEL);
+        if (!b) return;
+        b.classList.add('ripple-host');
+        const r = b.getBoundingClientRect();
+        const size = 12;
+        const s = document.createElement('span');
+        const light = b.matches('.course-enroll-btn, .detail-enroll, .form-submit');
+        s.className = 'ripple' + (light ? ' ripple--light' : '');
+        s.style.cssText = `left:${e.clientX - r.left - size / 2}px;top:${e.clientY - r.top - size / 2}px;` +
+          `width:${size}px;height:${size}px;--rs:${(Math.max(r.width, r.height) / size * 1.4).toFixed(1)}`;
+        b.appendChild(s);
+        s.addEventListener('animationend', () => s.remove());
+        setTimeout(() => s.remove(), 800);
+      });
+    })();
+
+    /* --- конфетти 🎉 --- */
+    const CONFETTI_COLORS = ['#FFD84A', '#632895', '#8B5FBF', '#F7F1E3', '#FF9F3D'];
+    let cCanvas = null, cCtx = null, cParts = [], cRunning = false;
+    function confettiLoop() {
+      if (!cRunning) return;
+      cCtx.clearRect(0, 0, cCanvas.width, cCanvas.height);
+      cParts = cParts.filter(p => p.y < cCanvas.height + 40 && p.life > 0);
+      cParts.forEach(p => {
+        p.life--; p.vy += .14; p.vx *= .992;
+        p.x += p.vx + Math.sin(p.life * .08 + p.seed) * .8;
+        p.y += p.vy; p.rot += p.vr;
+        cCtx.save();
+        cCtx.translate(p.x, p.y);
+        cCtx.rotate(p.rot);
+        cCtx.globalAlpha = Math.min(1, p.life / 40);
+        cCtx.fillStyle = p.color;
+        cCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        cCtx.restore();
+      });
+      if (cParts.length) requestAnimationFrame(confettiLoop);
+      else { cRunning = false; cCanvas.remove(); cCanvas = null; }
+    }
+    function confettiBurst(x, y, count, ang) {
+      for (let i = 0; i < count; i++) {
+        const a = ang + (Math.random() - .5) * 1.1;
+        const v = 7 + Math.random() * 8;
+        cParts.push({
+          x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v,
+          w: 6 + Math.random() * 7, h: 4 + Math.random() * 5,
+          color: CONFETTI_COLORS[(Math.random() * CONFETTI_COLORS.length) | 0],
+          rot: Math.random() * Math.PI, vr: (Math.random() - .5) * .3,
+          life: 90 + Math.random() * 50, seed: Math.random() * 10
+        });
+      }
+    }
+    function fireConfetti() {
+      if (REDUCED) return;
+      if (!cCanvas) {
+        cCanvas = document.createElement('canvas');
+        cCanvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:1400';
+        document.body.appendChild(cCanvas);
+        cCtx = cCanvas.getContext('2d');
+      }
+      cCanvas.width = window.innerWidth;
+      cCanvas.height = window.innerHeight;
+      const H = cCanvas.height, W = cCanvas.width;
+      confettiBurst(W * .12, H * .8, 55, -Math.PI / 2.6);
+      confettiBurst(W * .88, H * .8, 55, -Math.PI + Math.PI / 2.6);
+      setTimeout(() => confettiBurst(W * .5, H * .35, 70, -Math.PI / 2), 250);
+      if (!cRunning) { cRunning = true; confettiLoop(); }
+    }
+
+    /* --- «−10%» набегает при появлении баннера --- */
+    (function initFlyerCount() {
+      const el = document.getElementById('flyerBig');
+      if (!el || REDUCED) return;
+      const io = new IntersectionObserver(ens => {
+        ens.forEach(en => {
+          if (!en.isIntersecting) return;
+          io.disconnect();
+          const t0 = performance.now(), dur = 1100;
+          (function tick(t) {
+            const p = Math.min((t - t0) / dur, 1);
+            const e = 1 - Math.pow(1 - p, 3);
+            el.textContent = '−' + Math.round(10 * e) + '%';
+            if (p < 1) requestAnimationFrame(tick);
+          })(t0);
+        });
+      }, { threshold: .5 });
+      io.observe(el);
+    })();
+
+    /* --- «печатающийся» плейсхолдер поиска --- */
+    const SEARCH_PHRASES = [
+      '🔍 Поиск курсов…',
+      '🔍 Например: робототехника',
+      '🔍 Например: английский',
+      '🔍 Например: математика',
+      '🔍 Например: подготовка к ОГЭ'
+    ];
+    let phTimer = null;
+    function startPhCycle() {
+      stopPhCycle();
+      if (REDUCED) return;
+      const input = document.getElementById('searchInput');
+      let pi = 0, ci = 0, del = false;
+      phTimer = setInterval(() => {
+        if (document.activeElement === input || input.value) return;
+        const ph = SEARCH_PHRASES[pi];
+        ci += del ? -2 : 1;
+        if (ci >= ph.length) { ci = ph.length; del = true; }
+        if (del && ci <= 0) { ci = 0; del = false; pi = (pi + 1) % SEARCH_PHRASES.length; }
+        input.placeholder = ph.slice(0, Math.max(0, ci));
+      }, 60);
+    }
+    function stopPhCycle() { if (phTimer) { clearInterval(phTimer); phTimer = null; } }
 
     initGallery();
   </script>
