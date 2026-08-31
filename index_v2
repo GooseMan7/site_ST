@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Школа-студия STARТ · современный сайт</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFD84A' d='M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4z'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       КАРТИНКИ ДЛЯ ЗАМЕНЫ:
+       1. Логотип: замените "logo.png" на путь к вашему логотипу
+       2. Фото школы: замените "school-building.jpg" на путь к фото
+       3. Фото галереи: массив GALLERY_IMAGES в скрипте внизу файла
+       ============================================================ */
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #241638;        /* почти-чёрный фиолетовый — основной текст */
+      --ink-2: #14092B;
+      --muted: #6E6288;      /* приглушённый текст */
+      --grape: #632895;      /* фирменный фиолетовый */
+      --grape-soft: #8B5FBF;
+      --night: #251543;      /* тёмный «космос» */
+      --night-2: #2E1B58;
+      --sun: #FFD84A;        /* фирменный жёлтый */
+      --sun-dark: #C79A11;
+      --cream: #F7F1E3;      /* тёплая «бумага» */
+      --cream-2: #EFE5CE;
+      --paper: #FFFFFF;
+      --line: rgba(36, 22, 56, .12);
+      --line-soft: rgba(36, 22, 56, .07);
+      --font-d: 'Unbounded', sans-serif;
+      --font-b: 'Onest', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--cream);
+      background-image: radial-gradient(rgba(36,22,56,.05) 1px, transparent 1.5px);
+      background-size: 26px 26px;
+      color: var(--ink);
+      line-height: 1.55;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--sun); color: var(--ink); }
+    img { max-width: 100%; }
+    :focus-visible { outline: 3px solid rgba(99, 40, 149, .55); outline-offset: 2px; border-radius: 6px; }
+
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+    /* ================= ШАПКА ================= */
+    .navbar {
+      position: sticky; top: 14px; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      background: rgba(255, 255, 255, .88);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--line); border-radius: 100px;
+      padding: 10px 14px 10px 22px; margin: 16px 0 10px;
+      box-shadow: 0 10px 34px rgba(36, 22, 56, .10);
+      transition: box-shadow .3s;
+    }
+    .navbar.scrolled { box-shadow: 0 18px 48px rgba(36, 22, 56, .18); }
+
+    .logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .logo img { height: 46px; width: auto; }
+    .logo-text { display: flex; flex-direction: column; line-height: 1.05; }
+    .logo-text .brand { font-family: var(--font-d); font-weight: 800; font-size: 1.35rem; color: var(--ink); letter-spacing: .5px; }
+    .logo-text .brand .small-t { font-size: 1rem; color: var(--grape); }
+    .logo-text .sub { font-size: .62rem; letter-spacing: 2.6px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+    .nav-links { display: flex; gap: 2px; list-style: none; }
+    .nav-links a {
+      position: relative; text-decoration: none; color: var(--ink);
+      font-weight: 600; font-size: .92rem; padding: 8px 13px; cursor: pointer;
+      border-radius: 100px; transition: color .25s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; left: 13px; right: 13px; bottom: 4px;
+      height: 3px; border-radius: 3px; background: var(--sun);
+      transform: scaleX(0); transform-origin: left; transition: transform .3s;
+    }
+    .nav-links a:hover { color: var(--grape); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .btn-outline {
+      background: transparent; border: 2px solid var(--ink); color: var(--ink);
+      padding: 11px 22px; border-radius: 100px;
+      font-family: var(--font-d); font-weight: 600; font-size: .8rem;
+      cursor: pointer; transition: .25s;
+    }
+    .btn-outline:hover {
+      background: var(--ink); color: var(--cream);
+      transform: translateY(-2px); box-shadow: 0 8px 20px rgba(36, 22, 56, .25);
+    }
+
+    /* ================= КНОПКИ ================= */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      font-family: var(--font-d); font-weight: 600; border: none; cursor: pointer;
+      border-radius: 100px; text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease, background .25s, color .25s;
+    }
+    .btn-sun {
+      background: var(--sun); color: var(--ink);
+      padding: 16px 30px; font-size: .92rem;
+      box-shadow: 0 6px 0 var(--sun-dark);
+    }
+    .btn-sun:hover { transform: translateY(-3px); box-shadow: 0 9px 0 var(--sun-dark); }
+    .btn-sun:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--sun-dark); }
+
+    /* ================= ГЕРОЙ (тёмный «космос») ================= */
+    .hero {
+      position: relative; overflow: hidden;
+      background: var(--night); color: #F3EDDE;
+      border: 1px solid rgba(255, 255, 255, .07);
+      border-radius: 34px; margin-top: 26px;
+      display: grid; grid-template-columns: 1.12fr .88fr; gap: 40px; align-items: center;
+      padding: clamp(40px, 6vw, 76px) clamp(28px, 5vw, 72px);
+    }
+    .hero .star {
+      position: absolute; border-radius: 50%; background: #fff;
+      pointer-events: none; animation: twinkle 3s infinite;
+    }
+    @keyframes twinkle { 0%, 100% { opacity: .1; } 50% { opacity: .75; } }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255, 216, 74, .1); border: 1px solid rgba(255, 216, 74, .4);
+      color: var(--sun); padding: 9px 18px; border-radius: 100px;
+      font-weight: 600; font-size: .85rem; margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-d); font-weight: 700;
+      font-size: clamp(1.8rem, 4.2vw, 3.2rem);
+      line-height: 1.16; letter-spacing: -.5px; color: #F6F1E4;
+    }
+    .hero h1 .hl { position: relative; display: inline-block; color: var(--sun); }
+    .hero h1 .hl::after { content: '✨'; font-size: .55em; margin-left: 4px; }
+    .hl .squiggle { position: absolute; left: 0; bottom: -10px; width: 100%; height: 12px; overflow: visible; }
+    .squiggle path {
+      fill: none; stroke: var(--sun); stroke-width: 5; stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+      stroke-dasharray: 230; stroke-dashoffset: 230;
+      animation: draw 1.1s .6s cubic-bezier(.4, 0, .2, 1) forwards;
+    }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+
+    .hero .lead {
+      margin: 26px 0 32px; max-width: 520px;
+      color: rgba(243, 237, 222, .72); font-size: 1.05rem; line-height: 1.75;
+    }
+
+    .hero-stats {
+      display: flex; margin-top: 42px; padding-top: 26px;
+      border-top: 1px solid rgba(255, 255, 255, .14);
+    }
+    .hero-stats div { flex: 1; }
+    .hero-stats div + div { border-left: 1px solid rgba(255, 255, 255, .14); padding-left: 32px; }
+    .hero-stats h3 { font-family: var(--font-d); font-weight: 700; font-size: clamp(1.5rem, 2.6vw, 2.1rem); color: var(--sun); }
+    .hero-stats p { color: rgba(243, 237, 222, .6); font-size: .9rem; margin-top: 4px; }
+
+    /* сцена с ракетой */
+    .hero-visual { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .scene { position: relative; width: 100%; min-height: 400px; display: grid; place-items: center; }
+    .orbit-wrap { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+    .ow2 { transition: transform .35s ease-out; }
+    .orbit { border: 1.5px dashed rgba(255, 255, 255, .16); border-radius: 50%; animation: spin 46s linear infinite; position: relative; }
+    .orbit.o1 { width: min(420px, 92%); aspect-ratio: 1; }
+    .orbit.o2 { width: min(300px, 66%); aspect-ratio: 1; animation-duration: 30s; animation-direction: reverse; border-color: rgba(255, 216, 74, .25); }
+    .orbit .sat { position: absolute; top: -5px; left: calc(50% - 5px); width: 10px; height: 10px; border-radius: 50%; background: var(--sun); }
+    .orbit .sat-b { background: var(--grape-soft); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .planet { position: absolute; border-radius: 50%; }
+    .planet-a {
+      width: 52px; height: 52px; background: var(--grape-soft);
+      top: 9%; right: 7%; animation: float 7s ease-in-out infinite;
+    }
+    .planet-a::after {
+      content: ''; position: absolute; left: 50%; top: 50%;
+      width: 94px; height: 26px; border: 2.5px solid rgba(255, 216, 74, .65);
+      border-radius: 50%; transform: translate(-50%, -50%) rotate(-18deg);
+    }
+    .planet-b { width: 20px; height: 20px; background: var(--sun); bottom: 18%; left: 5%; animation: float 5.5s 1s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+    .rocket-wrap { position: relative; z-index: 2; transition: transform .35s ease-out; }
+    .rocket-float { animation: float 6s ease-in-out infinite; }
+    .rocket { width: clamp(170px, 24vw, 250px); height: auto; display: block; filter: drop-shadow(0 26px 24px rgba(0, 0, 0, .35)); }
+    .flame { transform-box: fill-box; transform-origin: 50% 0; animation: flick .55s ease-in-out infinite; }
+    @keyframes flick { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.8); } }
+
+    .hero-caption { text-align: center; }
+    .hero-caption .cap-title { font-family: var(--font-d); font-weight: 600; font-size: .92rem; color: #F3EDDE; }
+    .hero-caption .cap-tags { color: rgba(243, 237, 222, .5); font-size: .8rem; margin-top: 6px; }
+
+    /* ================= БЕГУЩАЯ СТРОКА ================= */
+    .marquee {
+      width: 100vw; margin: 28px calc(50% - 50vw) 0;
+      background: var(--sun); overflow: hidden; padding: 13px 0;
+    }
+    .marquee-track { display: flex; width: max-content; animation: scrollX 28s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    .m-item {
+      font-family: var(--font-d); font-weight: 600; font-size: .82rem;
+      letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink);
+      white-space: nowrap; display: inline-flex; align-items: center;
+    }
+    .m-item em { font-style: normal; margin: 0 32px; opacity: .5; }
+    @keyframes scrollX { to { transform: translateX(-50%); } }
+
+    /* ================= СЕЗОННОЕ ПРЕДЛОЖЕНИЕ ================= */
+    .seasonal {
+      background: var(--sun); border-radius: 30px;
+      padding: clamp(28px, 4vw, 44px) clamp(28px, 5vw, 52px);
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 24px; margin: 34px 0; position: relative; overflow: hidden;
+    }
+    .seasonal::before {
+      content: ''; position: absolute; right: -70px; top: -95px;
+      width: 260px; height: 260px; border: 3px solid rgba(36, 22, 56, .12); border-radius: 50%;
+    }
+    .seasonal::after {
+      content: ''; position: absolute; right: 60px; bottom: -135px;
+      width: 200px; height: 200px; border: 3px solid rgba(36, 22, 56, .08); border-radius: 50%;
+    }
+    .seasonal-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 2px solid var(--ink); border-radius: 100px;
+      padding: 7px 16px; font-weight: 700; font-size: .78rem;
+      letter-spacing: .5px; text-transform: uppercase; color: var(--ink);
+      background: rgba(255, 255, 255, .35); margin-bottom: 14px;
+    }
+    .seasonal h3 {
+      font-family: var(--font-d); font-weight: 600;
+      font-size: clamp(1.2rem, 2.4vw, 1.65rem); line-height: 1.32;
+      color: var(--ink); max-width: 640px; position: relative; z-index: 1;
+    }
+    .seasonal-badge {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--ink); color: var(--cream);
+      padding: 16px 26px; border-radius: 100px; font-weight: 600; font-size: 1rem;
+      position: relative; z-index: 1; box-shadow: 0 5px 0 rgba(20, 9, 43, .35);
+    }
+    .seasonal-badge span { font-size: 1.4rem; }
+
+    /* ================= О НАС ================= */
+    .about {
+      background: var(--paper); border: 1px solid var(--line); border-radius: 32px;
+      padding: clamp(30px, 4.5vw, 56px); margin: 34px 0;
+      box-shadow: 0 20px 50px rgba(36, 22, 56, .06);
+    }
+    .about-grid {
+      display: grid; grid-template-columns: 1.55fr .9fr;
+      gap: clamp(28px, 4vw, 56px); align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-d); font-weight: 600; font-size: .7rem;
+      letter-spacing: 2.5px; text-transform: uppercase; color: var(--grape); margin-bottom: 14px;
+    }
+    .eyebrow::before { content: ''; width: 26px; height: 3px; background: var(--sun); border-radius: 2px; }
+    .about h2 {
+      font-family: var(--font-d); font-weight: 700;
+      font-size: clamp(1.45rem, 3vw, 2.1rem); letter-spacing: -.5px;
+      line-height: 1.22; margin-bottom: 18px;
+    }
+    .about p { color: #3E3355; font-size: 1.02rem; line-height: 1.75; max-width: 620px; }
+    .about-contacts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+    .c-chip {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--cream); border: 1px solid var(--line); border-radius: 100px;
+      padding: 10px 18px; font-weight: 600; font-size: .88rem;
+    }
+    .about-quote {
+      background: var(--night); border-radius: 24px; padding: 36px 30px;
+      color: var(--cream); position: relative; overflow: hidden;
+    }
+    .about-quote::after {
+      content: ''; position: absolute; right: -45px; bottom: -45px;
+      width: 150px; height: 150px; border: 3px dashed rgba(255, 255, 255, .15); border-radius: 50%;
+    }
+    .about-quote .q-mark {
+      font-family: var(--font-d); font-weight: 800; font-size: 4.2rem;
+      color: var(--sun); line-height: .55; display: block; margin-bottom: 20px;
+    }
+    .about-quote p { font-size: 1.15rem; font-style: italic; color: #F3EDDE; font-weight: 500; position: relative; z-index: 1; }
+
+    /* ================= ПРЕИМУЩЕСТВА (полоса с разделителями) ================= */
+    .features {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--line);
+      border: 1px solid var(--line); border-radius: 28px; overflow: hidden;
+      margin: 0 0 34px;
+    }
+    .feature-item { background: var(--paper); padding: clamp(24px, 3vw, 36px) clamp(18px, 2.5vw, 30px); transition: background .3s; }
+    .feature-item:hover { background: var(--cream); }
+    .f-num { font-family: var(--font-d); font-weight: 700; font-size: .78rem; color: var(--muted); letter-spacing: 2px; transition: color .3s; }
+    .feature-item:hover .f-num { color: var(--grape); }
+    .f-icon {
+      width: 54px; height: 54px; border-radius: 16px;
+      background: var(--cream); border: 1px solid var(--line);
+      display: grid; place-items: center; font-size: 1.55rem;
+      margin: 16px 0 14px; transition: transform .3s, background .3s;
+    }
+    .feature-item:hover .f-icon { transform: rotate(-6deg) scale(1.07); background: var(--sun); }
+    .feature-item h4 { font-family: var(--font-d); font-weight: 600; font-size: .98rem; line-height: 1.3; }
+    .feature-item p { color: var(--muted); font-size: .9rem; margin-top: 8px; }
+
+    /* ================= БАННЕР СО СКИДКОЙ ================= */
+    .flyer {
+      background: var(--night); color: #F3EDDE; border-radius: 32px;
+      padding: clamp(32px, 5vw, 60px) clamp(28px, 5vw, 64px);
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 36px; align-items: center;
+      position: relative; overflow: hidden; margin: 34px 0;
+    }
+    .flyer::before {
+      content: ''; position: absolute; top: -65px; right: -65px;
+      width: 280px; height: 280px; border: 2.5px dashed rgba(255, 216, 74, .25); border-radius: 50%;
+    }
+    .flyer::after {
+      content: ''; position: absolute; bottom: -85px; left: -55px;
+      width: 220px; height: 220px; border: 2.5px dashed rgba(255, 255, 255, .12); border-radius: 50%;
+    }
+    .flyer-left { position: relative; z-index: 1; }
+    .flyer h2 { font-family: var(--font-d); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2.2rem); }
+    .flyer p { color: rgba(243, 237, 222, .72); margin: 16px 0 28px; max-width: 460px; line-height: 1.7; }
+    .flyer-tag { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+    .flyer-pin { font-size: 1.5rem; }
+    .flyer-big {
+      font-family: var(--font-d); font-weight: 800; letter-spacing: -2px;
+      font-size: clamp(3rem, 7vw, 5.2rem); color: var(--sun); line-height: 1.05;
+    }
+    .flyer-tag p { margin: 8px 0 0; font-size: .95rem; color: rgba(243, 237, 222, .85); line-height: 1.55; }
+
+    /* ================= ГАЛЕРЕЯ ================= */
+    .gallery-section { margin: 34px 0 40px; }
+    .section-head { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+    .section-head .g-emoji {
+      width: 54px; height: 54px; border-radius: 16px;
+      background: var(--paper); border: 1px solid var(--line);
+      display: grid; place-items: center; font-size: 1.45rem;
+    }
+    .section-head h2 { font-family: var(--font-d); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2rem); letter-spacing: -.5px; }
+    .section-head .head-line { flex: 1; height: 3px; background: var(--cream-2); border-radius: 2px; margin-left: 10px; }
+
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
+    .gallery-item {
+      position: relative; border-radius: 20px; overflow: hidden;
+      border: 1px solid var(--line); cursor: pointer; aspect-ratio: 1;
+      background: var(--cream-2); transition: transform .3s, box-shadow .3s;
+    }
+    .gallery-item:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(36, 22, 56, .14); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s; }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-overlay {
+      position: absolute; inset: auto 0 0 0;
+      background: rgba(20, 9, 43, .55); color: #fff;
+      padding: 14px 16px; display: flex; justify-content: flex-end; opacity: 0; transition: opacity .3s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay span { font-size: .75rem; font-weight: 600; background: rgba(255, 255, 255, .18); padding: 4px 12px; border-radius: 100px; }
+    .gallery-empty {
+      grid-column: 1 / -1; text-align: center; padding: 70px 24px; color: var(--muted);
+      background: var(--paper); border: 2px dashed rgba(36, 22, 56, .18); border-radius: 24px;
+    }
+    .gallery-empty span { font-size: 2.6rem; display: block; margin-bottom: 10px; }
+
+    /* лайтбокс */
+    .gallery-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1300;
+      background: rgba(15, 7, 30, .9);
+      justify-content: center; align-items: center; padding: 24px;
+    }
+    .gallery-modal-overlay.active { display: flex; animation: fadeIn .25s; }
+    .gallery-modal-content { position: relative; animation: popIn .3s; }
+    .gallery-modal-content img {
+      max-width: 90vw; max-height: 84vh; border-radius: 16px; display: block;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+    }
+    .gallery-modal-close {
+      position: absolute; top: -54px; right: 0;
+      background: var(--sun); color: var(--ink); border: none;
+      width: 44px; height: 44px; border-radius: 50%; font-size: 1.1rem;
+      cursor: pointer; box-shadow: 0 4px 0 var(--sun-dark); transition: .2s;
+    }
+    .gallery-modal-close:hover { transform: rotate(90deg); }
+    @keyframes popIn { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* ================= ФУТЕР ================= */
+    .footer {
+      background: var(--night); color: #F3EDDE; border-radius: 32px;
+      padding: clamp(30px, 4vw, 48px) clamp(28px, 5vw, 56px);
+      margin: 10px 0 34px; position: relative; overflow: hidden;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .footer::before {
+      content: 'STARт'; position: absolute; right: -12px; bottom: -42px;
+      font-family: var(--font-d); font-weight: 800; letter-spacing: -2px;
+      font-size: clamp(4rem, 10vw, 8rem); color: rgba(255, 255, 255, .05);
+      line-height: 1; pointer-events: none;
+    }
+    .footer .copy { font-weight: 500; font-size: .92rem; color: rgba(243, 237, 222, .75); position: relative; z-index: 1; }
+    .footer-links { display: flex; gap: 6px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .footer-links a {
+      color: rgba(243, 237, 222, .8); text-decoration: none; font-weight: 600;
+      font-size: .92rem; padding: 8px 14px; border-radius: 100px; cursor: pointer; transition: .25s;
+    }
+    .footer-links a:hover { color: var(--sun); background: rgba(255, 216, 74, .1); }
+    .policy-btn {
+      background: none; border: none; color: rgba(243, 237, 222, .8); cursor: pointer;
+      font-size: .92rem; font-family: var(--font-b); font-weight: 600;
+      padding: 8px 14px; border-radius: 100px; transition: .25s;
+    }
+    .policy-btn:hover { color: var(--sun); background: rgba(255, 216, 74, .1); }
+
+    /* ================= МОДАЛЬНЫЕ ОКНА (общее) ================= */
+    .modal-overlay, .info-overlay, .detail-overlay, .form-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(23, 12, 45, .55);
+      backdrop-filter: blur(9px); -webkit-backdrop-filter: blur(9px);
+      justify-content: center; align-items: center; padding: 20px;
+      animation: fadeIn .3s ease;
+    }
+    .modal-overlay.active, .info-overlay.active,
+    .detail-overlay.active, .form-overlay.active { display: flex; }
+    .modal-overlay, .info-overlay { z-index: 1000; }
+    .detail-overlay { z-index: 1100; }
+    .form-overlay { z-index: 1200; }
+
+    .modal, .info-modal, .detail-modal, .form-modal {
+      background: var(--paper); border: 1px solid var(--line);
+      width: 100%; border-radius: 28px;
+      padding: clamp(24px, 4vw, 44px);
+      max-height: 90vh; overflow-y: auto;
+      box-shadow: 0 40px 90px rgba(23, 12, 45, .35);
+      animation: slideUp .38s cubic-bezier(.18, .9, .32, 1.12);
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .modal::-webkit-scrollbar, .info-modal::-webkit-scrollbar { display: none; }
+    .modal { max-width: 1180px; }
+    .info-modal { max-width: 760px; }
+    .detail-modal { max-width: 660px; }
+    .form-modal { max-width: 520px; }
+
+    .modal-header, .info-header, .form-header {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; margin-bottom: 26px; flex-wrap: wrap;
+    }
+    .modal-header h2, .info-header h2, .form-header h2 {
+      font-family: var(--font-d); font-weight: 700;
+      font-size: clamp(1.2rem, 2.4vw, 1.6rem); letter-spacing: -.5px;
+    }
+    .modal-close, .info-close, .form-close, .detail-close {
+      background: var(--cream); border: 1px solid var(--line);
+      width: 46px; height: 46px; min-width: 46px; border-radius: 50%;
+      font-size: 1.1rem; cursor: pointer; color: var(--ink);
+      display: grid; place-items: center; transition: .25s;
+    }
+    .modal-close:hover, .info-close:hover, .form-close:hover, .detail-close:hover {
+      background: var(--sun); border-color: var(--sun); transform: rotate(90deg);
+    }
+
+    /* карточки возрастов */
+    .age-categories {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 16px; margin-bottom: 6px;
+    }
+    .age-category-card {
+      background: var(--cream); border: 1.5px solid var(--line);
+      border-radius: 22px; padding: 26px 18px; text-align: center;
+      cursor: pointer; transition: .28s;
+    }
+    .age-category-card:hover {
+      transform: translateY(-6px); border-color: var(--grape);
+      background: var(--paper); box-shadow: 0 16px 34px rgba(36, 22, 56, .12);
+    }
+    .age-icon {
+      width: 58px; height: 58px; margin: 0 auto 12px; border-radius: 50%;
+      background: var(--paper); border: 1px solid var(--line);
+      display: grid; place-items: center; font-size: 1.65rem; transition: background .28s;
+    }
+    .age-category-card:hover .age-icon { background: var(--sun); }
+    .age-title { font-family: var(--font-d); font-weight: 600; font-size: 1rem; }
+    .age-sub { color: var(--muted); font-size: .8rem; margin-top: 6px; line-height: 1.45; }
+    .age-category-card--all { background: var(--night); border-color: var(--night); }
+    .age-category-card--all .age-title { color: var(--sun); }
+    .age-category-card--all .age-sub { color: rgba(243, 237, 222, .65); }
+    .age-category-card--all .age-icon { background: rgba(255, 216, 74, .12); border-color: rgba(255, 216, 74, .4); }
+    .age-category-card--all:hover { background: var(--night-2); border-color: var(--sun); }
+
+    /* список курсов выбранной категории */
+    .category-courses { display: none; }
+    .category-courses.active { display: block; animation: slideUp .3s ease; }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--cream); border: 1px solid var(--line); color: var(--ink);
+      font-weight: 600; font-size: .9rem; cursor: pointer;
+      padding: 9px 18px; border-radius: 100px; transition: .25s; font-family: var(--font-b);
+    }
+    .back-btn:hover { background: var(--sun); border-color: var(--sun); transform: translateX(-3px); }
+    .category-title {
+      font-family: var(--font-d); font-weight: 700; font-size: 1.35rem;
+      letter-spacing: -.5px; margin: 18px 0 16px;
+    }
+    .modal-search {
+      width: 100%; padding: 13px 20px; border-radius: 100px;
+      border: 1.5px solid var(--line); font-size: .95rem;
+      font-family: var(--font-b); background: var(--cream);
+      outline: none; transition: .25s; margin-bottom: 22px;
+    }
+    .modal-search:focus {
+      border-color: var(--grape); background: var(--paper);
+      box-shadow: 0 0 0 4px rgba(99, 40, 149, .12);
+    }
+    .courses-grid-modal {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 18px;
+    }
+    .course-card-modal {
+      background: var(--paper); border: 1.5px solid var(--line);
+      border-radius: 20px; padding: 22px; cursor: pointer;
+      transition: .25s; display: flex; flex-direction: column;
+    }
+    .course-card-modal:hover {
+      transform: translateY(-5px); border-color: var(--grape);
+      box-shadow: 0 14px 30px rgba(36, 22, 56, .1);
+    }
+    .course-icon {
+      width: 46px; height: 46px; border-radius: 14px;
+      background: var(--cream); border: 1px solid var(--line);
+      display: grid; place-items: center; font-size: 1.3rem; margin-bottom: 12px; transition: background .25s;
+    }
+    .course-card-modal:hover .course-icon { background: var(--sun); }
+    .course-card-modal h3 { font-family: var(--font-d); font-weight: 600; font-size: .98rem; line-height: 1.3; margin-bottom: 6px; }
+    .course-card-modal .sub {
+      color: var(--grape); font-size: .74rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
+    }
+    .course-card-modal p { color: var(--muted); font-size: .9rem; line-height: 1.6; flex: 1; }
+    .course-tag {
+      margin-top: 12px; display: inline-flex; align-self: flex-start;
+      background: rgba(255, 216, 74, .4); color: #4A3608;
+      font-weight: 700; font-size: .72rem; padding: 5px 14px; border-radius: 100px;
+    }
+    .course-enroll-btn {
+      margin-top: 14px; padding: 11px 0; width: 100%;
+      background: var(--ink); color: var(--cream); border: none; border-radius: 100px;
+      font-family: var(--font-d); font-weight: 600; font-size: .8rem;
+      cursor: pointer; transition: .25s;
+    }
+    .course-enroll-btn:hover { background: var(--grape); transform: translateY(-2px); }
+    .no-results {
+      grid-column: 1 / -1; text-align: center; padding: 48px 20px; color: var(--muted);
+      background: var(--cream); border: 2px dashed var(--line); border-radius: 20px;
+    }
+
+    /* детальное окно курса */
+    .detail-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; }
+    .detail-title { display: flex; align-items: center; gap: 16px; }
+    .detail-title .icon {
+      font-size: 1.9rem; width: 64px; height: 64px; min-width: 64px;
+      border-radius: 18px; background: var(--cream); border: 1px solid var(--line);
+      display: grid; place-items: center;
+    }
+    .detail-title h2 { font-family: var(--font-d); font-weight: 700; font-size: 1.25rem; line-height: 1.25; }
+    .detail-sub {
+      color: var(--grape); font-weight: 700; font-size: .82rem;
+      text-transform: uppercase; letter-spacing: 1.5px;
+    }
+    .detail-desc {
+      font-size: 1rem; color: #3E3355; line-height: 1.75;
+      margin: 14px 0 26px; background: var(--cream);
+      border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px;
+    }
+    .detail-enroll {
+      width: 100%; padding: 16px; background: var(--ink); color: var(--cream);
+      border: none; border-radius: 100px;
+      font-family: var(--font-d); font-weight: 600; font-size: .92rem;
+      cursor: pointer; transition: .25s; box-shadow: 0 5px 0 var(--ink-2);
+    }
+    .detail-enroll:hover { background: var(--grape); transform: translateY(-2px); box-shadow: 0 7px 0 var(--ink-2); }
+
+    /* форма записи */
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 7px; font-size: .9rem; }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 13px 16px; border-radius: 14px;
+      border: 1.5px solid var(--line); font-size: .95rem;
+      font-family: var(--font-b); transition: .25s; outline: none; background: var(--cream);
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--grape); background: var(--paper);
+      box-shadow: 0 0 0 4px rgba(99, 40, 149, .12);
+    }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-submit {
+      width: 100%; padding: 16px; background: var(--ink); color: var(--cream);
+      border: none; border-radius: 100px;
+      font-family: var(--font-d); font-weight: 600; font-size: .92rem;
+      cursor: pointer; transition: .25s; box-shadow: 0 5px 0 var(--ink-2); margin-top: 6px;
+    }
+    .form-submit:hover { background: var(--grape); transform: translateY(-2px); box-shadow: 0 7px 0 var(--ink-2); }
+    .form-success { display: none; text-align: center; padding: 30px 10px; }
+    .form-success.show { display: block; animation: slideUp .3s; }
+    .form-success .s-icon {
+      width: 74px; height: 74px; border-radius: 50%; background: var(--sun);
+      display: grid; place-items: center; font-size: 2rem; margin: 0 auto 18px;
+      box-shadow: 0 6px 0 var(--sun-dark);
+    }
+    .form-success h3 { font-family: var(--font-d); font-weight: 700; font-size: 1.2rem; margin-bottom: 8px; }
+    .form-success p { color: var(--muted); }
+
+    /* инфо-модалки: о нас / контакты / политика */
+    .info-content { line-height: 1.7; }
+    .info-content h3 {
+      font-family: var(--font-d); font-weight: 600; font-size: 1.02rem;
+      margin: 26px 0 12px; display: flex; align-items: center; gap: 10px;
+    }
+    .info-content h3::before {
+      content: ''; width: 10px; height: 10px; background: var(--sun);
+      border-radius: 3px; transform: rotate(45deg); flex: none;
+    }
+    .info-content p { color: #3E3355; margin-bottom: 8px; }
+    .about-photo { border-radius: 18px; overflow: hidden; border: 1px solid var(--line); }
+    .about-photo img { width: 100%; height: auto; max-height: 300px; object-fit: cover; display: block; }
+    .contact-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 0; border-bottom: 1px solid var(--line-soft);
+    }
+    .contact-item .icon {
+      width: 44px; height: 44px; min-width: 44px; border-radius: 14px;
+      background: var(--cream); border: 1px solid var(--line);
+      display: grid; place-items: center; font-size: 1.15rem;
+    }
+    .contact-item .text { font-weight: 600; }
+    .social-links { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .social-links a {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; background: var(--cream);
+      border: 1.5px solid var(--line); border-radius: 100px;
+      text-decoration: none; color: var(--ink); font-weight: 600;
+      font-size: .92rem; transition: .25s;
+    }
+    .social-links a:hover {
+      background: var(--ink); color: var(--cream);
+      transform: translateY(-2px); border-color: var(--ink);
+    }
+    .map-container {
+      position: relative; width: 100%; padding-bottom: 56.25%;
+      border-radius: 18px; overflow: hidden; margin-top: 8px; border: 1px solid var(--line);
+    }
+    .map-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .policy-modal .info-content { font-size: .92rem; line-height: 1.8; }
+    .policy-modal .info-content h3 { font-size: .98rem; }
+
+    /* ================= АНИМАЦИИ ================= */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(34px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .pre-reveal { opacity: 0; transform: translateY(26px); transition: opacity .65s ease, transform .65s cubic-bezier(.2, .7, .25, 1); }
+    .pre-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .squiggle path { stroke-dashoffset: 0; }
+    }
+
+    /* ================= АДАПТИВ ================= */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .scene { min-height: 340px; }
+      .features { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { grid-template-columns: 1fr; }
+      .flyer { grid-template-columns: 1fr; }
+      .flyer-tag { align-items: flex-start; text-align: left; }
+    }
+    @media (max-width: 768px) {
+      .navbar { flex-direction: column; gap: 12px; border-radius: 26px; padding: 18px; }
+      .logo { justify-content: center; }
+      .nav-links { flex-wrap: wrap; justify-content: center; }
+      .hero { border-radius: 26px; padding: 34px 24px; }
+      .hero-stats div + div { padding-left: 16px; }
+      .hero-stats h3 { font-size: 1.35rem; }
+      .hero-stats p { font-size: .76rem; }
+      .scene { min-height: 280px; }
+      .rocket { width: 155px; }
+      .m-item { font-size: .7rem; }
+      .seasonal { flex-direction: column; align-items: flex-start; }
+      .seasonal-badge { width: 100%; justify-content: center; }
+      .modal, .info-modal, .detail-modal, .form-modal { padding: 24px; }
+      .courses-grid-modal { grid-template-columns: 1fr; }
+      .age-categories { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .age-category-card { padding: 18px 10px; }
+      .age-icon { width: 46px; height: 46px; font-size: 1.3rem; }
+      .age-title { font-size: .88rem; }
+      .age-sub { font-size: .68rem; }
+      .footer { flex-direction: column; text-align: center; justify-content: center; gap: 14px; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .features { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+      .hero-stats p { font-size: .7rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Навигация -->
+    <nav class="navbar" id="navbar">
+      <div class="logo" onclick="goHome()">
+        <img src="logo.png" alt="Логотип STARТ" onerror="this.style.display='none'">
+        <div class="logo-text">
+          <span class="brand">STAR<span class="small-t">т</span></span>
+          <span class="sub">школа-студия</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a onclick="goHome()">Главная</a></li>
+        <li><a onclick="openModal()">Курсы</a></li>
+        <li><a onclick="openAbout()">О нас</a></li>
+        <li><a onclick="openContacts()">Контакты</a></li>
+        <li><a onclick="openGallery()">Галерея</a></li>
+      </ul>
+      <button class="btn-outline" onclick="openForm()">Записаться</button>
+    </nav>
+
+    <!-- Герой -->
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <div class="hero-badge">🌟 Образование будущего</div>
+        <h1>Увлекательные <span class="hl">полёты<svg class="squiggle" viewBox="0 0 120 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 10 C 22 3, 42 12, 62 7 S 98 3, 117 8" vector-effect="non-scaling-stroke"/></svg></span><br>к знаниям!</h1>
+        <p class="lead">Современное образование для детей и подростков. Интерактивные курсы, опытные преподаватели и дружная атмосфера, где каждый ученик раскрывает свой потенциал.</p>
+        <button class="btn btn-sun" onclick="openModal()">📚 Посмотреть курсы →</button>
+        <div class="hero-stats">
+          <div><h3><span class="stat-num" data-target="12" data-suffix="+">12+</span></h3><p>направлений</p></div>
+          <div><h3><span class="stat-num" data-target="98" data-suffix="%">98%</span></h3><p>довольных учеников</p></div>
+          <div><h3><span class="stat-num" data-target="10" data-suffix="">10</span> лет</h3><p>успешной работы</p></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="scene">
+          <div class="orbit-wrap ow1"><div class="orbit o1"><span class="sat"></span></div></div>
+          <div class="orbit-wrap ow2"><div class="orbit o2"><span class="sat sat-b"></span></div></div>
+          <div class="planet planet-a"></div>
+          <div class="planet planet-b"></div>
+          <div class="rocket-wrap">
+            <div class="rocket-float">
+              <svg class="rocket" viewBox="0 0 220 270" aria-hidden="true">
+                <g transform="rotate(42 110 135)">
+                  <path class="flame" d="M90 196 C 95 234 110 258 110 258 C 110 258 125 234 130 196 Z" fill="#FFD84A"/>
+                  <path class="flame" d="M100 198 C 104 222 110 238 110 238 C 110 238 116 222 120 198 Z" fill="#FF9F3D"/>
+                  <path d="M74 130 L 32 186 L 74 196 Z" fill="#FFD84A"/>
+                  <path d="M146 130 L 188 186 L 146 196 Z" fill="#FFD84A"/>
+                  <path d="M110 10 C 148 50 160 100 160 144 C 160 174 154 192 148 200 L 72 200 C 66 192 60 174 60 144 C 60 100 72 50 110 10 Z" fill="#F7F1E3"/>
+                  <path d="M110 10 C 148 50 160 100 160 144 C 160 174 154 192 148 200 L 118 200 C 126 170 130 138 128 100 C 127 68 121 38 110 10 Z" fill="#E4D9BE"/>
+                  <path d="M110 10 C 130 32 141 55 146 78 C 128 70 92 70 74 78 C 79 55 90 32 110 10 Z" fill="#FFD84A"/>
+                  <circle cx="110" cy="104" r="31" fill="#E4D9BE"/>
+                  <circle cx="110" cy="104" r="23" fill="#251543"/>
+                  <path d="M110 90 l3.5 7.5 7.5 3.5 -7.5 3.5 -3.5 7.5 -3.5 -7.5 -7.5 -3.5 7.5 -3.5 Z" fill="#FFD84A"/>
+                  <path d="M64 150 C 84 160 136 160 156 150 L 156 164 C 136 174 84 174 64 164 Z" fill="#632895"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="hero-caption">
+          <p class="cap-title">Будущее начинается здесь</p>
+          <p class="cap-tags">#школа #развитие</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Бегущая строка направлений -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track" id="marqueeTrack">
+        <span class="m-item">Математика<em>✦</em></span>
+        <span class="m-item">Программирование<em>✦</em></span>
+        <span class="m-item">Английский<em>✦</em></span>
+        <span class="m-item">Робототехника<em>✦</em></span>
+        <span class="m-item">LEGO<em>✦</em></span>
+        <span class="m-item">Подготовка к школе<em>✦</em></span>
+        <span class="m-item">Творчество<em>✦</em></span>
+        <span class="m-item">Развитие речи<em>✦</em></span>
+        <span class="m-item">Искусство<em>✦</em></span>
+        <span class="m-item">Подготовка к ОГЭ<em>✦</em></span>
+      </div>
+    </div>
+
+    <!-- Плашка «Сезонные предложения» -->
+    <section class="seasonal" data-reveal>
+      <div class="seasonal-left">
+        <span class="seasonal-tag">🌸 Сезонные предложения</span>
+        <h3>Скидка 15% на все курсы при записи до конца месяца! 🎁</h3>
+      </div>
+      <div class="seasonal-badge"><span>🔥</span>Успей забронировать место!</div>
+    </section>
+
+    <!-- О нас (краткий блок на главной) -->
+    <section class="about" data-reveal>
+      <div class="about-grid">
+        <div class="about-text">
+          <span class="eyebrow">о школе</span>
+          <h2>О школе-студии STARТ</h2>
+          <p>Мы — образовательный центр с современным подходом. У нас небольшие группы, индивидуальный трек и проектная работа. Вдохновляем на открытия с 1 по 11 класс, помогая каждому ученику найти свой путь в мире знаний.</p>
+          <div class="about-contacts">
+            <span class="c-chip">📍 г. Туапсе, ул. Победы, д. 10 (ТОЦ «Победа», 4 этаж)</span>
+            <span class="c-chip">📞 +7 (918) 915-76-31</span>
+          </div>
+        </div>
+        <div class="about-quote">
+          <span class="q-mark">“</span>
+          <p>Знания, которые меняют мир</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="features" data-reveal>
+      <div class="feature-item">
+        <span class="f-num">01</span>
+        <span class="f-icon">🧑‍🏫</span>
+        <h4>Опытные педагоги</h4>
+        <p>Стаж от 5 лет, любовь к детям</p>
+      </div>
+      <div class="feature-item">
+        <span class="f-num">02</span>
+        <span class="f-icon">📚</span>
+        <h4>Авторские программы</h4>
+        <p>Разработаны с учётом ФГОС</p>
+      </div>
+      <div class="feature-item">
+        <span class="f-num">03</span>
+        <span class="f-icon">🎯</span>
+        <h4>Индивидуальный подход</h4>
+        <p>Трек для каждого ученика</p>
+      </div>
+      <div class="feature-item">
+        <span class="f-num">04</span>
+        <span class="f-icon">🏆</span>
+        <h4>Олимпиадная подготовка</h4>
+        <p>Победители и призёры</p>
+      </div>
+    </section>
+
+    <!-- Баннер со скидкой -->
+    <section class="flyer" data-reveal>
+      <div class="flyer-left">
+        <h2>📬 Присоединяйся!</h2>
+        <p>Запишись на пробный урок и получи скидку 10% на первый месяц обучения. Действует до конца месяца.</p>
+        <button class="btn btn-sun" onclick="openForm()">Получить предложение</button>
+      </div>
+      <div class="flyer-tag">
+        <span class="flyer-pin">📌</span>
+        <span class="flyer-big">−10%</span>
+        <p>«Школа нового поколения»<br>скидка 10%</p>
+      </div>
+    </section>
+
+    <!-- Галерея -->
+    <section class="gallery-section" id="gallerySection" data-reveal>
+      <div class="section-head">
+        <span class="g-emoji">📸</span>
+        <h2>Галерея</h2>
+        <span class="head-line"></span>
+      </div>
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+      <span class="copy">© 2026 Школа-студия STARТ · Все права защищены</span>
+      <div class="footer-links">
+        <a onclick="goHome()">Главная</a>
+        <a onclick="openAbout()">О нас</a>
+        <a onclick="openContacts()">Контакты</a>
+        <button class="policy-btn" onclick="openPolicy()">Политика конфиденциальности</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Модальное окно курсов -->
+  <div class="modal-overlay" id="coursesModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>📚 Выберите возраст</h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+
+      <!-- Карточки возрастов (Все курсы — в конце) -->
+      <div class="age-categories" id="ageCategories">
+        <div class="age-category-card" onclick="selectAge('3-5')">
+          <span class="age-icon">🧸</span>
+          <div class="age-title">3–5 лет</div>
+          <div class="age-sub">LEGO · развитие речи · творчество</div>
+        </div>
+        <div class="age-category-card" onclick="selectAge('5-7')">
+          <span class="age-icon">📚</span>
+          <div class="age-title">5–7 лет</div>
+          <div class="age-sub">Подготовка к школе · английский · робототехника</div>
+        </div>
+        <div class="age-category-card" onclick="selectAge('7-10')">
+          <span class="age-icon">🚀</span>
+          <div class="age-title">7–10 лет</div>
+          <div class="age-sub">Математика · программирование · искусство</div>
+        </div>
+        <div class="age-category-card" onclick="selectAge('10-17')">
+          <span class="age-icon">🎯</span>
+          <div class="age-title">10–17 лет</div>
+          <div class="age-sub">ОГЭ · программирование · английский</div>
+        </div>
+        <!-- Все курсы — в конце -->
+        <div class="age-category-card age-category-card--all" onclick="selectAge('all')">
+          <span class="age-icon">🌟</span>
+          <div class="age-title">Все курсы</div>
+          <div class="age-sub">Полный каталог направлений</div>
+        </div>
+      </div>
+
+      <!-- Список курсов для выбранной категории -->
+      <div class="category-courses" id="categoryCourses">
+        <button class="back-btn" onclick="showAgeCategories()">← Назад к возрастам</button>
+        <div class="category-title" id="categoryTitle">Курсы</div>
+        <input type="text" class="modal-search" id="searchInput" placeholder="🔍 Поиск курсов..." oninput="filterCategoryCourses()">
+        <div class="courses-grid-modal" id="coursesContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Детальное модальное окно курса -->
+  <div class="detail-overlay" id="detailModal">
+    <div class="detail-modal">
+      <div class="detail-header">
+        <div class="detail-title">
+          <span class="icon" id="detailIcon">📚</span>
+          <h2 id="detailTitle">Название курса</h2>
+        </div>
+        <button class="detail-close" onclick="closeDetail()">✕</button>
+      </div>
+      <div class="detail-sub" id="detailSub">Подзаголовок</div>
+      <div class="detail-desc" id="detailDesc">Описание курса</div>
+      <button class="detail-enroll" onclick="openForm()">📝 Записаться на курс</button>
+    </div>
+  </div>
+
+  <!-- Модальное окно формы записи -->
+  <div class="form-overlay" id="formModal">
+    <div class="form-modal">
+      <div class="form-header">
+        <h2>📝 Запись на курс</h2>
+        <button class="form-close" onclick="closeForm()">✕</button>
+      </div>
+      <form id="enrollForm" onsubmit="submitForm(event)">
+        <div class="form-group">
+          <label for="fullName">ФИО *</label>
+          <input type="text" id="fullName" placeholder="Иванов Иван Иванович" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Телефон *</label>
+          <input type="tel" id="phone" placeholder="+7 (918) 915-76-31" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" placeholder="ivan@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="comment">Комментарий</label>
+          <textarea id="comment" placeholder="Дополнительная информация, пожелания..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">✅ Отправить заявку</button>
+      </form>
+      <div class="form-success" id="formSuccess">
+        <div class="s-icon">✅</div>
+        <h3>Заявка отправлена!</h3>
+        <p>Мы свяжемся с вами в ближайшее время, чтобы подобрать курс.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно «О нас» -->
+  <div class="info-overlay" id="aboutModal">
+    <div class="info-modal">
+      <div class="info-header">
+        <h2>📖 О школе-студии STARТ</h2>
+        <button class="info-close" onclick="closeAbout()">✕</button>
+      </div>
+      <div class="info-content">
+        <div class="about-photo">
+          <img src="school-building.jpg" alt="Здание школы-студии STARТ" onerror="this.parentNode.style.display='none'">
+        </div>
+        <h3>🏫 Наша миссия</h3>
+        <p>Мы создаём пространство, где каждый ученик может раскрыть свой потенциал и получить качественное образование в комфортной атмосфере.</p>
+        <h3>📚 Что мы предлагаем</h3>
+        <p>• Современные образовательные программы по 12+ направлениям</p>
+        <p>• Индивидуальный подход к каждому ученику</p>
+        <p>• Малые группы до 10 человек</p>
+        <p>• Опытные преподаватели с профильным образованием</p>
+        <p>• Проектная и исследовательская работа</p>
+        <p>• Подготовка к ОГЭ, ЕГЭ и олимпиадам</p>
+        <h3>🌟 Наши ценности</h3>
+        <p>Мы верим, что образование должно быть интересным, доступным и вдохновляющим. Наша цель — помочь каждому ученику найти свой путь и добиться успеха.</p>
+        <h3>📅 График работы</h3>
+        <p>Ежедневно с 10:00 до 18:00</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно «Контакты» -->
+  <div class="info-overlay" id="contactsModal">
+    <div class="info-modal">
+      <div class="info-header">
+        <h2>📞 Контакты</h2>
+        <button class="info-close" onclick="closeContacts()">✕</button>
+      </div>
+      <div class="info-content">
+        <h3>📍 Адрес</h3>
+        <div class="contact-item">
+          <span class="icon">📍</span>
+          <span class="text">г. Туапсе, ул. Победы, д. 10 (ТОЦ «Победа», 4 этаж)</span>
+        </div>
+        <h3>📱 Телефоны</h3>
+        <div class="contact-item">
+          <span class="icon">📞</span>
+          <span class="text">+7 (918) 915-76-31</span>
+        </div>
+        <h3>🕐 Режим работы</h3>
+        <div class="contact-item">
+          <span class="icon">🕐</span>
+          <span class="text">Ежедневно с 10:00 до 18:00</span>
+        </div>
+        <h3>📧 Email</h3>
+        <div class="contact-item">
+          <span class="icon">✉️</span>
+          <span class="text">is1908@mail.ru</span>
+        </div>
+        <h3>🌐 Социальные сети</h3>
+        <div class="social-links">
+          <a href="https://vk.ru/start.tuapse" target="_blank"><span>💙</span> VK</a>
+          <a href="https://wa.me/message/6QXBBGDWYBHSN1" target="_blank"><span>💚</span> WhatsApp</a>
+          <a href="https://max.ru/id232200209248_biz" target="_blank"><span>📱</span> MAX</a>
+        </div>
+        <h3>🗺️ Мы на карте</h3>
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2841.248014555194!2d39.08176062350748!3d44.09541723444047!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDTCsDA1JzQzLjUiTiAzOScwNCc1NC4zIkU!5e0!3m2!1sru!2sru!4v1700000000000"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно «Политика конфиденциальности» -->
+  <div class="info-overlay policy-modal" id="policyModal">
+    <div class="info-modal">
+      <div class="info-header">
+        <h2>📄 Политика конфиденциальности</h2>
+        <button class="info-close" onclick="closePolicy()">✕</button>
+      </div>
+      <div class="info-content">
+        <h3>1. Общие положения</h3>
+        <p>Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. № 152-ФЗ «О персональных данных» (далее — Закон о персональных данных) и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных, предпринимаемые ИП Саникидзе Ириной Владимировной (далее — Оператор).</p>
+        <p>1.1. Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.</p>
+        <p>1.2. Настоящая политика Оператора в отношении обработки персональных данных (далее — Политика) применяется ко всей информации, которую Оператор может получить о посетителях веб-сайта http://start-tuapse.ru.</p>
+        <h3>2. Основные понятия, используемые в Политике</h3>
+        <p>2.1. Автоматизированная обработка персональных данных — обработка персональных данных с помощью средств вычислительной техники.</p>
+        <p>2.2. Блокирование персональных данных — временное прекращение обработки персональных данных (за исключением случаев, если обработка необходима для уточнения персональных данных).</p>
+        <!-- ⚠️ Ваш файл обрезался на этом месте. Вставьте сюда оставшийся
+             текст вашей Политики конфиденциальности из старой версии сайта. -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Лайтбокс галереи -->
+  <div class="gallery-modal-overlay" id="galleryLightbox">
+    <div class="gallery-modal-content">
+      <button class="gallery-modal-close" onclick="closeLightbox()">✕</button>
+      <img id="galleryModalImg" src="" alt="Фото из галереи">
+    </div>
+  </div>
+
+  <script>
+    /* ============================================================
+       ⚠️ ВАЖНО: присланный файл обрезался, и скрипт с вашими курсами
+       до меня не дошёл. Массив ниже собран по подсказкам из карточек
+       возрастов. Все функции работают как в вашей версии —
+       если курсы отличаются, просто замените элементы массива:
+       { icon, title, sub, desc, ages (возрастные группы), tag (не обязательно) }
+       ============================================================ */
+    const COURSES = [
+      { icon: '🧸', title: 'LEGO-конструирование', sub: '3–5 лет', desc: 'Развиваем мелкую моторику, пространственное мышление и фантазию через увлекательную сборку моделей.', ages: ['3-5'], tag: '🧩 Малые группы' },
+      { icon: '🗣️', title: 'Развитие речи', sub: '3–5 лет', desc: 'Артикуляционная гимнастика, обогащение словаря и первые шаги к чтению в игровой форме.', ages: ['3-5'] },
+      { icon: '🎨', title: 'Творческая мастерская', sub: '3–5 лет', desc: 'Рисование, лепка и аппликация — знакомим малышей с миром искусства и цвета.', ages: ['3-5'] },
+      { icon: '✏️', title: 'Подготовка к школе', sub: '5–7 лет', desc: 'Чтение, письмо, счёт и самостоятельность — чтобы первый класс стал уверенным стартом.', ages: ['5-7'], tag: '🔥 Популярный' },
+      { icon: '🇬🇧', title: 'Английский язык', sub: '5–7 лет', desc: 'Первые слова и фразы через песни, игры и сказки — без зубрёжки и стресса.', ages: ['5-7'] },
+      { icon: '🤖', title: 'Робототехника', sub: '5–7 лет', desc: 'Собираем первых роботов из конструкторов и осваиваем основы логики и алгоритмов.', ages: ['5-7'] },
+      { icon: '🔢', title: 'Математика', sub: '7–10 лет', desc: 'Нестандартные задачи, логические игры и олимпиадный уровень — учим полюбить цифры.', ages: ['7-10'] },
+      { icon: '💻', title: 'Программирование', sub: '7–10 лет', desc: 'Создаём первые игры и анимации в Scratch: от идеи до готового проекта.', ages: ['7-10'], tag: '✨ Новинка' },
+      { icon: '🖼️', title: 'Изобразительное искусство', sub: '7–10 лет', desc: 'Академический рисунок, живопись и композиция для юных художников.', ages: ['7-10'] },
+      { icon: '📝', title: 'Подготовка к ОГЭ', sub: '10–17 лет', desc: 'Системная подготовка по предметам с разбором реального формата экзамена.', ages: ['10-17'], tag: '🎯 Результат' },
+      { icon: '💻', title: 'Программирование (Python)', sub: '10–17 лет', desc: 'От синтаксиса до собственных проектов: игры, сайты и телеграм-боты.', ages: ['10-17'] },
+      { icon: '🇬🇧', title: 'Английский язык', sub: '10–17 лет', desc: 'Грамматика, разговорная практика и подготовка к экзаменам.', ages: ['10-17'] }
+    ];
+
+    /* 👇 Добавьте свои фото галереи: { src: 'foto1.jpg', label: 'Подпись' } */
+    const GALLERY_IMAGES = [];
+
+    const AGE_TITLES = {
+      '3-5': 'Курсы для детей 3–5 лет',
+      '5-7': 'Курсы для детей 5–7 лет',
+      '7-10': 'Курсы для детей 7–10 лет',
+      '10-17': 'Курсы для подростков 10–17 лет',
+      'all': 'Все курсы'
+    };
+
+    COURSES.forEach((c, i) => c.id = i);
+    let currentAge = 'all';
+    let currentCourse = null;
+
+    /* ---------- блокировка скролла страницы ---------- */
+    function anyOverlayActive() {
+      return !!document.querySelector('.modal-overlay.active, .detail-overlay.active, .form-overlay.active, .info-overlay.active, .gallery-modal-overlay.active');
+    }
+    function lockBody() { document.body.style.overflow = 'hidden'; }
+    function unlockBody() { if (!anyOverlayActive()) document.body.style.overflow = ''; }
+
+    /* ---------- навигация ---------- */
+    function goHome() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function openGallery() {
+      document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ---------- модалка курсов ---------- */
+    function openModal() {
+      showAgeCategories();
+      document.getElementById('coursesModal').classList.add('active');
+      lockBody();
+    }
+    function closeModal() {
+      document.getElementById('coursesModal').classList.remove('active');
+      unlockBody();
+    }
+    function selectAge(key) {
+      currentAge = key;
+      document.getElementById('categoryTitle').textContent = AGE_TITLES[key] || 'Все курсы';
+      document.getElementById('ageCategories').style.display = 'none';
+      document.getElementById('categoryCourses').classList.add('active');
+      document.getElementById('searchInput').value = '';
+      filterCategoryCourses();
+      document.querySelector('#coursesModal .modal').scrollTop = 0;
+    }
+    function showAgeCategories() {
+      document.getElementById('ageCategories').style.display = '';
+      document.getElementById('categoryCourses').classList.remove('active');
+      document.getElementById('searchInput').value = '';
+    }
+    function filterCategoryCourses() {
+      const q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+      const list = COURSES
+        .filter(c => currentAge === 'all' || c.ages.includes(currentAge))
+        .filter(c => !q || (c.title + ' ' + c.sub + ' ' + c.desc).toLowerCase().includes(q));
+      renderCourses(list);
+    }
+    function renderCourses(list) {
+      const box = document.getElementById('coursesContainer');
+      if (!list.length) {
+        box.innerHTML = '<div class="no-results">😕 Ничего не нашлось. Попробуйте изменить запрос.</div>';
+        return;
+      }
+      box.innerHTML = list.map(c => `
+        <article class="course-card-modal" data-id="${c.id}">
+          <span class="course-icon">${c.icon}</span>
+          <h3>${c.title}</h3>
+          <div class="sub">${c.sub}</div>
+          <p>${c.desc}</p>
+          ${c.tag ? `<span class="course-tag">${c.tag}</span>` : ''}
+          <button class="course-enroll-btn" type="button">Записаться</button>
+        </article>`).join('');
+    }
+
+    /* клики по карточкам курсов (кнопка — запись, карточка — детали) */
+    document.getElementById('coursesContainer').addEventListener('click', e => {
+      if (e.target.closest('.course-enroll-btn')) { e.stopPropagation(); openForm(); return; }
+      const card = e.target.closest('.course-card-modal');
+      if (card) openDetail(COURSES[+card.dataset.id]);
+    });
+
+    /* ---------- детальное окно курса ---------- */
+    function openDetail(c) {
+      currentCourse = c;
+      document.getElementById('detailIcon').textContent = c.icon;
+      document.getElementById('detailTitle').textContent = c.title;
+      document.getElementById('detailSub').textContent = c.sub + (c.tag ? ' · ' + c.tag : '');
+      document.getElementById('detailDesc').textContent = c.desc;
+      document.getElementById('detailModal').classList.add('active');
+      lockBody();
+    }
+    function closeDetail() {
+      document.getElementById('detailModal').classList.remove('active');
+      unlockBody();
+    }
+
+    /* ---------- форма записи ---------- */
+    function openForm() {
+      document.getElementById('enrollForm').style.display = '';
+      document.getElementById('enrollForm').reset();
+      document.getElementById('formSuccess').classList.remove('show');
+      document.getElementById('formModal').classList.add('active');
+      lockBody();
+    }
+    function closeForm() {
+      document.getElementById('formModal').classList.remove('active');
+      unlockBody();
+    }
+    function submitForm(e) {
+      e.preventDefault();
+      /* ↓↓↓ СЮДА вставьте код отправки заявки из вашей старой версии
+         (Telegram-бот, почта и т.д.), если он там был ↓↓↓ */
+
+      document.getElementById('enrollForm').style.display = 'none';
+      document.getElementById('formSuccess').classList.add('show');
+    }
+
+    /* ---------- о нас / контакты / политика ---------- */
+    function openAbout() { document.getElementById('aboutModal').classList.add('active'); lockBody(); }
+    function closeAbout() { document.getElementById('aboutModal').classList.remove('active'); unlockBody(); }
+    function openContacts() { document.getElementById('contactsModal').classList.add('active'); lockBody(); }
+    function closeContacts() { document.getElementById('contactsModal').classList.remove('active'); unlockBody(); }
+    function openPolicy() { document.getElementById('policyModal').classList.add('active'); lockBody(); }
+    function closePolicy() { document.getElementById('policyModal').classList.remove('active'); unlockBody(); }
+
+    /* ---------- галерея и лайтбокс ---------- */
+    function initGallery() {
+      const grid = document.getElementById('galleryGrid');
+      if (!GALLERY_IMAGES.length) {
+        grid.innerHTML = '<div class="gallery-empty"><span>📷</span>Фотографии скоро появятся</div>';
+        return;
+      }
+      grid.innerHTML = GALLERY_IMAGES.map(g => `
+        <div class="gallery-item" data-src="${g.src}">
+          <img src="${g.src}" alt="${g.label || 'Фото галереи'}" loading="lazy"
+               onerror="this.closest('.gallery-item').style.display='none'">
+          ${g.label ? `<div class="gallery-overlay"><span>${g.label}</span></div>` : ''}
+        </div>`).join('');
+      grid.addEventListener('click', e => {
+        const item = e.target.closest('.gallery-item');
+        if (item) openLightbox(item.dataset.src);
+      });
+    }
+    function openLightbox(src) {
+      document.getElementById('galleryModalImg').src = src;
+      document.getElementById('galleryLightbox').classList.add('active');
+      lockBody();
+    }
+    function closeLightbox() {
+      document.getElementById('galleryLightbox').classList.remove('active');
+      unlockBody();
+    }
+
+    /* ---------- закрытие по клику на фон и по Esc ---------- */
+    document.querySelectorAll('.modal-overlay, .info-overlay, .detail-overlay, .form-overlay, .gallery-modal-overlay').forEach(ov => {
+      ov.addEventListener('click', e => {
+        if (e.target === ov) { ov.classList.remove('active'); unlockBody(); }
+      });
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+      if (document.getElementById('galleryLightbox').classList.contains('active')) return closeLightbox();
+      if (document.getElementById('formModal').classList.contains('active')) return closeForm();
+      if (document.getElementById('detailModal').classList.contains('active')) return closeDetail();
+      if (document.getElementById('policyModal').classList.contains('active')) return closePolicy();
+      if (document.getElementById('contactsModal').classList.contains('active')) return closeContacts();
+      if (document.getElementById('aboutModal').classList.contains('active')) return closeAbout();
+      if (document.getElementById('coursesModal').classList.contains('active')) return closeModal();
+    });
+
+    /* ---------- звёзды в герое ---------- */
+    (function initStars() {
+      const hero = document.querySelector('.hero');
+      for (let i = 0; i < 70; i++) {
+        const s = document.createElement('span');
+        s.className = 'star';
+        const size = Math.random() * 2 + 1;
+        s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;width:${size}px;height:${size}px;animation-delay:${(Math.random() * 4).toFixed(2)}s;animation-duration:${(2.5 + Math.random() * 3).toFixed(2)}s`;
+        hero.appendChild(s);
+      }
+    })();
+
+    /* ---------- лёгкий параллакс за курсором ---------- */
+    (function initParallax() {
+      const hero = document.querySelector('.hero');
+      const rocket = document.querySelector('.rocket-wrap');
+      const ow2 = document.querySelector('.ow2');
+      hero.addEventListener('mousemove', e => {
+        const r = hero.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5;
+        const y = (e.clientY - r.top) / r.height - .5;
+        if (rocket) rocket.style.transform = `translate(${x * 14}px, ${y * 10}px)`;
+        if (ow2) ow2.style.transform = `translate(${x * 22}px, ${y * 14}px)`;
+      });
+      hero.addEventListener('mouseleave', () => {
+        if (rocket) rocket.style.transform = '';
+        if (ow2) ow2.style.transform = '';
+      });
+    })();
+
+    /* ---------- счётчики в герое ---------- */
+    (function initStats() {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          if (!en.isIntersecting) return;
+          io.unobserve(en.target);
+          const el = en.target, target = +el.dataset.target, suffix = el.dataset.suffix || '';
+          const t0 = performance.now(), dur = 1300;
+          (function tick(t) {
+            const p = Math.min((t - t0) / dur, 1);
+            const e = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(target * e) + suffix;
+            if (p < 1) requestAnimationFrame(tick);
+          })(t0);
+        });
+      }, { threshold: .4 });
+      document.querySelectorAll('.stat-num').forEach(el => io.observe(el));
+    })();
+
+    /* ---------- появление секций при скролле ---------- */
+    (function initReveal() {
+      const els = document.querySelectorAll('[data-reveal]');
+      els.forEach(el => el.classList.add('pre-reveal'));
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); }
+        });
+      }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(el => io.observe(el));
+    })();
+
+    /* ---------- бегущая строка: дублируем содержимое для бесшовной прокрутки ---------- */
+    (function () {
+      const t = document.getElementById('marqueeTrack');
+      if (t) t.innerHTML += t.innerHTML;
+    })();
+
+    /* ---------- тень шапки при скролле ---------- */
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    initGallery();
+  </script>
+</body>
+</html>
