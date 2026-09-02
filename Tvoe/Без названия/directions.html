@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Направления - Онлайн-школа "Твоё Окружение"</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Все стили остаются без изменений - используем те же самые стили, что и на главной */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f0f8ff;
+            color: #2c3e50;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        /* ... все те же стили, что и на главной странице ... */
+        /* Для экономии места я покажу только ключевые стили, но вы можете скопировать их из главной страницы */
+        
+        /* Основные стили для страницы направлений */
+        .page-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 800;
+            color: #1c3b6f;
+            margin-bottom: 20px;
+        }
+        .page-subtitle {
+            text-align: center;
+            font-size: 22px;
+            color: #4a6285;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            line-height: 1.7;
+        }
+        
+        /* Навигация - та же, что и на главной */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(200, 220, 240, 0.8);
+            box-shadow: 0 2px 15px rgba(100, 150, 220, 0.08);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0;
+            z-index: 1001;
+        }
+        .logo-icon {
+            color: #2c5aa0;
+            font-size: 32px;
+            margin-right: 10px;
+            width: 50px;
+            height: 50px;
+        }
+        .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #2c5aa0, #4a7ec9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            white-space: nowrap;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            flex-grow: 1;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin: 0 20px;
+        }
+        .nav-links li { position: relative; }
+        .nav-links a {
+            text-decoration: none;
+            color: #4a6285;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s;
+            position: relative;
+            padding: 6px 0;
+            white-space: nowrap;
+        }
+        .nav-links a span.full-text { display: inline; }
+        .nav-links a span.short-text { display: none; }
+        .nav-links a:hover { color: #2c5aa0; }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #2c5aa0;
+            left: 0;
+            bottom: 0;
+            transition: width 0.3s;
+            border-radius: 2px;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a.active { color: #2c5aa0; }
+        .nav-links a.active::after { width: 100%; }
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            gap: 10px;
+        }
+        .btn {
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        .btn-outline {
+            border: 2px solid #2c5aa0;
+            color: #2c5aa0;
+            background: transparent;
+        }
+        .btn-outline:hover {
+            background-color: #2c5aa0;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 90, 160, 0.2);
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #2c5aa0, #4a7ec9);
+            color: white;
+            border: none;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(44, 90, 160, 0.3);
+        }
+        .btn-consult {
+            background: linear-gradient(90deg, #2c5aa0, #4a7ec9);
+            color: white;
+            border: none;
+        }
+        .btn-consult:hover {
+            background: linear-gradient(90deg, #1c3b6f, #3a5a9f);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(44, 90, 160, 0.3);
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #2c5aa0;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .mobile-menu-btn:hover { background-color: rgba(44, 90, 160, 0.1); }
+        
+        /* Мобильное меню - те же стили */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 248, 255, 0.98));
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            padding: 100px 30px 40px;
+            overflow-y: auto;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+        }
+        .mobile-menu.active { transform: translateX(0); }
+        .mobile-menu-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: #2c5aa0;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .mobile-menu-close:hover {
+            background-color: rgba(44, 90, 160, 0.1);
+            transform: rotate(90deg);
+        }
+        .mobile-menu ul { list-style: none; margin-bottom: 40px; }
+        .mobile-menu li {
+            margin-bottom: 5px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
+        }
+        .mobile-menu li:nth-child(1) { animation-delay: 0.1s; }
+        .mobile-menu li:nth-child(2) { animation-delay: 0.15s; }
+        .mobile-menu li:nth-child(3) { animation-delay: 0.2s; }
+        .mobile-menu li:nth-child(4) { animation-delay: 0.25s; }
+        .mobile-menu li:nth-child(5) { animation-delay: 0.3s; }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .mobile-menu a {
+            text-decoration: none;
+            color: #4a6285;
+            font-weight: 600;
+            font-size: 22px;
+            display: block;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(220, 230, 245, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .mobile-menu a:hover {
+            color: #2c5aa0;
+            padding-left: 15px;
+        }
+        .mobile-menu a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #2c5aa0, #4a7ec9);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        .mobile-menu a:hover::before { width: 8px; }
+        .mobile-menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .mobile-menu .btn {
+            width: 100%;
+            text-align: center;
+            padding: 18px 24px;
+            font-size: 18px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(44, 90, 160, 0.15);
+        }
+        .mobile-contact-info {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(220, 230, 245, 0.5);
+            color: #5a7699;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .mobile-contact-info p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .mobile-contact-info i {
+            color: #2c5aa0;
+            font-size: 18px;
+            width: 24px;
+        }
+        
+        /* Стили для контента - такие же как на главной */
+        .content-section {
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 30px;
+            padding: 60px;
+            margin: 40px auto;
+            border: 1px solid rgba(220, 230, 245, 0.9);
+            box-shadow: 0 15px 40px rgba(100, 150, 220, 0.15);
+            position: relative;
+            z-index: 5;
+            max-width: 1100px;
+            backdrop-filter: blur(10px);
+        }
+        .content-section h2 {
+            color: #1c3b6f;
+            margin-bottom: 30px;
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+        }
+        .content-section h3 {
+            color: #1c3b6f;
+            margin: 25px 0 15px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .content-section p {
+            margin-bottom: 25px;
+            color: #3a5680;
+            font-size: 19px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        .subject-tag {
+            background: linear-gradient(135deg, #e6f0ff, #d6e6ff);
+            padding: 15px 28px;
+            border-radius: 50px;
+            color: #1c3b6f;
+            font-weight: 600;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            font-size: 17px;
+        }
+        .subject-tag:hover {
+            border-color: #2c5aa0;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(44, 90, 160, 0.25);
+        }
+        .subjects-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 35px;
+            justify-content: center;
+        }
+        .direction-category { margin-top: 50px; }
+        .direction-category h3 {
+            color: #1c3b6f;
+            font-size: 26px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(44, 90, 160, 0.15);
+        }
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .direction-card {
+            background: linear-gradient(135deg, #e6f0ff, #d6e6ff);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .direction-card:hover {
+            transform: translateY(-8px);
+            border-color: #2c5aa0;
+            box-shadow: 0 15px 30px rgba(44, 90, 160, 0.2);
+        }
+        .direction-card.featured {
+            background: linear-gradient(135deg, #d6e6ff, #c6daff);
+            border-color: rgba(44, 90, 160, 0.2);
+        }
+        .direction-icon {
+            font-size: 42px;
+            color: #2c5aa0;
+            margin-bottom: 15px;
+        }
+        .direction-card h4 {
+            color: #1c3b6f;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+        .direction-card p {
+            color: #4a6285;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .benefits-list {
+            list-style-type: none;
+            margin: 20px 0 30px;
+            padding-left: 0;
+        }
+        .benefits-list li {
+            padding: 12px 0 12px 40px;
+            margin-bottom: 10px;
+            position: relative;
+            color: #3a5680;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .benefits-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #2c5aa0, #4a7ec9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .platform-badge {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: linear-gradient(135deg, #e6f0ff, #f0f8ff);
+            border: 2px solid #2c5aa0;
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin: 30px 0;
+        }
+        .platform-badge i {
+            font-size: 48px;
+            color: #2c5aa0;
+            flex-shrink: 0;
+        }
+        .platform-badge p {
+            margin: 0;
+            font-size: 17px;
+        }
+        
+        /* Английский раздел */
+        .english-advantages {
+            margin-top: 45px;
+            padding-top: 40px;
+            border-top: 2px solid rgba(44, 90, 160, 0.12);
+        }
+        .english-advantages__heading {
+            text-align: center;
+            color: #1c3b6f;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        .english-advantages__subtitle {
+            text-align: center;
+            color: #4a6285;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 40px;
+            line-height: 1.5;
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .english-advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .english-advantage-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 28px 26px;
+            box-shadow: 0 8px 28px rgba(44, 90, 160, 0.1);
+            border: 1px solid rgba(200, 220, 240, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .english-advantage-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(44, 90, 160, 0.18);
+            border-color: rgba(44, 90, 160, 0.25);
+        }
+        .english-advantage-card--philosophy {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #eef5ff 0%, #e0edff 100%);
+            border-color: rgba(44, 90, 160, 0.2);
+            padding: 32px 36px;
+        }
+        .english-advantage-card--philosophy:hover { border-color: #2c5aa0; }
+        .english-advantage-card__icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #2c5aa0, #4a7ec9);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 18px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        .english-advantage-card:hover .english-advantage-card__icon { transform: scale(1.08); }
+        .english-advantage-card__title {
+            color: #1c3b6f;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.35;
+        }
+        .english-advantage-card__text {
+            color: #4a6285;
+            font-size: 16px;
+            line-height: 1.65;
+            margin: 0;
+        }
+        .english-philosophy-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px 28px;
+        }
+        .english-philosophy-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #4a6285;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .english-philosophy-list li::before {
+            content: '';
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            margin-top: 2px;
+            border-radius: 50%;
+            background-color: #2c5aa0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+            background-size: 12px;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        /* Подвал */
+        footer {
+            text-align: center;
+            padding: 50px 0;
+            color: #5a7699;
+            font-size: 16px;
+            border-top: 1px solid rgba(220, 230, 245, 0.8);
+            margin-top: 80px;
+            background-color: rgba(255, 255, 255, 0.95);
+            position: relative;
+            z-index: 10;
+        }
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 30px 0;
+        }
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2c5aa0, #4a7ec9);
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(44, 90, 160, 0.2);
+        }
+        .social-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(44, 90, 160, 0.3);
+            background: linear-gradient(135deg, #1c3b6f, #3a5a9f);
+        }
+        .contact-info {
+            margin-top: 25px;
+            line-height: 1.8;
+        }
+        .phone-link {
+            display: inline-block;
+            font-size: 24px;
+            color: #2c5aa0;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 15px 0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+        .phone-link:hover {
+            background-color: white;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(44, 90, 160, 0.2);
+        }
+        
+        /* Модальные окна */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+            position: relative;
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #2c5aa0;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        .modal-close:hover { background-color: rgba(44, 90, 160, 0.1); }
+        .modal-title {
+            color: #1c3b6f;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .modal-text {
+            color: #4a6285;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .consult-form {
+            display: none;
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+            position: relative;
+            margin: 0 auto;
+        }
+        .consult-form.active {
+            display: block;
+            transform: translateY(0);
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1c3b6f;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0eaf8;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #4a6285;
+            transition: border-color 0.3s;
+            background-color: #f8fbff;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #2c5aa0;
+            background-color: white;
+        }
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .form-buttons .btn {
+            flex: 1;
+            text-align: center;
+            padding: 16px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .container { padding: 0 30px; }
+            .content-section { max-width: 1000px; }
+            .page-title { font-size: 42px; }
+        }
+        @media (max-width: 992px) {
+            .nav-links { display: none; }
+            .nav-buttons { display: none; }
+            .mobile-menu-btn { display: block; }
+            .container { padding: 0 25px; }
+            .content-section { max-width: 900px; padding: 40px; }
+            .content-section h2 { font-size: 32px; }
+            .content-section h3 { font-size: 24px; }
+            .content-section p { font-size: 18px; }
+            .page-title { font-size: 36px; }
+            .page-subtitle { font-size: 20px; }
+            .english-advantages-grid { grid-template-columns: repeat(2, 1fr); }
+            .english-philosophy-list { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+            nav { padding: 15px 0; }
+            .logo-icon { font-size: 28px; }
+            .logo-text { font-size: 20px; }
+            .content-section { padding: 30px; border-radius: 25px; max-width: 100%; }
+            .content-section h2 { font-size: 28px; }
+            .content-section h3 { font-size: 22px; }
+            .content-section p { font-size: 17px; }
+            .directions-grid { grid-template-columns: 1fr; }
+            .page-title { font-size: 32px; }
+            .page-subtitle { font-size: 18px; margin-bottom: 40px; }
+            .subjects-container { gap: 15px; }
+            .subject-tag { padding: 12px 22px; font-size: 15px; }
+            footer { padding: 40px 0; }
+            .social-links { gap: 15px; }
+            .social-link { width: 45px; height: 45px; font-size: 20px; }
+            .mobile-menu a span.full-text { display: none; }
+            .mobile-menu a span.short-text { display: inline; }
+            .english-advantages-grid { grid-template-columns: 1fr; }
+            .english-advantage-card--philosophy { grid-column: auto; padding: 24px 22px; }
+            .english-advantages__heading { font-size: 28px; }
+            .english-advantages__subtitle { font-size: 17px; }
+            .english-advantage-card { padding: 24px 22px; }
+        }
+        @media (max-width: 576px) {
+            .container { padding: 0 15px; }
+            .logo-text { font-size: 18px; }
+            .mobile-menu-btn { font-size: 24px; }
+            .content-section { padding: 25px; border-radius: 20px; }
+            .content-section h2 { font-size: 24px; }
+            .content-section h3 { font-size: 20px; }
+            .content-section p { font-size: 16px; }
+            .subject-tag { padding: 10px 18px; font-size: 14px; }
+            .subjects-container { gap: 12px; }
+            .page-title { font-size: 28px; }
+            .page-subtitle { font-size: 16px; }
+            .mobile-menu { padding: 90px 20px 30px; }
+            .mobile-menu a { font-size: 20px; padding: 16px 0; }
+            .mobile-menu .btn { padding: 16px 20px; font-size: 16px; }
+            .phone-link { font-size: 18px; padding: 8px 15px; }
+            footer { padding: 30px 0; font-size: 14px; }
+            .social-link { width: 40px; height: 40px; font-size: 18px; }
+        }
+        @media (max-width: 400px) {
+            .logo-text { font-size: 17px; }
+            .content-section { padding: 20px; }
+            .content-section h2 { font-size: 22px; }
+            .subject-tag { padding: 8px 15px; font-size: 13px; }
+            .mobile-menu a { font-size: 18px; }
+            .page-title { font-size: 24px; }
+            .social-links { gap: 10px; }
+            .social-link { width: 35px; height: 35px; font-size: 16px; }
+        }
+        body.menu-open { overflow: hidden; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <img src="icon.png" alt="Логотип" class="logo-image">
+                    </div>
+                    <div class="logo-text">Твоё Окружение</div>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html#oge-ege"><span class="full-text">ОГЭ и ЕГЭ</span><span class="short-text">Экзамены</span></a></li>
+                    <li><a href="index.html#process"><span class="full-text">Процесс обучения</span><span class="short-text">Обучение</span></a></li>
+                    <li><a href="index.html#about"><span class="full-text">О нас</span><span class="short-text">О нас</span></a></li>
+                    <li><a href="directions.html" class="active"><span class="full-text">Направления</span><span class="short-text">Направл.</span></a></li>
+                    <li><a href="index.html#reviews"><span class="full-text">Отзывы</span><span class="short-text">Отзывы</span></a></li>
+                    <li><a href="index.html#news"><span class="full-text">Новости/акции</span><span class="short-text">Новости</span></a></li>
+                    <li><a href="index.html#contacts"><span class="full-text">Контакты</span><span class="short-text">Контакты</span></a></li>
+                </ul>
+                
+                <div class="nav-buttons">
+                    <a href="#signup" class="btn btn-outline">Записаться</a>
+                    <button class="btn btn-consult" id="consultBtn">Получить консультацию</button>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Модальные окна -->
+    <div class="modal-overlay" id="consultModal">
+        <div class="modal-content">
+            <button class="modal-close" id="consultModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="modal-title">Заявка на консультацию</h3>
+            <form id="consultationForm" class="consult-form active">
+                <div class="form-group">
+                    <label for="name">Имя</label>
+                    <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
+                </div>
+                <div class="form-group">
+                    <label for="subject">Интересуемый предмет</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Выберите предмет</option>
+                        <option value="mathematics">Математика</option>
+                        <option value="russian">Русский язык</option>
+                        <option value="physics">Физика</option>
+                        <option value="chemistry">Химия</option>
+                        <option value="biology">Биология</option>
+                        <option value="history">История</option>
+                        <option value="english">Английский язык</option>
+                        <option value="informatics">Информатика</option>
+                        <option value="other">Другой предмет</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="age">Возраст ученика</label>
+                    <input type="number" id="age" name="age" min="7" max="18" required placeholder="Введите возраст">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Контактный телефон</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+7 (XXX) XXX-XX-XX">
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                    <button type="button" class="btn btn-outline" id="cancelConsult">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileMenuClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul>
+            <li><a href="index.html#oge-ege"><span class="full-text">ОГЭ и ЕГЭ</span><span class="short-text">Экзамены</span></a></li>
+            <li><a href="index.html#process"><span class="full-text">Процесс обучения</span><span class="short-text">Обучение</span></a></li>
+            <li><a href="index.html#about"><span class="full-text">О нас</span><span class="short-text">О нас</span></a></li>
+            <li><a href="directions.html"><span class="full-text">Направления</span><span class="short-text">Направл.</span></a></li>
+            <li><a href="index.html#reviews"><span class="full-text">Отзывы</span><span class="short-text">Отзывы</span></a></li>
+            <li><a href="index.html#news"><span class="full-text">Новости/акции</span><span class="short-text">Новости</span></a></li>
+            <li><a href="index.html#contacts"><span class="full-text">Контакты</span><span class="short-text">Контакты</span></a></li>
+        </ul>
+        <div class="mobile-menu-buttons">
+            <a href="#signup" class="btn btn-outline">Записаться</a>
+            <button class="btn btn-consult" id="mobileConsultBtn">Получить консультацию</button>
+        </div>
+        <div class="mobile-contact-info">
+            <p><i class="fas fa-phone"></i> +7 (495) 123-45-67</p>
+            <p><i class="fas fa-envelope"></i> info@твоеокружение.рус</p>
+            <p><i class="fas fa-map-marker-alt"></i> г. Москва, ул. Образовательная, д. 15</p>
+            <p><i class="fas fa-clock"></i> Пн-Пт: 9:00-20:00, Сб-Вс: 10:00-18:00</p>
+        </div>
+    </div>
+    
+    <!-- Основной контент страницы направлений -->
+    <div class="content-wrapper" style="padding-top: 40px;">
+        <div class="container">
+            <h1 class="page-title">Направления обучения</h1>
+            <p class="page-subtitle">В нашей онлайн-школе мы предлагаем широкий спектр образовательных программ для учеников любого возраста — от подготовки к школе до успешной сдачи государственных экзаменов и олимпиад.</p>
+            
+            <section class="content-section">
+                <h2>Все направления</h2>
+                
+                <!-- 1. Подготовка к ОГЭ, ЕГЭ и ВПР -->
+                <div class="direction-category">
+                    <h3>📚 Подготовка к ОГЭ, ЕГЭ и ВПР</h3>
+                    <p>Комплексная подготовка к государственным экзаменам и всероссийским проверочным работам с индивидуальным подходом и отработкой типовых заданий. Наши ученики регулярно показывают высокие результаты и поступают в ведущие вузы страны.</p>
+                    
+                    <div class="subjects-container">
+                        <div class="subject-tag">Математика (ОГЭ/ЕГЭ/ВПР)</div>
+                        <div class="subject-tag">Русский язык (ОГЭ/ЕГЭ/ВПР)</div>
+                        <div class="subject-tag">Обществознание (ЕГЭ)</div>
+                        <div class="subject-tag">Физика (ЕГЭ/ВПР)</div>
+                        <div class="subject-tag">Химия (ЕГЭ/ВПР)</div>
+                        <div class="subject-tag">Биология (ЕГЭ/ВПР)</div>
+                        <div class="subject-tag">История (ЕГЭ/ВПР)</div>
+                        <div class="subject-tag">Английский язык (ОГЭ/ЕГЭ/ВПР)</div>
+                        <div class="subject-tag">Информатика (ЕГЭ/ВПР)</div>
+                        <div class="subject-tag">Литература (ЕГЭ)</div>
+                        <div class="subject-tag">География (ОГЭ/ЕГЭ/ВПР)</div>
+                        <div class="subject-tag">Немецкий язык (ОГЭ/ЕГЭ)</div>
+                    </div>
+                </div>
+                
+                <!-- 2. Начальная школа -->
+                <div class="direction-category">
+                    <h3>🏫 Начальная школа</h3>
+                    <p>Помогаем ученикам 1–4 классов уверенно освоить школьную программу и полюбить учёбу. Занятия проходят в увлекательной форме с учётом возрастных особенностей детей.</p>
+                    
+                    <div class="directions-grid">
+                        <div class="direction-card">
+                            <div class="direction-icon"><i class="fas fa-book-open"></i></div>
+                            <h4>Математика</h4>
+                            <p>Освоение базовых математических понятий, развитие логического мышления и навыков решения задач.</p>
+                        </div>
+                        <div class="direction-card">
+                            <div class="direction-icon"><i class="fas fa-pen-fancy"></i></div>
+                            <h4>Русский язык</h4>
+                            <p>Грамотность, чтение, письмо и развитие речи в игровой и увлекательной форме.</p>
+                        </div>
+                        <div class="direction-card">
+                            <div class="direction-icon"><i class="fas fa-globe"></i></div>
+                            <h4>Окружающий мир</h4>
+                            <p>Изучение природы, общества и окружающей среды через практические задания и проекты.</p>
+                        </div>
+                        <div class="direction-card">
+                            <div class="direction-icon"><i class="fas fa-book-reader"></i></div>
+                            <h4>Скорочтение</h4>
+                            <p>Развитие навыков быстрого чтения с пониманием текста для повышения успеваемости.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3. Подготовка к школе -->
+                <div class="direction-category">
+                    <h3>🧒 Подготовка к школе</h3>
+                    <p>Комплексная программа для будущих первоклассников: развиваем логику, речь, моторику и готовим к успешному старту в школе.</p>
+                    
+                    <div class="directions-grid">
+                        <div class="direction-card">
+                            <div class="direction-icon"><i class="fas fa-child"></i></div>
+                            <h4>Развитие речи</h4>
+                            <p>Обогащение словарного запаса, развитие связной речи и навыков общения.</p>
+                        </div>
+                        <div class="direction-card">
+                            <div class="direction-icon"><i class="fas fa-shapes"></i></div>
+                            <h4>Математическая подготовка</h4>
+                            <p>Знакомство с числами, счёт, логические задачи и пространственное мышление.</p>
+                        </div>
+                        <div class="direction-card">
+                            <div class="direction-icon"><i class="fas fa-pencil-alt"></i></div>
+                            <h4>Подготовка руки к письму</h4>
+                            <p>Развитие мелкой моторики и навыков письма для комфортного обучения в 1 классе.</p>
+                        </div>
+                        <div class="direction-card">
+                            <div class="direction-icon"><i class="fas fa-school"></i></div>
+                            <h4>Адаптация к школе</h4>
+                            <p>Формирование навыков концентрации, дисциплины и готовности к школьным занятиям.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 4. Цифровая грамотность и творчество -->
+                <div class="direction-category">
+                    <h3>💻 Цифровая грамотность и творчество</h3>
+                    <div class="directions-grid">
+                        <div class="direction-card featured">
+                            <div class="direction-icon"><i class="fas fa-laptop-code"></i></div>
+                            <h4>Цифровая грамотность: от таблиц до ИИ и сайтов</h4>
+                            <p>Уникальный курс, который знакомит учеников с цифровым миром: от работы с таблицами и презентациями до основ искусственного интеллекта и создания собственных сайтов. Развиваем техническое мышление, креативность и практические навыки XXI века.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 5. Английский язык -->
+                <div class="direction-category">
+                    <h3>🌍 Английский язык</h3>
+                    
+                    <div class="direction-card">
+                        <div class="direction-icon"><i class="fas fa-language"></i></div>
+                        <h4>Английский язык</h4>
+                        <p>Изучение английского языка с нуля до продвинутого уровня, подготовка к международным экзаменам и государственным экзаменам (ОГЭ/ЕГЭ).</p>
+                        
+                        <ul class="benefits-list" style="margin-top: 15px;">
+                            <li>Разговорная практика с носителями методики</li>
+                            <li>Подготовка к ОГЭ и ЕГЭ по английскому языку</li>
+                            <li>Индивидуальный и групповой формат занятий</li>
+                            <li>Интерактивные материалы на образовательной платформе</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="english-advantages">
+                        <h2 class="english-advantages__heading">Преимущества школы</h2>
+                        <h3 class="english-advantages__subtitle">Почему родители выбирают нашу школу для своих детей</h3>
+                        
+                        <div class="english-advantages-grid">
+                            <article class="english-advantage-card english-advantage-card--philosophy">
+                                <div class="english-advantage-card__icon"><i class="fas fa-compass"></i></div>
+                                <h4 class="english-advantage-card__title">Наша философия:</h4>
+                                <ul class="english-philosophy-list">
+                                    <li>Обучение без перевода — развиваем языковое мышление</li>
+                                    <li>Погружение в язык — создаём естественную среду общения</li>
+                                    <li>Развитие разговорных навыков — фокус на практике</li>
+                                    <li>Внимание к каждому ребёнку — индивидуальный подход</li>
+                                </ul>
+                            </article>
+                            
+                            <article class="english-advantage-card">
+                                <div class="english-advantage-card__icon"><i class="fas fa-comments"></i></div>
+                                <h4 class="english-advantage-card__title">Регулярная обратная связь</h4>
+                                <p class="english-advantage-card__text">Родители всегда в курсе прогресса ребёнка и получают рекомендации</p>
+                            </article>
+                            
+                            <article class="english-advantage-card">
+                                <div class="english-advantage-card__icon"><i class="fas fa-users"></i></div>
+                                <h4 class="english-advantage-card__title">Маленькие группы</h4>
+                                <p class="english-advantage-card__text">До 8 человек в группе — преподаватель уделяет внимание каждому ребёнку</p>
+                            </article>
+                            
+                            <article class="english-advantage-card">
+                                <div class="english-advantage-card__icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                                <h4 class="english-advantage-card__title">Опытные преподаватели</h4>
+                                <p class="english-advantage-card__text">Сертифицированные специалисты с опытом работы с детьми и подростками</p>
+                            </article>
+                            
+                            <article class="english-advantage-card">
+                                <div class="english-advantage-card__icon"><i class="fas fa-laptop"></i></div>
+                                <h4 class="english-advantage-card__title">Современные методики</h4>
+                                <p class="english-advantage-card__text">Используем коммуникативный подход и интерактивные материалы</p>
+                            </article>
+                            
+                            <article class="english-advantage-card">
+                                <div class="english-advantage-card__icon"><i class="fas fa-heart"></i></div>
+                                <h4 class="english-advantage-card__title">Комфортная атмосфера</h4>
+                                <p class="english-advantage-card__text">Дети не боятся ошибаться и с удовольствием приходят на занятия</p>
+                            </article>
+                            
+                            <article class="english-advantage-card">
+                                <div class="english-advantage-card__icon"><i class="fas fa-chart-line"></i></div>
+                                <h4 class="english-advantage-card__title">Видимый прогресс</h4>
+                                <p class="english-advantage-card__text">Дети начинают говорить уже после первых занятий, растёт уверенность</p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Платформа -->
+                <div class="platform-badge" style="margin-top: 60px;">
+                    <i class="fas fa-laptop-house"></i>
+                    <p><strong>Занимаемся на Российской платформе.</strong> Все уроки проходят на нашей образовательной платформе «Твоё Окружение» — удобной, безопасной и полностью адаптированной под российские образовательные стандарты.</p>
+                </div>
+                
+                <!-- Призыв к действию -->
+                <div style="text-align: center; margin-top: 50px; padding: 40px; background: linear-gradient(135deg, #e6f0ff, #d6e6ff); border-radius: 20px;">
+                    <h3 style="color: #1c3b6f; font-size: 28px; margin-bottom: 15px;">Готовы начать обучение?</h3>
+                    <p style="font-size: 18px; color: #4a6285; max-width: 600px; margin: 0 auto 25px;">Выберите направление и запишитесь на пробный урок уже сегодня!</p>
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <a href="#signup" class="btn btn-primary" style="padding: 16px 40px; font-size: 18px;">Записаться</a>
+                        <button class="btn btn-consult" id="coverConsultBtn" style="padding: 16px 40px; font-size: 18px;">Получить консультацию</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <!-- Подвал -->
+    <footer id="contacts">
+        <div class="container">
+            <div class="footer-content">
+                <h3 style="color: #1c3b6f; margin-bottom: 20px;">Свяжитесь с нами</h3>
+                <div class="social-links">
+                    <a href="https://vk.com/ваша_страница" class="social-link" target="_blank" title="ВКонтакте">
+                        <i class="fab fa-vk"></i>
+                    </a>
+                    <a href="https://t.me/ваш_канал" class="social-link" target="_blank" title="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="https://www.macs.software/ваша_страница" class="social-link" target="_blank" title="MACS">
+                        <i class="fas fa-comment"></i>
+                    </a>
+                </div>
+                <div class="contact-info">
+                    <p>© 2023 "Твоё Окружение". Все права защищены.</p>
+                    <p>Онлайн-школа подготовки к ОГЭ, ЕГЭ, ВПР и репетиторства для школьников. Занятия на Российской образовательной платформе.</p>
+                    <p style="margin-top: 10px;">г. Москва, ул. Образовательная, д. 15</p>
+                    <p>+7 (495) 123-45-67 | info@твоеокружение.рус</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Скрипты для страницы направлений
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const body = document.body;
+        
+        const consultModal = document.getElementById('consultModal');
+        const consultModalClose = document.getElementById('consultModalClose');
+        const consultForm = document.getElementById('consultationForm');
+        const cancelConsult = document.getElementById('cancelConsult');
+        const consultBtn = document.getElementById('consultBtn');
+        const coverConsultBtn = document.getElementById('coverConsultBtn');
+        const mobileConsultBtn = document.getElementById('mobileConsultBtn');
+        
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            body.classList.add('menu-open');
+        }
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            body.classList.remove('menu-open');
+        }
+        
+        mobileMenuBtn.addEventListener('click', openMobileMenu);
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+        
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (mobileMenu.classList.contains('active') && 
+                !e.target.closest('.mobile-menu') && 
+                !e.target.closest('.mobile-menu-btn')) {
+                closeMobileMenu();
+            }
+        });
+        
+        function openConsultModal() {
+            consultModal.classList.add('active');
+            body.classList.add('menu-open');
+            closeMobileMenu();
+        }
+        
+        function closeConsultModal() {
+            consultModal.classList.remove('active');
+            body.classList.remove('menu-open');
+        }
+        
+        consultBtn.addEventListener('click', openConsultModal);
+        coverConsultBtn.addEventListener('click', openConsultModal);
+        mobileConsultBtn.addEventListener('click', function() {
+            openConsultModal();
+            closeMobileMenu();
+        });
+        
+        consultModalClose.addEventListener('click', closeConsultModal);
+        cancelConsult.addEventListener('click', closeConsultModal);
+        
+        consultModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeConsultModal();
+            }
+        });
+        
+        consultForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Спасибо! Ваша заявка принята. Мы свяжемся с вами в ближайшее время.');
+            closeConsultModal();
+            consultForm.reset();
+        });
+        
+        // Плавная прокрутка к разделам
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
