@@ -1,3 +1,14 @@
+Вот обновлённый HTML-код со всеми внесёнными изменениями:
+
+1. **Фон** космического блока стал светлее (использован цвет `#2D1B4E` вместо `#251543`).
+2. Добавлен **значок «Хорошее место» от Яндекса** в правом нижнем углу (фиксированная позиция, `image/yandex.png`).
+3. **Сезонные предложения** переработаны: добавлены карточки летних и зимних интенсивов, кнопка изменена.
+4. Блок **преимуществ** заменён на компактный блок **IT-курсов от Алгоритмики** с курсами в виде списка.
+5. Курсы **Алгоритмики** добавлены в раздел «Курсы».
+6. **Контакты** сокращены до адреса, телефона, соцсетей и карты.
+7. **Форма заявки** обновлена: добавлены поля «Возраст ребёнка» и выпадающий список «Направление».
+
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -10,7 +21,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ============================================================
-    
+       СТИЛИ
        ============================================================ */
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,8 +32,8 @@
       --muted: #6E6288;
       --grape: #632895;
       --grape-soft: #8B5FBF;
-      --night: #251543;
-      --night-2: #2E1B58;
+      --night: #2D1B4E;
+      --night-2: #3A2568;
       --sun: #FFD84A;
       --sun-dark: #C79A11;
       --cream: #F7F1E3;
@@ -224,8 +235,7 @@
     .seasonal {
       background: var(--sun); border-radius: 30px;
       padding: clamp(28px, 4vw, 44px) clamp(28px, 5vw, 52px);
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-      gap: 24px; margin: 34px 0; position: relative; overflow: hidden;
+      margin: 34px 0; position: relative; overflow: hidden;
     }
     .seasonal::before {
       content: ''; position: absolute; right: -70px; top: -95px;
@@ -264,6 +274,113 @@
       box-shadow: 0 2px 0 rgba(20, 9, 43, .35);
     }
     .seasonal-badge span { font-size: 1.4rem; }
+
+    .intensives-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+    .intensive-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 18px;
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      text-align: center;
+    }
+    .intensive-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--ink);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 30px rgba(36, 22, 56, .12);
+    }
+    .intensive-card .emoji {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .intensive-card h4 {
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+    .intensive-card p {
+      font-size: .82rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .intensive-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(23, 12, 45, .55);
+      backdrop-filter: blur(9px);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 2000;
+      animation: fadeIn .3s ease;
+    }
+    .intensive-modal.active { display: flex; }
+    .intensive-modal-content {
+      background: var(--paper);
+      border-radius: 28px;
+      padding: clamp(24px, 4vw, 40px);
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 40px 90px rgba(23, 12, 45, .35);
+      animation: slideUp .38s cubic-bezier(.18, .9, .32, 1.12);
+      position: relative;
+    }
+    .intensive-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: .25s;
+      display: grid;
+      place-items: center;
+    }
+    .intensive-modal-close:hover {
+      background: var(--sun);
+      transform: rotate(90deg);
+    }
+    .intensive-modal-content .emoji-big {
+      font-size: 3rem;
+      text-align: center;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .intensive-modal-content h2 {
+      font-family: var(--font-d);
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .intensive-modal-content p {
+      color: var(--muted);
+      line-height: 1.7;
+      text-align: center;
+    }
+    .intensive-modal-content .btn {
+      margin-top: 20px;
+      width: 100%;
+    }
 
     /* ================= О НАС ================= */
     .about {
@@ -307,26 +424,86 @@
     }
     .about-quote p { font-size: 1.15rem; font-style: italic; color: #F3EDDE; font-weight: 500; position: relative; z-index: 1; }
 
-    /* ================= ПРЕИМУЩЕСТВА ================= */
-    .features {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1px; background: var(--line);
-      border: 1px solid var(--line); border-radius: 28px; overflow: hidden;
+    /* ================= IT-КУРСЫ ОТ АЛГОРИТМИКИ ================= */
+    .it-courses {
+      background: var(--paper); border: 1px solid var(--line); border-radius: 32px;
+      padding: clamp(24px, 3.5vw, 40px) clamp(20px, 3vw, 48px);
       margin: 0 0 34px;
+      box-shadow: 0 20px 50px rgba(36, 22, 56, .06);
     }
-    .feature-item { background: var(--paper); padding: clamp(24px, 3vw, 36px) clamp(18px, 2.5vw, 30px); transition: background .3s, transform .3s; }
-    .feature-item:hover { background: var(--cream); }
-    .f-num { font-family: var(--font-d); font-weight: 700; font-size: .78rem; color: var(--muted); letter-spacing: 2px; transition: color .3s; }
-    .feature-item:hover .f-num { color: var(--grape); }
-    .f-icon {
-      width: 54px; height: 54px; border-radius: 16px;
-      background: var(--cream); border: 1px solid var(--line);
-      display: grid; place-items: center; font-size: 1.55rem;
-      margin: 16px 0 14px; transition: transform .3s, background .3s;
+    .it-courses .it-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
     }
-    .feature-item:hover .f-icon { transform: rotate(-6deg) scale(1.07); background: var(--sun); }
-    .feature-item h4 { font-family: var(--font-d); font-weight: 600; font-size: .98rem; line-height: 1.3; }
-    .feature-item p { color: var(--muted); font-size: .9rem; margin-top: 8px; }
+    .it-courses .it-header .it-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+    }
+    .it-courses .it-header h2 {
+      font-family: var(--font-d);
+      font-weight: 700;
+      font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+      letter-spacing: -.5px;
+    }
+    .it-courses .it-header h2 span {
+      color: var(--grape);
+    }
+    .it-courses .it-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+    .it-courses .it-sub strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .it-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .it-tag {
+      background: var(--cream);
+      border: 1px solid var(--line-soft);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--ink);
+      transition: all .25s;
+      cursor: default;
+    }
+    .it-tag:hover {
+      background: var(--sun);
+      border-color: var(--sun);
+      transform: translateY(-2px);
+    }
+    .it-tag .age {
+      color: var(--grape);
+      font-weight: 600;
+      font-size: .7rem;
+    }
+    .it-footer {
+      margin-top: 16px;
+      font-size: .92rem;
+      color: var(--muted);
+      font-style: italic;
+      border-top: 1px solid var(--line-soft);
+      padding-top: 14px;
+    }
+    .it-footer strong {
+      color: var(--grape);
+      font-style: normal;
+    }
 
     /* ================= БАННЕР СО СКИДКОЙ ================= */
     .flyer {
@@ -603,12 +780,13 @@
     /* форма записи */
     .form-group { margin-bottom: 18px; }
     .form-group label { display: block; font-weight: 600; margin-bottom: 7px; font-size: .9rem; }
-    .form-group input, .form-group textarea {
+    .form-group input, .form-group textarea, .form-group select {
       width: 100%; padding: 13px 16px; border-radius: 14px;
       border: 1.5px solid var(--line); font-size: .95rem;
       font-family: var(--font-b); transition: .25s; outline: none; background: var(--cream);
+      appearance: auto;
     }
-    .form-group input:focus, .form-group textarea:focus {
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
       border-color: var(--grape); background: var(--paper);
       box-shadow: 0 0 0 4px rgba(99, 40, 149, .12);
     }
@@ -791,11 +969,6 @@
       100% { opacity: 0; transform: translate(var(--px, 0), var(--py, -120px)) scale(0) rotate(var(--rot, 360deg)); }
     }
 
-    .features.is-visible .feature-item { animation: popIn .55s cubic-bezier(.2, .7, .3, 1.15) backwards; }
-    .features.is-visible .feature-item:nth-child(2) { animation-delay: .1s; }
-    .features.is-visible .feature-item:nth-child(3) { animation-delay: .2s; }
-    .features.is-visible .feature-item:nth-child(4) { animation-delay: .3s; }
-
     .courses-grid-modal.fresh .course-card-modal {
       animation: cardIn .5s cubic-bezier(.2, .7, .3, 1) backwards;
       animation-delay: calc(var(--i, 0) * 45ms);
@@ -832,10 +1005,10 @@
     @media (max-width: 1024px) {
       .hero { grid-template-columns: 1fr; }
       .scene { min-height: 340px; }
-      .features { grid-template-columns: repeat(2, 1fr); }
       .about-grid { grid-template-columns: 1fr; }
       .flyer { grid-template-columns: 1fr; }
       .flyer-tag { align-items: flex-start; text-align: left; }
+      .intensives-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
       .navbar { flex-direction: column; gap: 12px; border-radius: 26px; padding: 18px; }
@@ -848,8 +1021,6 @@
       .scene { min-height: 280px; }
       .rocket { width: 155px; }
       .m-item { font-size: .7rem; }
-      .seasonal { flex-direction: column; align-items: flex-start; }
-      .seasonal-badge { width: 100%; justify-content: center; }
       .modal, .info-modal, .detail-modal, .form-modal { padding: 24px; }
       .courses-grid-modal { grid-template-columns: 1fr; }
       .age-categories { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -860,17 +1031,46 @@
       .footer { flex-direction: column; text-align: center; justify-content: center; gap: 14px; }
       .footer-links { justify-content: center; }
       .to-top { width: 48px; height: 48px; right: 14px; bottom: 14px; font-size: 1.1rem; }
+      .intensives-grid { grid-template-columns: 1fr; }
+      .it-tags { gap: 6px; }
+      .it-tag { font-size: .75rem; padding: 4px 12px; }
     }
     @media (max-width: 480px) {
-      .features { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
       .hero-stats p { font-size: .7rem; }
+    }
+
+    /* Яндекc значок */
+    .yandex-badge {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      z-index: 800;
+      width: 48px;
+      height: auto;
+      cursor: pointer;
+      transition: transform .3s ease;
+      box-shadow: 0 4px 16px rgba(0,0,0,.15);
+      border-radius: 8px;
+    }
+    .yandex-badge:hover {
+      transform: scale(1.08);
+    }
+    @media (max-width: 768px) {
+      .yandex-badge {
+        bottom: 80px;
+        right: 14px;
+        width: 40px;
+      }
     }
   </style>
 </head>
 <body>
   <!-- Полоса прогресса чтения -->
   <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Яндекc значок "Хорошее место" -->
+  <img src="image/yandex.png" alt="Хорошее место" class="yandex-badge" onclick="window.open('https://yandex.ru/maps/org/horosheye_mesto/','_blank')">
 
   <div class="container">
 
@@ -957,12 +1157,24 @@
 
     <!-- Плашка «Сезонные предложения» -->
     <section class="seasonal" data-reveal>
-      <div class="seasonal-left">
-        <span class="seasonal-tag">🌸 Сезонные предложения</span>
-        <h3>Скидка 15% на все курсы при записи до конца месяца! 🎁</h3>
+      <div>
+        <span class="seasonal-tag">🔥 Сезонные предложения</span>
+        <h3>Летние и зимние интенсивы — успей забронировать место!</h3>
+        <div class="intensives-grid">
+          <div class="intensive-card" onclick="openIntensive('summer')">
+            <span class="emoji">☀️</span>
+            <h4>Летний интенсив</h4>
+            <p>Июнь–август</p>
+          </div>
+          <div class="intensive-card" onclick="openIntensive('winter')">
+            <span class="emoji">❄️</span>
+            <h4>Зимний интенсив</h4>
+            <p>Декабрь–февраль</p>
+          </div>
+        </div>
       </div>
       <div class="seasonal-badge" id="seasonalBadge" onclick="openFormWithAnimation(event)">
-        <span>🔥</span>Успей забронировать место!
+        <span>🔥</span>Забронировать место
       </div>
     </section>
 
@@ -985,31 +1197,31 @@
       </div>
     </section>
 
-    <!-- Преимущества -->
-    <section class="features" data-reveal>
-      <div class="feature-item">
-        <span class="f-num">01</span>
-        <span class="f-icon">👩‍🏫</span>
-        <h4>Опытные педагоги</h4>
-        <p>Стаж от 5 лет, любовь к детям</p>
+    <!-- IT-курсы от Алгоритмики -->
+    <section class="it-courses" data-reveal>
+      <div class="it-header">
+        <span class="it-icon">🤖</span>
+        <h2>IT-курсы от <span>Алгоритмики</span></h2>
       </div>
-      <div class="feature-item">
-        <span class="f-num">02</span>
-        <span class="f-icon">📚</span>
-        <h4>Авторские программы</h4>
-        <p>Разработаны с учётом ФГОС</p>
+      <div class="it-sub">
+        <strong>Международная школа программирования и математики</strong> — приглашаем на курсы:
       </div>
-      <div class="feature-item">
-        <span class="f-num">03</span>
-        <span class="f-icon">🎯</span>
-        <h4>Индивидуальный подход</h4>
-        <p>Трек для каждого ученика</p>
+      <div class="it-tags">
+        <span class="it-tag">Основы логики <span class="age">6–7 лет</span></span>
+        <span class="it-tag">IT-грамотность <span class="age">7–10 лет</span></span>
+        <span class="it-tag">Scratch <span class="age">8–11 лет</span></span>
+        <span class="it-tag">Roblox <span class="age">10–12 лет</span></span>
+        <span class="it-tag">Unity <span class="age">12–16 лет</span></span>
+        <span class="it-tag">Создание сайтов <span class="age">11–13 лет</span></span>
+        <span class="it-tag">Графический дизайн <span class="age">9–15 лет</span></span>
+        <span class="it-tag">Искусственный интеллект</span>
+        <span class="it-tag">Python <span class="age">12–17 лет</span></span>
+        <span class="it-tag">Frontend <span class="age">15–18 лет</span></span>
+        <span class="it-tag">Видеоблогинг <span class="age">9–13 лет</span></span>
+        <span class="it-tag">Математика <span class="age">6–13 лет</span></span>
       </div>
-      <div class="feature-item">
-        <span class="f-num">04</span>
-        <span class="f-icon">🏆</span>
-        <h4>Олимпиадная подготовка</h4>
-        <p>Победители и призёры</p>
+      <div class="it-footer">
+        💡 <strong>Будущее — за программистами</strong>, а будущие программисты — в «Алгоритмике»!
       </div>
     </section>
 
@@ -1118,20 +1330,27 @@
       </div>
       <form id="enrollForm" onsubmit="submitForm(event)">
         <div class="form-group">
-          <label for="fullName">ФИО *</label>
+          <label for="fullName">✔️ Ваше имя (родителя) *</label>
           <input type="text" id="fullName" name="fullName" placeholder="Иванов Иван Иванович" required>
         </div>
         <div class="form-group">
-          <label for="phone">Телефон *</label>
+          <label for="childAge">✔️ Возраст ребенка *</label>
+          <input type="text" id="childAge" name="childAge" placeholder="Например: 8 лет" required>
+        </div>
+        <div class="form-group">
+          <label for="direction">✔️ Направление *</label>
+          <select id="direction" name="direction" required>
+            <option value="">Выберите направление</option>
+            <option value="Подготовка к школе">Подготовка к школе</option>
+            <option value="Английский">Английский</option>
+            <option value="Творчество/Изо">Творчество/Изо</option>
+            <option value="Робототехника">Робототехника</option>
+            <option value="Программирование">Программирование</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="phone">✔️ Номер телефона *</label>
           <input type="tel" id="phone" name="phone" placeholder="+7 (918) 915-76-31" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email *</label>
-          <input type="email" id="email" name="email" placeholder="ivan@example.com" required>
-        </div>
-        <div class="form-group">
-          <label for="comment">Комментарий</label>
-          <textarea id="comment" name="comment" placeholder="Дополнительная информация, пожелания..."></textarea>
         </div>
         <button type="submit" class="form-submit">✅ Отправить заявку</button>
       </form>
@@ -1184,20 +1403,10 @@
           <span class="icon">📍</span>
           <span class="text">г. Туапсе, ул. Победы, д. 10 (ТОЦ «Победа», 4 этаж)</span>
         </div>
-        <h3>📱 Телефоны</h3>
+        <h3>📱 Телефон</h3>
         <div class="contact-item">
           <span class="icon">📞</span>
           <span class="text">+7 (918) 915-76-31</span>
-        </div>
-        <h3>🕐 Режим работы</h3>
-        <div class="contact-item">
-          <span class="icon">🕐</span>
-          <span class="text">Ежедневно с 10:00 до 18:00</span>
-        </div>
-        <h3>📧 Email</h3>
-        <div class="contact-item">
-          <span class="icon">✉️</span>
-          <span class="text">is1908@mail.ru</span>
         </div>
         <h3>🌐 Социальные сети</h3>
         <div class="social-links">
@@ -1331,6 +1540,17 @@
     </div>
   </div>
 
+  <!-- Модальное окно интенсивов -->
+  <div class="intensive-modal" id="intensiveModal">
+    <div class="intensive-modal-content">
+      <button class="intensive-modal-close" onclick="closeIntensive()">✕</button>
+      <span class="emoji-big" id="intensiveEmoji">☀️</span>
+      <h2 id="intensiveTitle">Летний интенсив</h2>
+      <p id="intensiveDesc">Интенсивные занятия в июне–августе: погружение в выбранное направление, яркие проекты и новые друзья!</p>
+      <button class="btn btn-sun" onclick="closeIntensive(); openForm();">Записаться →</button>
+    </div>
+  </div>
+
   <!-- Лайтбокс галереи -->
   <div class="gallery-modal-overlay" id="galleryLightbox">
     <div class="gallery-modal-content">
@@ -1355,7 +1575,20 @@
       { icon: '🖼️', title: 'Изобразительное искусство', sub: '7–10 лет', desc: 'Академический рисунок, живопись и композиция для юных художников.', ages: ['7-10'] },
       { icon: '📝', title: 'Подготовка к ОГЭ', sub: '10–17 лет', desc: 'Системная подготовка по предметам с разбором реального формата экзамена.', ages: ['10-17'], tag: '🎯 Результат' },
       { icon: '💻', title: 'Программирование (Python)', sub: '10–17 лет', desc: 'От синтаксиса до собственных проектов: игры, сайты и телеграм-боты.', ages: ['10-17'] },
-      { icon: '🇬🇧', title: 'Английский язык', sub: '10–17 лет', desc: 'Грамматика, разговорная практика и подготовка к экзаменам.', ages: ['10-17'] }
+      { icon: '🇬🇧', title: 'Английский язык', sub: '10–17 лет', desc: 'Грамматика, разговорная практика и подготовка к экзаменам.', ages: ['10-17'] },
+      // Курсы Алгоритмики
+      { icon: '🧩', title: 'Основы логики и программирования', sub: 'Алгоритмика · 6–7 лет', desc: 'Развитие логического мышления через игровые задачи и первые шаги в программировании.', ages: ['5-7', '7-10'], tag: '🤖 Алгоритмика' },
+      { icon: '💻', title: 'Компьютерная грамотность', sub: 'Алгоритмика · 7–10 лет', desc: 'Уверенное владение компьютером, работа с файлами и безопасность в интернете.', ages: ['7-10'], tag: '🤖 Алгоритмика' },
+      { icon: '🐱', title: 'Визуальное программирование на Scratch', sub: 'Алгоритмика · 8–11 лет', desc: 'Создание игр и мультфильмов в визуальной среде. Развитие алгоритмического мышления.', ages: ['7-10', '10-17'], tag: '🤖 Алгоритмика' },
+      { icon: '🎨', title: 'Графический дизайн', sub: 'Алгоритмика · 9–15 лет', desc: 'Изучение основ дизайна, работа в профессиональных редакторах, создание логотипов и макетов.', ages: ['7-10', '10-17'], tag: '🤖 Алгоритмика' },
+      { icon: '🌐', title: 'Создание сайтов', sub: 'Алгоритмика · 11–13 лет', desc: 'Верстка сайтов на HTML и CSS, знакомство с основами веб-разработки.', ages: ['10-17'], tag: '🤖 Алгоритмика' },
+      { icon: '🎮', title: 'Геймдизайн Roblox', sub: 'Алгоритмика · 10–12 лет', desc: 'Создание собственных игр в Roblox Studio, программирование на Lua и основы геймдизайна.', ages: ['7-10', '10-17'], tag: '🤖 Алгоритмика' },
+      { icon: '🐍', title: 'Программирование на Python', sub: 'Алгоритмика · 12–17 лет', desc: 'Изучение современного языка программирования, создание игр, веб-приложений и ботов.', ages: ['10-17'], tag: '🤖 Алгоритмика' },
+      { icon: '🎯', title: 'Разработка игр на Unity', sub: 'Алгоритмика · 12–16 лет', desc: 'Создание 2D и 3D игр в профессиональной среде Unity с использованием C#.', ages: ['10-17'], tag: '🤖 Алгоритмика' },
+      { icon: '💻', title: 'Frontend-разработка', sub: 'Алгоритмика · 15–18 лет', desc: 'Современная веб-разработка: HTML, CSS, JavaScript, React и создание интерактивных интерфейсов.', ages: ['10-17'], tag: '🤖 Алгоритмика' },
+      { icon: '📹', title: 'Видеоблогинг', sub: 'Алгоритмика · 9–13 лет', desc: 'Создание и монтаж видео, работа со звуком, основы сценарного мастерства и продвижение контента.', ages: ['7-10', '10-17'], tag: '🤖 Алгоритмика' },
+      { icon: '🧠', title: 'Искусственный интеллект', sub: 'Алгоритмика', desc: 'Знакомство с AI, машинным обучением и нейросетями: создание умных приложений и ботов.', ages: ['10-17'], tag: '🤖 Алгоритмика' },
+      { icon: '📐', title: 'Математика', sub: 'Алгоритмика · 6–13 лет', desc: 'Решение олимпиадных задач, развитие математического мышления и подготовка к экзаменам.', ages: ['5-7', '7-10', '10-17'], tag: '🤖 Алгоритмика' }
     ];
 
    const GALLERY_IMAGES = [
@@ -1385,7 +1618,7 @@
     const FINE = window.matchMedia('(pointer: fine)').matches;
 
     function anyOverlayActive() {
-      return !!document.querySelector('.modal-overlay.active, .detail-overlay.active, .form-overlay.active, .info-overlay.active, .gallery-modal-overlay.active');
+      return !!document.querySelector('.modal-overlay.active, .detail-overlay.active, .form-overlay.active, .info-overlay.active, .gallery-modal-overlay.active, .intensive-modal.active');
     }
     function lockBody() { document.body.style.overflow = 'hidden'; }
     function unlockBody() { if (!anyOverlayActive()) document.body.style.overflow = ''; }
@@ -1394,6 +1627,32 @@
     function openGallery() {
       document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+
+    // Интенсивы
+    function openIntensive(type) {
+      const modal = document.getElementById('intensiveModal');
+      const emoji = document.getElementById('intensiveEmoji');
+      const title = document.getElementById('intensiveTitle');
+      const desc = document.getElementById('intensiveDesc');
+      if (type === 'summer') {
+        emoji.textContent = '☀️';
+        title.textContent = 'Летний интенсив';
+        desc.textContent = 'Июнь–август: интенсивные занятия по выбранному направлению. Яркие проекты, летняя атмосфера и новые друзья!';
+      } else {
+        emoji.textContent = '❄️';
+        title.textContent = 'Зимний интенсив';
+        desc.textContent = 'Декабрь–февраль: углублённое погружение в предмет. Уютная атмосфера, зимние проекты и подготовка к олимпиадам!';
+      }
+      modal.classList.add('active');
+      lockBody();
+    }
+    function closeIntensive() {
+      document.getElementById('intensiveModal').classList.remove('active');
+      unlockBody();
+    }
+    document.getElementById('intensiveModal').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeIntensive();
+    });
 
     let freshTimer = null;
     function openModal() {
@@ -1626,6 +1885,7 @@
     });
     document.addEventListener('keydown', e => {
       if (e.key !== 'Escape') return;
+      if (document.getElementById('intensiveModal').classList.contains('active')) return closeIntensive();
       if (document.getElementById('galleryLightbox').classList.contains('active')) return closeLightbox();
       if (document.getElementById('formModal').classList.contains('active')) return closeForm();
       if (document.getElementById('detailModal').classList.contains('active')) return closeDetail();
@@ -1793,7 +2053,7 @@
         el.addEventListener('mouseleave', () => { el.style.transform = ''; });
       });
     }
-    addTilt(document.querySelectorAll('.age-category-card, .feature-item'));
+    addTilt(document.querySelectorAll('.age-category-card, .intensive-card'));
 
     (function galleryTilt() {
       const grid = document.getElementById('galleryGrid');
@@ -1826,7 +2086,7 @@
 
     (function initRipple() {
       if (REDUCED) return;
-      const SEL = '.btn, .btn-outline, .course-enroll-btn, .detail-enroll, .form-submit, .back-btn';
+      const SEL = '.btn, .btn-outline, .course-enroll-btn, .detail-enroll, .form-submit, .back-btn, .intensive-card';
       document.addEventListener('click', e => {
         const b = e.target.closest(SEL);
         if (!b) return;
@@ -1942,3 +2202,4 @@
   </script>
 </body>
 </html>
+```
