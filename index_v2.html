@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -223,37 +222,84 @@
 
     /* ================= СЕЗОННОЕ ПРЕДЛОЖЕНИЕ ================= */
     .seasonal {
-      background: var(--sun); border-radius: 30px;
+      background: var(--sun);
+      border-radius: 30px;
       padding: clamp(28px, 4vw, 44px) clamp(28px, 5vw, 52px);
-      margin: 34px 0; position: relative; overflow: hidden;
+      margin: 34px 0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
     .seasonal::before {
-      content: ''; position: absolute; right: -70px; top: -95px;
-      width: 260px; height: 260px; border: 3px solid rgba(36, 22, 56, .12); border-radius: 50%;
+      content: '';
+      position: absolute;
+      right: -70px;
+      top: -95px;
+      width: 260px;
+      height: 260px;
+      border: 3px solid rgba(36, 22, 56, .12);
+      border-radius: 50%;
     }
     .seasonal::after {
-      content: ''; position: absolute; right: 60px; bottom: -135px;
-      width: 200px; height: 200px; border: 3px solid rgba(36, 22, 56, .08); border-radius: 50%;
+      content: '';
+      position: absolute;
+      right: 60px;
+      bottom: -135px;
+      width: 200px;
+      height: 200px;
+      border: 3px solid rgba(36, 22, 56, .08);
+      border-radius: 50%;
+    }
+    .seasonal-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
     }
     .seasonal-tag {
-      display: inline-flex; align-items: center; gap: 8px;
-      border: 2px solid var(--ink); border-radius: 100px;
-      padding: 7px 16px; font-weight: 700; font-size: .78rem;
-      letter-spacing: .5px; text-transform: uppercase; color: var(--ink);
-      background: rgba(255, 255, 255, .35); margin-bottom: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--ink);
+      border-radius: 100px;
+      padding: 7px 16px;
+      font-weight: 700;
+      font-size: .78rem;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: rgba(255, 255, 255, .35);
+      width: fit-content;
     }
     .seasonal h3 {
-      font-family: var(--font-d); font-weight: 600;
-      font-size: clamp(1.2rem, 2.4vw, 1.65rem); line-height: 1.32;
-      color: var(--ink); max-width: 640px; position: relative; z-index: 1;
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+      line-height: 1.32;
+      color: var(--ink);
+      flex: 1;
+      min-width: 200px;
     }
     .seasonal-badge {
-      display: inline-flex; align-items: center; gap: 12px;
-      background: var(--ink); color: var(--cream);
-      padding: 16px 26px; border-radius: 100px; font-weight: 600; font-size: 1rem;
-      position: relative; z-index: 1; box-shadow: 0 5px 0 rgba(20, 9, 43, .35);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--ink);
+      color: var(--cream);
+      padding: 16px 26px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 5px 0 rgba(20, 9, 43, .35);
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
     }
     .seasonal-badge:hover {
       transform: translateY(-3px) scale(1.03);
@@ -269,7 +315,6 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
-      margin-top: 20px;
       width: 100%;
       position: relative;
       z-index: 1;
@@ -1024,6 +1069,8 @@
       .intensives-grid { grid-template-columns: 1fr; }
       .it-tags { gap: 6px; }
       .it-tag { font-size: .75rem; padding: 4px 12px; }
+      .seasonal-top { flex-direction: column; align-items: stretch; }
+      .seasonal-badge { width: 100%; justify-content: center; }
     }
     @media (max-width: 480px) {
       .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
@@ -1147,24 +1194,24 @@
 
     <!-- Плашка «Сезонные предложения» -->
     <section class="seasonal" data-reveal>
-      <div>
+      <div class="seasonal-top">
         <span class="seasonal-tag">🔥 Сезонные предложения</span>
         <h3>Летние и зимние интенсивы — успей забронировать место!</h3>
-        <div class="intensives-grid">
-          <div class="intensive-card" onclick="openIntensive('summer')">
-            <span class="emoji">☀️</span>
-            <h4>Летний интенсив</h4>
-            <p>Июнь–август</p>
-          </div>
-          <div class="intensive-card" onclick="openIntensive('winter')">
-            <span class="emoji">❄️</span>
-            <h4>Зимний интенсив</h4>
-            <p>Декабрь–февраль</p>
-          </div>
+        <div class="seasonal-badge" id="seasonalBadge" onclick="openFormWithAnimation(event)">
+          <span>🔥</span>Забронировать место
         </div>
       </div>
-      <div class="seasonal-badge" id="seasonalBadge" onclick="openFormWithAnimation(event)">
-        <span>🔥</span>Забронировать место
+      <div class="intensives-grid">
+        <div class="intensive-card" onclick="openIntensive('summer')">
+          <span class="emoji">☀️</span>
+          <h4>Летний интенсив</h4>
+          <p>Июнь–август</p>
+        </div>
+        <div class="intensive-card" onclick="openIntensive('winter')">
+          <span class="emoji">❄️</span>
+          <h4>Зимний интенсив</h4>
+          <p>Декабрь–февраль</p>
+        </div>
       </div>
     </section>
 
@@ -2214,4 +2261,3 @@
   </script>
 </body>
 </html>
-```
