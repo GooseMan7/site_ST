@@ -10,10 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ============================================================
-           УНИКАЛЬНЫЙ СОВРЕМЕННЫЙ ДИЗАЙН
-           ============================================================ */
-
         * {
             margin: 0;
             padding: 0;
@@ -146,6 +142,7 @@
             border-radius: 50px;
             transition: var(--transition);
             position: relative;
+            cursor: pointer;
         }
 
         .nav-links a:hover {
@@ -212,17 +209,6 @@
         .btn-secondary:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(255, 107, 107, 0.4);
-        }
-
-        .btn-accent {
-            background: var(--accent);
-            color: var(--dark);
-            box-shadow: 0 4px 20px rgba(255, 217, 61, 0.3);
-        }
-
-        .btn-accent:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(255, 217, 61, 0.4);
         }
 
         .btn-ghost {
@@ -407,50 +393,62 @@
         }
 
         /* ============================================================
-           ПЛАВАЮЩИЕ КАРТОЧКИ (УВЕЛИЧЕННЫЙ БЕЛЫЙ ПРЯМОУГОЛЬНИК)
+           ПЛАВАЮЩИЕ КАРТОЧКИ
            ============================================================ */
 
         .floating-card {
             position: absolute;
             background: white;
             border-radius: var(--radius-md);
-            padding: 18px 22px;
+            padding: 16px 20px;
             box-shadow: var(--shadow-md);
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             animation: float 6s ease-in-out infinite;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.5);
-            min-width: 200px;
+            min-width: 180px;
         }
 
         .floating-card:nth-child(1) {
-            top: 5%;
+            top: 0%;
             right: -5%;
             animation-delay: 0s;
         }
 
         .floating-card:nth-child(2) {
             bottom: 20%;
-            left: -10%;
+            left: -12%;
             animation-delay: 2s;
         }
 
         .floating-card:nth-child(3) {
-            bottom: 0%;
-            right: 0%;
+            bottom: -5%;
+            right: -8%;
             animation-delay: 4s;
         }
 
+        .floating-card:nth-child(4) {
+            top: 35%;
+            right: -15%;
+            animation-delay: 1s;
+        }
+
+        .floating-card:nth-child(5) {
+            top: 55%;
+            left: -15%;
+            animation-delay: 3s;
+        }
+
         .floating-card .icon {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
             flex-shrink: 0;
         }
 
@@ -492,16 +490,14 @@
             color: var(--gray);
         }
 
-        /* Увеличенный белый прямоугольник с преимуществами */
+        /* Карточка с преимуществами — отдельные пункты внутри */
         .floating-card.benefits-card {
-            bottom: -5%;
-            right: -10%;
-            animation-delay: 4s;
-            padding: 20px 24px;
-            min-width: 220px;
             flex-direction: column;
             align-items: flex-start;
             gap: 6px;
+            padding: 18px 22px;
+            min-width: 200px;
+            animation-delay: 4s;
         }
 
         .floating-card.benefits-card .benefit-item {
@@ -524,6 +520,11 @@
         .floating-card.benefits-card .benefit-item small {
             font-weight: 400;
             color: var(--gray);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
         }
 
         .hero-illustration .main-shape {
@@ -550,10 +551,10 @@
 
         .hero-illustration .main-shape .emoji-big {
             font-size: 80px;
-            animation: float 4s ease-in-out infinite;
+            animation: float-emoji 4s ease-in-out infinite;
         }
 
-        @keyframes float {
+        @keyframes float-emoji {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
         }
@@ -610,95 +611,6 @@
             color: var(--gray);
             font-size: 1.1rem;
             line-height: 1.7;
-        }
-
-        /* ============================================================
-           ПРЕДМЕТЫ
-           ============================================================ */
-
-        .subjects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .subject-card {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 28px 20px;
-            text-align: center;
-            transition: var(--transition);
-            border: 2px solid transparent;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-        }
-
-        .subject-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--primary);
-            box-shadow: var(--shadow-md);
-        }
-
-        .subject-card .icon {
-            font-size: 36px;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .subject-card h4 {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 4px;
-        }
-
-        .subject-card p {
-            font-size: 13px;
-            color: var(--gray);
-            margin-bottom: 0;
-        }
-
-        .subject-card .badge {
-            display: inline-block;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 2px 12px;
-            border-radius: 50px;
-            margin-top: 8px;
-        }
-
-        .subject-card .badge.exam {
-            background: rgba(255, 107, 107, 0.12);
-            color: var(--secondary);
-        }
-
-        .subject-card .badge.olympiad {
-            background: rgba(52, 211, 153, 0.12);
-            color: #10B981;
-        }
-
-        .subject-card .badge.popular {
-            background: rgba(108, 99, 249, 0.12);
-            color: var(--primary);
-        }
-
-        .subject-category-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--dark);
-            margin: 40px 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .subject-category-title::after {
-            content: '';
-            flex: 1;
-            height: 2px;
-            background: var(--gray-light);
         }
 
         /* ============================================================
@@ -1057,7 +969,7 @@
         }
 
         /* ============================================================
-           МОДАЛЬНОЕ ОКНО
+           МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ (КАК НА ПЕРВОМ САЙТЕ)
            ============================================================ */
 
         .modal-overlay {
@@ -1078,20 +990,20 @@
             display: flex;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .modal {
             background: white;
             border-radius: var(--radius-lg);
             padding: 40px;
-            max-width: 520px;
+            max-width: 900px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes slideUp {
@@ -1103,13 +1015,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         .modal-header h3 {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
             color: var(--dark);
+        }
+
+        .modal-header h3 .highlight {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .modal-close {
@@ -1119,17 +1040,126 @@
             color: var(--gray);
             cursor: pointer;
             transition: var(--transition);
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: var(--gray-light);
         }
 
         .modal-close:hover {
-            background: var(--gray-light);
+            background: var(--primary);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-subtitle {
+            color: var(--gray);
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+        }
+
+        .modal-subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .modal-subject-card {
+            background: var(--bg);
+            border-radius: var(--radius-md);
+            padding: 24px 20px;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .modal-subject-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+            background: white;
+        }
+
+        .modal-subject-card .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .modal-subject-card h4 {
+            font-size: 14px;
+            font-weight: 700;
             color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .modal-subject-card p {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+
+        .modal-subject-card .badge {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 2px 10px;
+            border-radius: 50px;
+            margin-top: 6px;
+        }
+
+        .modal-subject-card .badge.exam {
+            background: rgba(255, 107, 107, 0.12);
+            color: var(--secondary);
+        }
+
+        .modal-subject-card .badge.olympiad {
+            background: rgba(52, 211, 153, 0.12);
+            color: #10B981;
+        }
+
+        .modal-subject-card .badge.popular {
+            background: rgba(108, 99, 249, 0.12);
+            color: var(--primary);
+        }
+
+        .modal-category-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 30px 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-category-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: var(--gray-light);
+        }
+
+        .modal-footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid var(--gray-light);
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ============================================================
+           ФОРМА ЗАПИСИ (отдельное модальное окно)
+           ============================================================ */
+
+        .form-modal {
+            max-width: 520px;
         }
 
         .form-group {
@@ -1299,6 +1329,7 @@
             text-decoration: none;
             border-bottom: 1px solid var(--gray-light);
             transition: var(--transition);
+            cursor: pointer;
         }
 
         .mobile-menu ul a:hover {
@@ -1349,9 +1380,14 @@
             .floating-card:nth-child(2) {
                 left: 0;
             }
-
-            .floating-card.benefits-card {
+            .floating-card:nth-child(3) {
                 right: 0;
+            }
+            .floating-card:nth-child(4) {
+                right: 0;
+            }
+            .floating-card:nth-child(5) {
+                left: 0;
             }
 
             .about-grid {
@@ -1411,6 +1447,19 @@
                 font-size: 1.6rem;
             }
 
+            .floating-card {
+                display: none !important;
+            }
+
+            .hero-illustration .main-shape {
+                width: 80%;
+                margin: 0 auto;
+            }
+
+            .hero-illustration .main-shape .emoji-big {
+                font-size: 56px;
+            }
+
             .process-grid {
                 grid-template-columns: 1fr;
             }
@@ -1433,59 +1482,30 @@
                 text-align: center;
             }
 
-            .subjects-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
             .modal {
                 padding: 28px;
             }
 
-            .floating-card {
-                display: none;
-            }
-
-            .floating-card.benefits-card {
-                display: flex;
-                position: relative;
-                bottom: auto;
-                right: auto;
-                margin-top: 20px;
-                width: 100%;
-                max-width: 300px;
-                animation: none;
-            }
-
-            .hero-illustration {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .hero-illustration .main-shape .emoji-big {
-                font-size: 56px;
-            }
-
-            .hero-illustration .main-shape {
-                font-size: 80px;
+            .modal-subjects-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
         @media (max-width: 480px) {
-            .subjects-grid {
+            .modal-subjects-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 12px;
+                gap: 10px;
             }
 
-            .subject-card {
-                padding: 20px 16px;
+            .modal-subject-card {
+                padding: 18px 14px;
             }
 
-            .subject-card .icon {
-                font-size: 28px;
+            .modal-subject-card .icon {
+                font-size: 24px;
             }
 
-            .subject-card h4 {
+            .modal-subject-card h4 {
                 font-size: 13px;
             }
 
@@ -1509,13 +1529,8 @@
                 padding: 20px;
             }
 
-            .floating-card.benefits-card {
-                padding: 16px 18px;
-                min-width: unset;
-            }
-
-            .floating-card.benefits-card .benefit-item {
-                font-size: 12px;
+            .modal-header h3 {
+                font-size: 22px;
             }
         }
 
@@ -1537,8 +1552,6 @@
         .reveal-delay-1 { transition-delay: 0.1s; }
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-        .reveal-delay-5 { transition-delay: 0.5s; }
     </style>
 </head>
 <body>
@@ -1555,7 +1568,7 @@
             </a>
 
             <ul class="nav-links">
-                <li><a href="#subjects">Предметы</a></li>
+                <li><a onclick="openSubjectsModal()">Предметы</a></li>
                 <li><a href="#process">Обучение</a></li>
                 <li><a href="#about">О нас</a></li>
                 <li><a href="#news">Новости</a></li>
@@ -1581,7 +1594,7 @@
             <i class="fas fa-times"></i>
         </button>
         <ul>
-            <li><a href="#subjects" onclick="closeMobile()">Предметы</a></li>
+            <li><a onclick="closeMobile(); openSubjectsModal();">Предметы</a></li>
             <li><a href="#process" onclick="closeMobile()">Обучение</a></li>
             <li><a href="#about" onclick="closeMobile()">О нас</a></li>
             <li><a href="#news" onclick="closeMobile()">Новости</a></li>
@@ -1618,8 +1631,8 @@
                         <button class="btn btn-primary" onclick="openForm()">
                             <i class="fas fa-rocket"></i> Начать обучение
                         </button>
-                        <button class="btn btn-outline" onclick="openForm()">
-                            <i class="fas fa-phone"></i> Консультация
+                        <button class="btn btn-outline" onclick="openSubjectsModal()">
+                            <i class="fas fa-book"></i> Выбрать предмет
                         </button>
                     </div>
                     <div class="hero-stats">
@@ -1645,7 +1658,7 @@
                         </div>
 
                         <!-- Карточка 1: Групповые занятия -->
-                        <div class="floating-card" style="top: 5%; right: -5%;">
+                        <div class="floating-card">
                             <div class="icon purple"><i class="fas fa-users"></i></div>
                             <div class="text">
                                 Групповые занятия
@@ -1654,7 +1667,7 @@
                         </div>
 
                         <!-- Карточка 2: Индивидуальный подход -->
-                        <div class="floating-card" style="bottom: 25%; left: -10%;">
+                        <div class="floating-card">
                             <div class="icon warm"><i class="fas fa-user-graduate"></i></div>
                             <div class="text">
                                 Индивидуальный подход
@@ -1662,144 +1675,52 @@
                             </div>
                         </div>
 
-                        <!-- Карточка 3: Увеличенный белый прямоугольник с преимуществами -->
-                        <div class="floating-card benefits-card" style="bottom: -5%; right: -10%;">
-                            <div class="benefit-item">
-                                <span class="check-mark">✓</span>
+                        <!-- Карточка 3: Опытные преподаватели -->
+                        <div class="floating-card">
+                            <div class="icon gold"><i class="fas fa-star"></i></div>
+                            <div class="text">
                                 Опытные преподаватели
                                 <small>5+ лет практики</small>
                             </div>
-                            <div class="benefit-item">
-                                <span class="check-mark">✓</span>
+                        </div>
+
+                        <!-- Карточка 4: Современные методики -->
+                        <div class="floating-card">
+                            <div class="icon green"><i class="fas fa-laptop-code"></i></div>
+                            <div class="text">
                                 Современные методики
                                 <small>интерактивные уроки</small>
                             </div>
-                            <div class="benefit-item">
-                                <span class="check-mark">✓</span>
+                        </div>
+
+                        <!-- Карточка 5: Гибкое расписание -->
+                        <div class="floating-card">
+                            <div class="icon blue"><i class="fas fa-clock"></i></div>
+                            <div class="text">
                                 Гибкое расписание
                                 <small>под ваш график</small>
                             </div>
+                        </div>
+
+                        <!-- Карточка 6: Обратная связь -->
+                        <div class="floating-card benefits-card">
                             <div class="benefit-item">
                                 <span class="check-mark">✓</span>
                                 Обратная связь
                                 <small>после каждого занятия</small>
                             </div>
+                            <div class="benefit-item">
+                                <span class="check-mark">✓</span>
+                                Поддержка 24/7
+                                <small>куратор всегда на связи</small>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="check-mark">✓</span>
+                                Домашние задания
+                                <small>с проверкой</small>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-    ПРЕДМЕТЫ
-    ============================================================ -->
-
-    <section class="section" id="subjects">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="tag">Направления</span>
-                <h2>Выбери свой <span class="highlight">предмет</span></h2>
-                <p>Широкий выбор курсов для детей и подростков. От подготовки к школе до олимпиадного уровня.</p>
-            </div>
-
-            <div class="subject-category-title">
-                <i class="fas fa-book" style="color: var(--primary);"></i> Основные предметы
-            </div>
-            <div class="subjects-grid reveal">
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">📚</span>
-                    <h4>Подготовка к школе</h4>
-                    <p>6–7 лет</p>
-                    <span class="badge popular">Популярный</span>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">⚡</span>
-                    <h4>Скорочтение</h4>
-                    <p>7–14 лет</p>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">🌍</span>
-                    <h4>Английский язык</h4>
-                    <p>6–17 лет</p>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">📝</span>
-                    <h4>Русский язык</h4>
-                    <p>7–17 лет</p>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">🔢</span>
-                    <h4>Математика</h4>
-                    <p>7–17 лет</p>
-                    <span class="badge popular">Популярный</span>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">⚛️</span>
-                    <h4>Физика</h4>
-                    <p>10–17 лет</p>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">💻</span>
-                    <h4>Информатика</h4>
-                    <p>10–17 лет</p>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">🧪</span>
-                    <h4>Химия</h4>
-                    <p>12–17 лет</p>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">🌌</span>
-                    <h4>Астрономия</h4>
-                    <p>10–17 лет</p>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">🤖</span>
-                    <h4>Программирование</h4>
-                    <p>10–17 лет</p>
-                </div>
-            </div>
-
-            <div class="subject-category-title" style="margin-top: 30px;">
-                <i class="fas fa-graduation-cap" style="color: var(--secondary);"></i> Подготовка к ОГЭ/ЕГЭ
-            </div>
-            <div class="subjects-grid reveal">
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">⚛️</span>
-                    <h4>ОГЭ/ЕГЭ Физика</h4>
-                    <span class="badge exam">Экзамен</span>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">🔢</span>
-                    <h4>ОГЭ/ЕГЭ Математика</h4>
-                    <span class="badge exam">Экзамен</span>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">💻</span>
-                    <h4>ОГЭ/ЕГЭ Информатика</h4>
-                    <span class="badge exam">Экзамен</span>
-                </div>
-            </div>
-
-            <div class="subject-category-title" style="margin-top: 30px;">
-                <i class="fas fa-trophy" style="color: #10B981;"></i> Олимпиадная подготовка
-            </div>
-            <div class="subjects-grid reveal">
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">🏆</span>
-                    <h4>Олимпиадная математика</h4>
-                    <span class="badge olympiad">Олимпиада</span>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">🏆</span>
-                    <h4>Олимпиадная физика</h4>
-                    <span class="badge olympiad">Олимпиада</span>
-                </div>
-                <div class="subject-card" onclick="openForm()">
-                    <span class="icon">🏆</span>
-                    <h4>Олимпиадная астрономия</h4>
-                    <span class="badge olympiad">Олимпиада</span>
                 </div>
             </div>
         </div>
@@ -1990,7 +1911,7 @@
                 <div>
                     <h5>Навигация</h5>
                     <ul>
-                        <li><a href="#subjects">Предметы</a></li>
+                        <li><a onclick="openSubjectsModal()" style="cursor:pointer;">Предметы</a></li>
                         <li><a href="#process">Обучение</a></li>
                         <li><a href="#about">О нас</a></li>
                         <li><a href="#news">Новости</a></li>
@@ -2025,11 +1946,133 @@
     </footer>
 
     <!-- ============================================================
-    МОДАЛЬНОЕ ОКНО ФОРМЫ
+    МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ
+    ============================================================ -->
+
+    <div class="modal-overlay" id="subjectsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>📚 Выбери <span class="highlight">предмет</span></h3>
+                <button class="modal-close" onclick="closeSubjectsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <p class="modal-subtitle">Широкий выбор курсов для детей и подростков. От подготовки к школе до олимпиадного уровня.</p>
+
+            <div class="modal-category-title">
+                <i class="fas fa-book" style="color: var(--primary);"></i> Основные предметы
+            </div>
+            <div class="modal-subjects-grid">
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">📚</span>
+                    <h4>Подготовка к школе</h4>
+                    <p>6–7 лет</p>
+                    <span class="badge popular">Популярный</span>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">⚡</span>
+                    <h4>Скорочтение</h4>
+                    <p>7–14 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">🌍</span>
+                    <h4>Английский язык</h4>
+                    <p>6–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">📝</span>
+                    <h4>Русский язык</h4>
+                    <p>7–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">🔢</span>
+                    <h4>Математика</h4>
+                    <p>7–17 лет</p>
+                    <span class="badge popular">Популярный</span>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">⚛️</span>
+                    <h4>Физика</h4>
+                    <p>10–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">💻</span>
+                    <h4>Информатика</h4>
+                    <p>10–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">🧪</span>
+                    <h4>Химия</h4>
+                    <p>12–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">🌌</span>
+                    <h4>Астрономия</h4>
+                    <p>10–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">🤖</span>
+                    <h4>Программирование</h4>
+                    <p>10–17 лет</p>
+                </div>
+            </div>
+
+            <div class="modal-category-title">
+                <i class="fas fa-graduation-cap" style="color: var(--secondary);"></i> Подготовка к ОГЭ/ЕГЭ
+            </div>
+            <div class="modal-subjects-grid">
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">⚛️</span>
+                    <h4>ОГЭ/ЕГЭ Физика</h4>
+                    <span class="badge exam">Экзамен</span>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">🔢</span>
+                    <h4>ОГЭ/ЕГЭ Математика</h4>
+                    <span class="badge exam">Экзамен</span>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">💻</span>
+                    <h4>ОГЭ/ЕГЭ Информатика</h4>
+                    <span class="badge exam">Экзамен</span>
+                </div>
+            </div>
+
+            <div class="modal-category-title">
+                <i class="fas fa-trophy" style="color: #10B981;"></i> Олимпиадная подготовка
+            </div>
+            <div class="modal-subjects-grid">
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">🏆</span>
+                    <h4>Олимпиадная математика</h4>
+                    <span class="badge olympiad">Олимпиада</span>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">🏆</span>
+                    <h4>Олимпиадная физика</h4>
+                    <span class="badge olympiad">Олимпиада</span>
+                </div>
+                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                    <span class="icon">🏆</span>
+                    <h4>Олимпиадная астрономия</h4>
+                    <span class="badge olympiad">Олимпиада</span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeSubjectsModal(); openForm();">
+                    <i class="fas fa-pen"></i> Записаться на курс
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    МОДАЛЬНОЕ ОКНО ФОРМЫ ЗАПИСИ
     ============================================================ -->
 
     <div class="modal-overlay" id="formModal">
-        <div class="modal">
+        <div class="modal form-modal">
             <div class="modal-header">
                 <h3>📝 Запись на курс</h3>
                 <button class="modal-close" onclick="closeForm()">
@@ -2090,7 +2133,7 @@
     ============================================================ -->
 
     <div class="modal-overlay" id="policyModal">
-        <div class="modal">
+        <div class="modal form-modal">
             <div class="modal-header">
                 <h3>📄 Политика конфиденциальности</h3>
                 <button class="modal-close" onclick="closePolicy()">
@@ -2137,21 +2180,6 @@
             const y = window.scrollY;
             navbar.classList.toggle('scrolled', y > 20);
             toTop.classList.toggle('show', y > 400);
-
-            // Активная ссылка в меню
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-                const href = link.getAttribute('href');
-                if (href && href.startsWith('#')) {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        const rect = target.getBoundingClientRect();
-                        if (rect.top <= 120 && rect.bottom >= 120) {
-                            link.classList.add('active');
-                        }
-                    }
-                }
-            });
         }, { passive: true });
 
         toTop.addEventListener('click', () => {
@@ -2187,6 +2215,72 @@
                 !e.target.closest('.mobile-menu') &&
                 !e.target.closest('.mobile-menu-btn')) {
                 closeMobile();
+            }
+        });
+
+        // ============================================================
+        // МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ
+        // ============================================================
+
+        const subjectsModal = document.getElementById('subjectsModal');
+
+        function openSubjectsModal() {
+            subjectsModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSubjectsModal() {
+            subjectsModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        subjectsModal.addEventListener('click', e => {
+            if (e.target === subjectsModal) closeSubjectsModal();
+        });
+
+        // ============================================================
+        // МОДАЛЬНЫЕ ОКНА ФОРМЫ И ПОЛИТИКИ
+        // ============================================================
+
+        const formModal = document.getElementById('formModal');
+        const policyModal = document.getElementById('policyModal');
+
+        function openForm() {
+            document.getElementById('enrollForm').style.display = '';
+            document.getElementById('enrollForm').reset();
+            document.getElementById('formSuccess').classList.remove('show');
+            formModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeForm() {
+            formModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function openPolicy() {
+            policyModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePolicy() {
+            policyModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        formModal.addEventListener('click', e => {
+            if (e.target === formModal) closeForm();
+        });
+
+        policyModal.addEventListener('click', e => {
+            if (e.target === policyModal) closePolicy();
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                if (subjectsModal.classList.contains('active')) closeSubjectsModal();
+                if (formModal.classList.contains('active')) closeForm();
+                if (policyModal.classList.contains('active')) closePolicy();
             }
         });
 
@@ -2227,51 +2321,6 @@
         });
 
         revealElements.forEach(el => revealObserver.observe(el));
-
-        // ============================================================
-        // МОДАЛЬНЫЕ ОКНА
-        // ============================================================
-
-        const formModal = document.getElementById('formModal');
-        const policyModal = document.getElementById('policyModal');
-
-        function openForm() {
-            document.getElementById('enrollForm').style.display = '';
-            document.getElementById('enrollForm').reset();
-            document.getElementById('formSuccess').classList.remove('show');
-            formModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeForm() {
-            formModal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function openPolicy() {
-            policyModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closePolicy() {
-            policyModal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        formModal.addEventListener('click', e => {
-            if (e.target === formModal) closeForm();
-        });
-
-        policyModal.addEventListener('click', e => {
-            if (e.target === policyModal) closePolicy();
-        });
-
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                if (formModal.classList.contains('active')) closeForm();
-                if (policyModal.classList.contains('active')) closePolicy();
-            }
-        });
 
         // ============================================================
         // ОТПРАВКА ФОРМЫ
