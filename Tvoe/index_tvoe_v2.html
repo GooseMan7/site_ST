@@ -406,23 +406,28 @@
             aspect-ratio: 1;
         }
 
+        /* ============================================================
+           ПЛАВАЮЩИЕ КАРТОЧКИ (УВЕЛИЧЕННЫЙ БЕЛЫЙ ПРЯМОУГОЛЬНИК)
+           ============================================================ */
+
         .floating-card {
             position: absolute;
             background: white;
             border-radius: var(--radius-md);
-            padding: 16px 20px;
+            padding: 18px 22px;
             box-shadow: var(--shadow-md);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             animation: float 6s ease-in-out infinite;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.5);
+            min-width: 200px;
         }
 
         .floating-card:nth-child(1) {
             top: 5%;
-            right: 0;
+            right: -5%;
             animation-delay: 0s;
         }
 
@@ -433,19 +438,19 @@
         }
 
         .floating-card:nth-child(3) {
-            bottom: 5%;
-            right: 5%;
+            bottom: 0%;
+            right: 0%;
             animation-delay: 4s;
         }
 
         .floating-card .icon {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
             flex-shrink: 0;
         }
 
@@ -464,6 +469,16 @@
             color: #F59E0B;
         }
 
+        .floating-card .icon.green {
+            background: rgba(16, 185, 129, 0.12);
+            color: #10B981;
+        }
+
+        .floating-card .icon.blue {
+            background: rgba(59, 130, 246, 0.12);
+            color: #3B82F6;
+        }
+
         .floating-card .text {
             font-size: 13px;
             font-weight: 600;
@@ -474,6 +489,40 @@
             display: block;
             font-weight: 400;
             font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* Увеличенный белый прямоугольник с преимуществами */
+        .floating-card.benefits-card {
+            bottom: -5%;
+            right: -10%;
+            animation-delay: 4s;
+            padding: 20px 24px;
+            min-width: 220px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .floating-card.benefits-card .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--dark);
+            width: 100%;
+        }
+
+        .floating-card.benefits-card .benefit-item .check-mark {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .floating-card.benefits-card .benefit-item small {
+            font-weight: 400;
             color: var(--gray);
         }
 
@@ -1301,6 +1350,10 @@
                 left: 0;
             }
 
+            .floating-card.benefits-card {
+                right: 0;
+            }
+
             .about-grid {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -1392,6 +1445,23 @@
                 display: none;
             }
 
+            .floating-card.benefits-card {
+                display: flex;
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 20px;
+                width: 100%;
+                max-width: 300px;
+                animation: none;
+            }
+
+            .hero-illustration {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
             .hero-illustration .main-shape .emoji-big {
                 font-size: 56px;
             }
@@ -1437,6 +1507,15 @@
 
             .modal {
                 padding: 20px;
+            }
+
+            .floating-card.benefits-card {
+                padding: 16px 18px;
+                min-width: unset;
+            }
+
+            .floating-card.benefits-card .benefit-item {
+                font-size: 12px;
             }
         }
 
@@ -1565,6 +1644,7 @@
                             <span class="emoji-big">🚀</span>
                         </div>
 
+                        <!-- Карточка 1: Групповые занятия -->
                         <div class="floating-card" style="top: 5%; right: -5%;">
                             <div class="icon purple"><i class="fas fa-users"></i></div>
                             <div class="text">
@@ -1573,6 +1653,7 @@
                             </div>
                         </div>
 
+                        <!-- Карточка 2: Индивидуальный подход -->
                         <div class="floating-card" style="bottom: 25%; left: -10%;">
                             <div class="icon warm"><i class="fas fa-user-graduate"></i></div>
                             <div class="text">
@@ -1581,11 +1662,27 @@
                             </div>
                         </div>
 
-                        <div class="floating-card" style="bottom: 5%; right: 0;">
-                            <div class="icon gold"><i class="fas fa-star"></i></div>
-                            <div class="text">
+                        <!-- Карточка 3: Увеличенный белый прямоугольник с преимуществами -->
+                        <div class="floating-card benefits-card" style="bottom: -5%; right: -10%;">
+                            <div class="benefit-item">
+                                <span class="check-mark">✓</span>
                                 Опытные преподаватели
                                 <small>5+ лет практики</small>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="check-mark">✓</span>
+                                Современные методики
+                                <small>интерактивные уроки</small>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="check-mark">✓</span>
+                                Гибкое расписание
+                                <small>под ваш график</small>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="check-mark">✓</span>
+                                Обратная связь
+                                <small>после каждого занятия</small>
                             </div>
                         </div>
                     </div>
