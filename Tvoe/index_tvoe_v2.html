@@ -1,1515 +1,2275 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Онлайн-класс "Твоё Окружение"</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232c5aa0' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* ============================================================
-       СТИЛИ (объединенные)
-       ============================================================ */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Твоё Окружение — онлайн-класс</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%236C63F9' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ============================================================
+           УНИКАЛЬНЫЙ СОВРЕМЕННЫЙ ДИЗАЙН
+           ============================================================ */
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    :root {
-      --ink: #1c3b6f;
-      --ink-2: #0f2a4f;
-      --muted: #4a6285;
-      --primary: #2c5aa0;
-      --primary-light: #4a7ec9;
-      --primary-dark: #1c3b6f;
-      --night: #1c3b6f;
-      --night-2: #2c5aa0;
-      --sun: #4a7ec9;
-      --sun-dark: #2c5aa0;
-      --cream: #f0f8ff;
-      --cream-2: #e6f0ff;
-      --paper: #FFFFFF;
-      --line: rgba(44, 90, 160, .12);
-      --line-soft: rgba(44, 90, 160, .07);
-      --font-d: 'Unbounded', sans-serif;
-      --font-b: 'Onest', system-ui, sans-serif;
-      --gradient-primary: linear-gradient(135deg, #2c5aa0, #4a7ec9);
-      --gradient-light: linear-gradient(135deg, #e6f0ff, #d6e6ff);
-    }
+        :root {
+            --primary: #6C63F9;
+            --primary-dark: #5A52D9;
+            --primary-light: #8B83FF;
+            --secondary: #FF6B6B;
+            --accent: #FFD93D;
+            --dark: #1A1A2E;
+            --dark-2: #16213E;
+            --gray: #6B7A8F;
+            --gray-light: #E8ECF1;
+            --white: #FFFFFF;
+            --bg: #F8F9FE;
+            --gradient-main: linear-gradient(135deg, #6C63F9 0%, #5A52D9 50%, #4A42C9 100%);
+            --gradient-warm: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            --shadow-sm: 0 4px 20px rgba(108, 99, 249, 0.15);
+            --shadow-md: 0 8px 40px rgba(108, 99, 249, 0.2);
+            --shadow-lg: 0 20px 60px rgba(108, 99, 249, 0.25);
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 30px;
+            --radius-xl: 40px;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
 
-    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
 
-    body {
-      font-family: var(--font-b);
-      background: var(--cream);
-      background-image: radial-gradient(rgba(44,90,160,.05) 1px, transparent 1.5px);
-      background-size: 26px 26px;
-      color: var(--ink);
-      line-height: 1.55;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    ::selection { background: var(--primary); color: #fff; }
-    img { max-width: 100%; }
-    :focus-visible { outline: 3px solid rgba(44, 90, 160, .55); outline-offset: 2px; border-radius: 6px; }
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
 
-    .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
 
-    /* ================= ШАПКА (из первого) ================= */
-    .navbar {
-      position: sticky; top: 14px; z-index: 500;
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      background: rgba(255, 255, 255, .92);
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--line); border-radius: 100px;
-      padding: 10px 14px 10px 22px; margin: 16px 0 10px;
-      box-shadow: 0 10px 34px rgba(44, 90, 160, .10);
-      transition: box-shadow .3s;
-    }
-    .navbar.scrolled { box-shadow: 0 18px 48px rgba(44, 90, 160, .18); }
+        /* ============================================================
+           ШАПКА
+           ============================================================ */
 
-    .logo { display: flex; align-items: center; gap: 12px; cursor: pointer; text-decoration: none; }
-    .logo-icon {
-      width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
-      background: var(--gradient-primary); border-radius: 14px; color: #fff; font-size: 28px;
-      flex-shrink: 0;
-    }
-    .logo-text { display: flex; flex-direction: column; line-height: 1.05; }
-    .logo-text .brand {
-      font-family: var(--font-d); font-weight: 800; font-size: 1.35rem;
-      background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text;
-      color: transparent; letter-spacing: .5px;
-    }
-    .logo-text .sub { font-size: .62rem; letter-spacing: 2.6px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: var(--transition);
+            background: transparent;
+        }
 
-    .nav-links { display: flex; gap: 2px; list-style: none; }
-    .nav-links a {
-      position: relative; text-decoration: none; color: var(--ink);
-      font-weight: 600; font-size: .92rem; padding: 8px 13px; cursor: pointer;
-      border-radius: 100px; transition: color .25s;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute; left: 13px; right: 13px; bottom: 4px;
-      height: 3px; border-radius: 3px; background: var(--primary);
-      transform: scaleX(0); transform-origin: left; transition: transform .3s;
-    }
-    .nav-links a:hover { color: var(--primary); }
-    .nav-links a:hover::after { transform: scaleX(1); }
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+            padding: 12px 0;
+        }
 
-    .btn-outline {
-      background: transparent; border: 2px solid var(--primary); color: var(--primary);
-      padding: 11px 22px; border-radius: 100px;
-      font-family: var(--font-d); font-weight: 600; font-size: .8rem;
-      cursor: pointer;
-      transform: translate(var(--mx, 0px), var(--my, 0px)) translateY(var(--lift, 0px));
-      transition: transform .22s ease, background .25s, color .25s, box-shadow .25s;
-    }
-    .btn-outline:hover {
-      --lift: -2px;
-      background: var(--primary); color: #fff;
-      box-shadow: 0 8px 20px rgba(44, 90, 160, .25);
-    }
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    /* ================= КНОПКИ (из второго) ================= */
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      font-family: var(--font-d); font-weight: 600; border: none; cursor: pointer;
-      border-radius: 100px; text-decoration: none;
-      transform: translate(var(--mx, 0px), var(--my, 0px)) translateY(var(--lift, 0px));
-      transition: transform .18s ease, box-shadow .18s ease, background .25s, color .25s;
-    }
-    .btn-primary {
-      background: var(--gradient-primary); color: #fff;
-      padding: 16px 30px; font-size: .92rem;
-      box-shadow: 0 6px 0 var(--primary-dark);
-    }
-    .btn-primary:hover { --lift: -3px; box-shadow: 0 9px 0 var(--primary-dark); }
-    .btn-primary:active { --lift: 2px; box-shadow: 0 2px 0 var(--primary-dark); }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
 
-    .btn-consult {
-      background: var(--gradient-primary); color: #fff;
-      padding: 16px 30px; font-size: .92rem;
-      box-shadow: 0 6px 0 var(--primary-dark);
-    }
-    .btn-consult:hover { --lift: -3px; box-shadow: 0 9px 0 var(--primary-dark); }
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-main);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            font-weight: 800;
+            box-shadow: var(--shadow-sm);
+        }
 
-    /* ================= ГЕРОЙ (из второго, стилизован под первый) ================= */
-    .hero {
-      position: relative; overflow: hidden;
-      background: var(--gradient-primary); color: #F3EDDE;
-      border-radius: 34px; margin-top: 26px;
-      display: grid; grid-template-columns: 1.12fr .88fr; gap: 40px; align-items: center;
-      padding: clamp(40px, 6vw, 76px) clamp(28px, 5vw, 72px);
-      min-height: 90vh;
-    }
-    .hero .star {
-      position: absolute; border-radius: 50%; background: rgba(255,255,255,.3);
-      pointer-events: none; animation: twinkle 3s infinite;
-    }
-    @keyframes twinkle { 0%, 100% { opacity: .1; } 50% { opacity: .75; } }
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
 
-    .hero-content { position: relative; z-index: 2; }
+        .logo-text span {
+            color: var(--primary);
+        }
 
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .4);
-      color: #fff; padding: 9px 18px; border-radius: 100px;
-      font-weight: 600; font-size: .85rem; margin-bottom: 22px;
-    }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
 
-    .hero h1 {
-      font-family: var(--font-d); font-weight: 700;
-      font-size: clamp(1.8rem, 4.2vw, 3.2rem);
-      line-height: 1.16; letter-spacing: -.5px; color: #F6F1E4;
-    }
-    .hero h1 .hl { position: relative; display: inline-block; color: #FFD84A; }
-    .hero h1 .hl::after { content: '✨'; font-size: .55em; margin-left: 4px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 15px;
+            padding: 8px 18px;
+            border-radius: 50px;
+            transition: var(--transition);
+            position: relative;
+        }
 
-    .hero .lead {
-      margin: 26px 0 32px; max-width: 520px;
-      color: rgba(255, 255, 255, .72); font-size: 1.05rem; line-height: 1.75;
-    }
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(108, 99, 249, 0.08);
+        }
 
-    .hero-stats {
-      display: flex; margin-top: 42px; padding-top: 26px;
-      border-top: 1px solid rgba(255, 255, 255, .14);
-    }
-    .hero-stats div { flex: 1; }
-    .hero-stats div + div { border-left: 1px solid rgba(255, 255, 255, .14); padding-left: 32px; }
-    .hero-stats h3 { font-family: var(--font-d); font-weight: 700; font-size: clamp(1.5rem, 2.6vw, 2.1rem); color: #FFD84A; }
-    .hero-stats p { color: rgba(255, 255, 255, .6); font-size: .9rem; margin-top: 4px; }
+        .nav-links a.active {
+            color: var(--primary);
+            background: rgba(108, 99, 249, 0.1);
+        }
 
-    .hero-visual { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    /* Фигуры с картинками в герое (из второго) */
-    .image-shape {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 5;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease !important;
-      cursor: pointer;
-      overflow: hidden;
-      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
-      will-change: transform;
-      border: 6px solid rgba(255,255,255,0.3);
-    }
-    .image-shape img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    .image-shape:hover img { transform: scale(1.1); }
-    .image-shape:hover {
-      transform: scale(1.15) rotate(5deg) !important;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-      z-index: 20;
-      transition: transform 0.3s ease, box-shadow 0.3s ease !important;
-    }
-    .image-shape-circle { border-radius: 50%; }
-    .image-shape-blob { border-radius: 71% 29% 37% 63% / 45% 34% 66% 55%; }
-    .image-shape-droplet { border-radius: 50% 5% 55% 45% / 40% 30% 70% 60%; }
-    .image-shape-organic { border-radius: 40% 60% 70% 30% / 45% 55% 45% 55%; }
-    .image-shape-wave { border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%; }
-    .image-shape-bubble { border-radius: 60% 40% 40% 60% / 60% 40% 60% 40%; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+        }
 
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      33% { transform: translate(5px, -15px) rotate(2deg); }
-      66% { transform: translate(-5px, 10px) rotate(-2deg); }
-    }
-    .floating { animation: float 12s ease-in-out infinite; }
-    @keyframes float2 {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      25% { transform: translate(-8px, -20px) rotate(3deg); }
-      50% { transform: translate(10px, 5px) rotate(-1deg); }
-      75% { transform: translate(-5px, 15px) rotate(2deg); }
-    }
-    .floating2 { animation: float2 15s ease-in-out infinite; }
-    @keyframes float3 {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      20% { transform: translate(15px, -10px) rotate(-3deg); }
-      40% { transform: translate(-10px, 20px) rotate(2deg); }
-      60% { transform: translate(5px, -5px) rotate(1deg); }
-      80% { transform: translate(-15px, 5px) rotate(-2deg); }
-    }
-    .floating3 { animation: float3 18s ease-in-out infinite; }
+        .btn-primary {
+            background: var(--gradient-main);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
 
-    /* ================= БЕГУЩАЯ СТРОКА (из первого, но цвета из второго) ================= */
-    .marquee {
-      width: 100vw; margin: 28px calc(50% - 50vw) 0;
-      background: var(--gradient-primary); overflow: hidden; padding: 13px 0;
-    }
-    .marquee-track { display: flex; width: max-content; animation: scrollX 28s linear infinite; }
-    .marquee:hover .marquee-track { animation-play-state: paused; }
-    .m-item {
-      font-family: var(--font-d); font-weight: 600; font-size: .82rem;
-      letter-spacing: 1.5px; text-transform: uppercase; color: #fff;
-      white-space: nowrap; display: inline-flex; align-items: center;
-    }
-    .m-item em { font-style: normal; margin: 0 32px; opacity: .5; }
-    @keyframes scrollX { to { transform: translateX(-50%); } }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
 
-    /* ================= СЕЗОННОЕ ПРЕДЛОЖЕНИЕ (из первого, цвета из второго) ================= */
-    .seasonal {
-      background: var(--gradient-light);
-      border-radius: 30px;
-      padding: clamp(28px, 4vw, 44px) clamp(28px, 5vw, 52px);
-      margin: 34px 0;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .seasonal::before {
-      content: '';
-      position: absolute;
-      right: -70px;
-      top: -95px;
-      width: 260px;
-      height: 260px;
-      border: 3px solid rgba(44, 90, 160, .12);
-      border-radius: 50%;
-    }
-    .seasonal::after {
-      content: '';
-      position: absolute;
-      right: 60px;
-      bottom: -135px;
-      width: 200px;
-      height: 200px;
-      border: 3px solid rgba(44, 90, 160, .08);
-      border-radius: 50%;
-    }
-    .seasonal-top {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 16px;
-      position: relative;
-      z-index: 1;
-    }
-    .seasonal-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 2px solid var(--primary);
-      border-radius: 100px;
-      padding: 7px 16px;
-      font-weight: 700;
-      font-size: .78rem;
-      letter-spacing: .5px;
-      text-transform: uppercase;
-      color: var(--primary);
-      background: rgba(255, 255, 255, .35);
-      width: fit-content;
-    }
-    .seasonal h3 {
-      font-family: var(--font-d);
-      font-weight: 600;
-      font-size: clamp(1.2rem, 2.4vw, 1.65rem);
-      line-height: 1.32;
-      color: var(--ink);
-      flex: 1;
-      min-width: 200px;
-    }
-    .seasonal-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--primary);
-      color: #fff;
-      padding: 16px 26px;
-      border-radius: 100px;
-      font-weight: 600;
-      font-size: 1rem;
-      box-shadow: 0 5px 0 var(--primary-dark);
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 1;
-    }
-    .seasonal-badge:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 8px 0 var(--primary-dark);
-    }
-    .seasonal-badge:active {
-      transform: translateY(2px) scale(0.97);
-      box-shadow: 0 2px 0 var(--primary-dark);
-    }
-    .seasonal-badge span { font-size: 1.4rem; }
+        .btn-outline {
+            background: transparent;
+            color: var(--dark);
+            border: 2px solid var(--gray-light);
+        }
 
-    .intensives-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      width: 100%;
-      position: relative;
-      z-index: 1;
-    }
-    .intensive-card {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(4px);
-      border-radius: 18px;
-      padding: 18px 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-      text-align: center;
-    }
-    .intensive-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--primary);
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 10px 30px rgba(44, 90, 160, .12);
-    }
-    .intensive-card .emoji { font-size: 2rem; display: block; margin-bottom: 6px; }
-    .intensive-card h4 { font-family: var(--font-d); font-weight: 600; font-size: 1rem; color: var(--ink); }
-    .intensive-card p { font-size: .82rem; color: var(--muted); margin-top: 4px; }
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
 
-    /* ================= О НАС (из первого, контент из второго) ================= */
-    .about {
-      background: var(--paper); border: 1px solid var(--line); border-radius: 32px;
-      padding: clamp(30px, 4.5vw, 56px); margin: 34px 0;
-      box-shadow: 0 20px 50px rgba(44, 90, 160, .06);
-    }
-    .about-grid {
-      display: grid; grid-template-columns: 1.55fr .9fr;
-      gap: clamp(28px, 4vw, 56px); align-items: center;
-    }
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-family: var(--font-d); font-weight: 600; font-size: .7rem;
-      letter-spacing: 2.5px; text-transform: uppercase; color: var(--primary); margin-bottom: 14px;
-    }
-    .eyebrow::before { content: ''; width: 26px; height: 3px; background: var(--primary); border-radius: 2px; }
-    .about h2 {
-      font-family: var(--font-d); font-weight: 700;
-      font-size: clamp(1.45rem, 3vw, 2.1rem); letter-spacing: -.5px;
-      line-height: 1.22; margin-bottom: 18px;
-    }
-    .about p { color: #3E3355; font-size: 1.02rem; line-height: 1.75; max-width: 620px; }
-    .about-contacts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
-    .c-chip {
-      display: inline-flex; align-items: center; gap: 9px;
-      background: var(--cream); border: 1px solid var(--line); border-radius: 100px;
-      padding: 10px 18px; font-weight: 600; font-size: .88rem;
-    }
-    .about-quote {
-      background: var(--gradient-primary); border-radius: 24px; padding: 36px 30px;
-      color: #fff; position: relative; overflow: hidden;
-    }
-    .about-quote::after {
-      content: ''; position: absolute; right: -45px; bottom: -45px;
-      width: 150px; height: 150px; border: 3px dashed rgba(255, 255, 255, .15); border-radius: 50%;
-    }
-    .about-quote .q-mark {
-      font-family: var(--font-d); font-weight: 800; font-size: 4.2rem;
-      color: #FFD84A; line-height: .55; display: block; margin-bottom: 20px;
-    }
-    .about-quote p { font-size: 1.15rem; font-style: italic; color: #F3EDDE; font-weight: 500; position: relative; z-index: 1; }
+        .btn-secondary {
+            background: var(--gradient-warm);
+            color: white;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+        }
 
-    /* ================= ПРЕДМЕТЫ (из второго) ================= */
-    .subjects-section {
-      background: var(--paper); border: 1px solid var(--line); border-radius: 32px;
-      padding: clamp(30px, 4.5vw, 56px); margin: 34px 0;
-      box-shadow: 0 20px 50px rgba(44, 90, 160, .06);
-    }
-    .subjects-section h2 {
-      font-family: var(--font-d); font-weight: 700;
-      font-size: clamp(1.45rem, 3vw, 2.1rem);
-      margin-bottom: 18px; letter-spacing: -.5px;
-    }
-    .subjects-section p {
-      color: #3E3355; font-size: 1.02rem; line-height: 1.75; margin-bottom: 24px;
-    }
-    .subject-category {
-      margin: 30px 0 15px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid var(--primary);
-      color: var(--ink);
-      font-size: 22px;
-      font-weight: 700;
-      font-family: var(--font-d);
-    }
-    .subject-category:first-child { margin-top: 0; }
-    .subjects-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-    .subject-tag {
-      background: var(--gradient-light);
-      padding: 12px 24px;
-      border-radius: 50px;
-      color: var(--ink);
-      font-weight: 600;
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .subject-tag:hover {
-      border-color: var(--primary);
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(44, 90, 160, 0.25);
-    }
-    .exam-tag { background: linear-gradient(135deg, #ffe6e6, #ffd6d6); color: #d63031; }
-    .exam-tag:hover { box-shadow: 0 10px 25px rgba(214, 48, 49, 0.25); }
-    .olympiad-tag { background: linear-gradient(135deg, #e6ffe6, #d6ffd6); color: #27ae60; }
-    .olympiad-tag:hover { box-shadow: 0 10px 25px rgba(39, 174, 96, 0.25); }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 107, 0.4);
+        }
 
-    .subject-description {
-      margin-top: 30px; padding: 30px;
-      background: var(--gradient-light); border-radius: 20px;
-      display: none;
-    }
-    .subject-description h3 { font-family: var(--font-d); font-weight: 700; font-size: 1.3rem; color: var(--ink); margin-bottom: 12px; }
-    .subject-description p { color: #3E3355; font-size: 1rem; line-height: 1.7; margin-bottom: 16px; }
+        .btn-accent {
+            background: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 4px 20px rgba(255, 217, 61, 0.3);
+        }
 
-    /* ================= ПРОЦЕСС ОБУЧЕНИЯ (из второго) ================= */
-    .process-section {
-      background: var(--paper); border: 1px solid var(--line); border-radius: 32px;
-      padding: clamp(30px, 4.5vw, 56px); margin: 34px 0;
-      box-shadow: 0 20px 50px rgba(44, 90, 160, .06);
-    }
-    .process-section h2 {
-      font-family: var(--font-d); font-weight: 700;
-      font-size: clamp(1.45rem, 3vw, 2.1rem);
-      margin-bottom: 18px; letter-spacing: -.5px;
-    }
-    .process-section p {
-      color: #3E3355; font-size: 1.02rem; line-height: 1.75; margin-bottom: 16px;
-    }
-    .formats-container {
-      display: flex;
-      gap: 30px;
-      margin: 30px 0;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .format-card {
-      flex: 1;
-      min-width: 280px;
-      background: var(--gradient-light);
-      border-radius: 20px;
-      padding: 30px 28px;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-    }
-    .format-card:hover {
-      transform: translateY(-10px);
-      border-color: var(--primary);
-      box-shadow: 0 15px 30px rgba(44, 90, 160, 0.2);
-    }
-    .format-icon { font-size: 50px; color: var(--primary); margin-bottom: 20px; text-align: center; }
-    .format-card h3 { font-family: var(--font-d); font-weight: 600; font-size: 1.2rem; color: var(--ink); margin-bottom: 12px; text-align: center; }
-    .format-card p { font-size: .95rem; color: var(--muted); line-height: 1.6; }
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 217, 61, 0.4);
+        }
 
-    .benefits-list {
-      list-style-type: none;
-      margin: 16px 0 0;
-      padding-left: 0;
-    }
-    .benefits-list li {
-      padding: 8px 0 8px 35px;
-      position: relative;
-      color: var(--muted);
-      font-size: .92rem;
-      line-height: 1.5;
-    }
-    .benefits-list li:before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 24px;
-      height: 24px;
-      background: var(--gradient-primary);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 14px;
-    }
+        .btn-ghost {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
 
-    /* ================= ОТЗЫВЫ (из второго) ================= */
-    .feedback-section {
-      display: flex;
-      gap: 40px;
-      margin: 40px 0;
-      align-items: center;
-    }
-    .feedback-image {
-      width: 280px;
-      height: 280px;
-      border-radius: 20px;
-      object-fit: cover;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-      border: 6px solid white;
-      flex-shrink: 0;
-    }
-    .feedback-text {
-      flex: 1;
-      font-size: 1.02rem;
-      line-height: 1.7;
-      color: #3a5680;
-      background: var(--gradient-light);
-      padding: 30px;
-      border-radius: 20px;
-      border: 2px solid #d6e6ff;
-    }
-    .feedback-author {
-      margin-top: 20px;
-      font-style: italic;
-      font-weight: 600;
-      color: var(--primary);
-      text-align: right;
-    }
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: translateY(-2px);
+        }
 
-    /* ================= НОВОСТИ/АКЦИИ (из второго) ================= */
-    .news-section {
-      background: var(--paper); border: 1px solid var(--line); border-radius: 32px;
-      padding: clamp(30px, 4.5vw, 56px); margin: 34px 0;
-      box-shadow: 0 20px 50px rgba(44, 90, 160, .06);
-    }
-    .news-section h2 {
-      font-family: var(--font-d); font-weight: 700;
-      font-size: clamp(1.45rem, 3vw, 2.1rem);
-      margin-bottom: 18px; letter-spacing: -.5px;
-    }
-    .news-section > p {
-      color: #3E3355; font-size: 1.02rem; line-height: 1.75; margin-bottom: 24px;
-    }
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 30px;
-    }
-    .news-card {
-      background: white;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      transition: all 0.3s ease;
-      border: 1px solid var(--line);
-    }
-    .news-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    }
-    .news-image { width: 100%; height: 200px; object-fit: cover; }
-    .news-content { padding: 25px; }
-    .news-date { color: var(--muted); font-size: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
-    .news-title { color: var(--ink); font-size: 20px; font-weight: 700; margin-bottom: 15px; line-height: 1.4; }
-    .news-text { color: var(--muted); font-size: 16px; line-height: 1.6; margin-bottom: 20px; }
-    .news-tag {
-      display: inline-block;
-      padding: 5px 15px;
-      background: var(--gradient-light);
-      color: var(--primary);
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-right: 10px;
-      margin-bottom: 10px;
-    }
-    .news-tag.special { background: linear-gradient(135deg, #ffe6e6, #ffd6d6); color: #d63031; }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
 
-    /* ================= БАННЕР СО СКИДКОЙ (из первого, цвета из второго) ================= */
-    .flyer {
-      background: var(--gradient-primary); color: #F3EDDE; border-radius: 32px;
-      padding: clamp(32px, 5vw, 60px) clamp(28px, 5vw, 64px);
-      display: grid; grid-template-columns: 1.4fr 1fr; gap: 36px; align-items: center;
-      position: relative; overflow: hidden; margin: 34px 0;
-    }
-    .flyer::before {
-      content: ''; position: absolute; top: -65px; right: -65px;
-      width: 280px; height: 280px; border: 2.5px dashed rgba(255, 255, 255, .2); border-radius: 50%;
-    }
-    .flyer::after {
-      content: ''; position: absolute; bottom: -85px; left: -55px;
-      width: 220px; height: 220px; border: 2.5px dashed rgba(255, 255, 255, .12); border-radius: 50%;
-    }
-    .flyer-left { position: relative; z-index: 1; }
-    .flyer h2 { font-family: var(--font-d); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2.2rem); }
-    .flyer p { color: rgba(255, 255, 255, .72); margin: 16px 0 28px; max-width: 460px; line-height: 1.7; }
-    .flyer-tag { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
-    .flyer-pin { font-size: 1.5rem; }
-    .flyer-big {
-      font-family: var(--font-d); font-weight: 800; letter-spacing: -2px;
-      font-size: clamp(3rem, 7vw, 5.2rem); color: #FFD84A; line-height: 1.05;
-    }
-    .flyer-tag p { margin: 8px 0 0; font-size: .95rem; color: rgba(255, 255, 255, .85); line-height: 1.55; }
+        .mobile-menu-btn:hover {
+            background: rgba(108, 99, 249, 0.08);
+        }
 
-    /* ================= ГАЛЕРЕЯ (из первого) ================= */
-    .gallery-section { margin: 34px 0 40px; }
-    .section-head { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
-    .section-head .g-emoji {
-      width: 54px; height: 54px; border-radius: 16px;
-      background: var(--paper); border: 1px solid var(--line);
-      display: grid; place-items: center; font-size: 1.45rem;
-    }
-    .section-head h2 { font-family: var(--font-d); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2rem); letter-spacing: -.5px; }
-    .section-head .head-line { flex: 1; height: 3px; background: var(--cream-2); border-radius: 2px; margin-left: 10px; }
+        /* ============================================================
+           ГЕРОЙ
+           ============================================================ */
 
-    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
-    .gallery-item {
-      position: relative; border-radius: 20px; overflow: hidden;
-      border: 1px solid var(--line); cursor: pointer; aspect-ratio: 1;
-      background: var(--cream-2); transition: transform .3s, box-shadow .3s;
-    }
-    .gallery-item:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(44, 90, 160, .14); }
-    .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s; }
-    .gallery-item:hover img { transform: scale(1.06); }
-    .gallery-overlay {
-      position: absolute; inset: auto 0 0 0;
-      background: rgba(28, 59, 111, .55); color: #fff;
-      padding: 14px 16px; display: flex; justify-content: flex-end; opacity: 0; transition: opacity .3s;
-    }
-    .gallery-item:hover .gallery-overlay { opacity: 1; }
-    .gallery-overlay span { font-size: .75rem; font-weight: 600; background: rgba(255, 255, 255, .18); padding: 4px 12px; border-radius: 100px; }
-    .gallery-empty {
-      grid-column: 1 / -1; text-align: center; padding: 70px 24px; color: var(--muted);
-      background: var(--paper); border: 2px dashed rgba(44, 90, 160, .18); border-radius: 24px;
-    }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg);
+        }
 
-    /* ================= ФУТЕР (из первого, цвета из второго) ================= */
-    .footer {
-      background: var(--gradient-primary); color: #F3EDDE; border-radius: 32px;
-      padding: clamp(30px, 4vw, 48px) clamp(28px, 5vw, 56px);
-      margin: 10px 0 34px; position: relative; overflow: hidden;
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
-    }
-    .footer::before {
-      content: 'Твоё Окружение'; position: absolute; right: -12px; bottom: -42px;
-      font-family: var(--font-d); font-weight: 800; letter-spacing: -2px;
-      font-size: clamp(3rem, 8vw, 6rem); color: rgba(255, 255, 255, .05);
-      line-height: 1; pointer-events: none;
-    }
-    .footer .copy { font-weight: 500; font-size: .92rem; color: rgba(255, 255, 255, .75); position: relative; z-index: 1; }
-    .footer-links { display: flex; gap: 6px; flex-wrap: wrap; position: relative; z-index: 1; }
-    .footer-links a {
-      color: rgba(255, 255, 255, .8); text-decoration: none; font-weight: 600;
-      font-size: .92rem; padding: 8px 14px; border-radius: 100px; cursor: pointer; transition: .25s;
-    }
-    .footer-links a:hover { color: #FFD84A; background: rgba(255, 255, 255, .1); }
-    .policy-btn {
-      background: none; border: none; color: rgba(255, 255, 255, .8); cursor: pointer;
-      font-size: .92rem; font-family: var(--font-b); font-weight: 600;
-      padding: 8px 14px; border-radius: 100px; transition: .25s;
-    }
-    .policy-btn:hover { color: #FFD84A; background: rgba(255, 255, 255, .1); }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(108, 99, 249, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
 
-    /* ================= МОДАЛЬНЫЕ ОКНА (из первого) ================= */
-    .modal-overlay, .info-overlay, .detail-overlay, .form-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(28, 59, 111, .55);
-      backdrop-filter: blur(9px); -webkit-backdrop-filter: blur(9px);
-      justify-content: center; align-items: center; padding: 20px;
-      animation: fadeIn .3s ease;
-    }
-    .modal-overlay.active, .info-overlay.active,
-    .detail-overlay.active, .form-overlay.active { display: flex; }
-    .modal-overlay, .info-overlay { z-index: 1000; }
-    .detail-overlay { z-index: 1100; }
-    .form-overlay { z-index: 1200; }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
 
-    .modal, .info-modal, .detail-modal, .form-modal {
-      background: var(--paper); border: 1px solid var(--line);
-      width: 100%; border-radius: 28px;
-      padding: clamp(24px, 4vw, 44px);
-      max-height: 90vh; overflow-y: auto;
-      box-shadow: 0 40px 90px rgba(28, 59, 111, .35);
-      animation: slideUp .38s cubic-bezier(.18, .9, .32, 1.12);
-      scrollbar-width: none; -ms-overflow-style: none;
-    }
-    .modal::-webkit-scrollbar, .info-modal::-webkit-scrollbar { display: none; }
-    .modal { max-width: 1180px; }
-    .info-modal { max-width: 760px; }
-    .detail-modal { max-width: 660px; }
-    .form-modal { max-width: 520px; }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
 
-    .modal-header, .info-header, .form-header {
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 16px; margin-bottom: 26px; flex-wrap: wrap;
-    }
-    .modal-header h2, .info-header h2, .form-header h2 {
-      font-family: var(--font-d); font-weight: 700;
-      font-size: clamp(1.2rem, 2.4vw, 1.6rem); letter-spacing: -.5px;
-    }
-    .modal-close, .info-close, .form-close, .detail-close {
-      background: var(--cream); border: 1px solid var(--line);
-      width: 46px; height: 46px; min-width: 46px; border-radius: 50%;
-      font-size: 1.1rem; cursor: pointer; color: var(--ink);
-      display: grid; place-items: center; transition: .25s;
-    }
-    .modal-close:hover, .info-close:hover, .form-close:hover, .detail-close:hover {
-      background: var(--primary); border-color: var(--primary); color: #fff; transform: rotate(90deg);
-    }
+        .hero-content {
+            animation: fadeInUp 0.8s ease;
+        }
 
-    /* ================= ФОРМА ЗАПИСИ (из первого) ================= */
-    .form-group { margin-bottom: 18px; }
-    .form-group label { display: block; font-weight: 600; margin-bottom: 7px; font-size: .9rem; }
-    .form-group input, .form-group textarea, .form-group select {
-      width: 100%; padding: 13px 16px; border-radius: 14px;
-      border: 1.5px solid var(--line); font-size: .95rem;
-      font-family: var(--font-b); transition: .25s; outline: none; background: var(--cream);
-      appearance: auto;
-    }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-      border-color: var(--primary); background: var(--paper);
-      box-shadow: 0 0 0 4px rgba(44, 90, 160, .12);
-    }
-    .form-submit {
-      width: 100%; padding: 16px; background: var(--primary); color: #fff;
-      border: none; border-radius: 100px;
-      font-family: var(--font-d); font-weight: 600; font-size: .92rem;
-      cursor: pointer; transition: .25s; box-shadow: 0 5px 0 var(--primary-dark); margin-top: 6px;
-    }
-    .form-submit:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 7px 0 var(--primary-dark); }
-    .form-success { display: none; text-align: center; padding: 30px 10px; }
-    .form-success.show { display: block; animation: slideUp .3s; }
-    .form-success .s-icon {
-      width: 74px; height: 74px; border-radius: 50%; background: var(--gradient-primary);
-      display: grid; place-items: center; font-size: 2rem; margin: 0 auto 18px;
-      box-shadow: 0 6px 0 var(--primary-dark);
-      animation: sIconPop .5s cubic-bezier(.2, .7, .3, 1.4);
-    }
-    @keyframes sIconPop { 0% { transform: scale(0) rotate(-30deg); } 100% { transform: scale(1) rotate(0); } }
-    .form-success h3 { font-family: var(--font-d); font-weight: 700; font-size: 1.2rem; margin-bottom: 8px; }
-    .form-success p { color: var(--muted); }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(108, 99, 249, 0.1);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
 
-    /* ================= БАЗОВЫЕ АНИМАЦИИ ================= */
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideUp { from { transform: translateY(34px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
 
-    .pre-reveal { opacity: 0; transform: translateY(26px); transition: opacity .65s ease, transform .65s cubic-bezier(.2, .7, .25, 1); }
-    .pre-reveal.is-visible { opacity: 1; transform: translateY(0); }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
 
-    /* ================= ПРОГРЕСС-БАР (из первого) ================= */
-    .progress-bar {
-      position: fixed; top: 0; left: 0; height: 4px; width: 0;
-      background: var(--gradient-primary);
-      z-index: 999; border-radius: 0 4px 4px 0;
-    }
+        .hero h1 {
+            font-size: clamp(2.8rem, 5vw, 4.2rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
 
-    /* ================= КНОПКА НАВЕРХ (из первого) ================= */
-    .to-top {
-      position: fixed; right: 22px; bottom: 22px; z-index: 900;
-      width: 56px; height: 56px; border-radius: 50%;
-      background: var(--primary); color: #fff;
-      border: 1px solid rgba(255, 255, 255, .15);
-      font-size: 1.35rem; cursor: pointer;
-      box-shadow: 0 12px 28px rgba(44, 90, 160, .3);
-      opacity: 0; transform: translateY(90px) scale(.6);
-      transition: transform .4s cubic-bezier(.2, .7, .3, 1.2), opacity .3s, background .25s;
-      pointer-events: none;
-    }
-    .to-top.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
-    .to-top.show:hover { transform: translateY(-5px) scale(1.06); background: var(--primary-dark); }
-    .to-top.launch {
-      transform: translateY(-140px) scale(.5) rotate(-14deg); opacity: 0;
-      transition: transform .55s cubic-bezier(.4, 0, .8, .4), opacity .5s .1s;
-    }
+        .hero h1 .highlight {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important; }
-    }
+        .hero h1 .highlight-warm {
+            background: var(--gradient-warm);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    /* ================= АДАПТИВ ================= */
-    @media (max-width: 1024px) {
-      .hero { grid-template-columns: 1fr; }
-      .about-grid { grid-template-columns: 1fr; }
-      .flyer { grid-template-columns: 1fr; }
-      .flyer-tag { align-items: flex-start; text-align: left; }
-      .intensives-grid { grid-template-columns: repeat(2, 1fr); }
-      .feedback-section { flex-direction: column; gap: 20px; }
-      .feedback-image { width: 200px; height: 200px; }
-      .image-shape { width: 140px !important; height: 140px !important; }
-    }
-    @media (max-width: 768px) {
-      .navbar { flex-direction: column; gap: 12px; border-radius: 26px; padding: 18px; }
-      .logo { justify-content: center; }
-      .nav-links { flex-wrap: wrap; justify-content: center; }
-      .hero { border-radius: 26px; padding: 34px 24px; }
-      .hero-stats div + div { padding-left: 16px; }
-      .hero-stats h3 { font-size: 1.35rem; }
-      .image-shape { display: none !important; }
-      .modal, .info-modal, .detail-modal, .form-modal { padding: 24px; }
-      .formats-container { flex-direction: column; }
-      .format-card { min-width: 100%; }
-      .news-grid { grid-template-columns: 1fr; }
-      .footer { flex-direction: column; text-align: center; justify-content: center; gap: 14px; }
-      .footer-links { justify-content: center; }
-      .to-top { width: 48px; height: 48px; right: 14px; bottom: 14px; font-size: 1.1rem; }
-      .intensives-grid { grid-template-columns: 1fr; }
-      .seasonal-top { flex-direction: column; align-items: stretch; }
-      .seasonal-badge { width: 100%; justify-content: center; }
-      .feedback-image { width: 180px; height: 180px; }
-    }
-    @media (max-width: 480px) {
-      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
-      .hero-stats p { font-size: .7rem; }
-      .feedback-image { width: 150px; height: 150px; }
-      .feedback-text { font-size: .92rem; padding: 20px; }
-    }
-  </style>
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--gray);
+            max-width: 520px;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 2px solid var(--gray-light);
+        }
+
+        .hero-stats .stat h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -1px;
+        }
+
+        .hero-stats .stat h3 .accent {
+            color: var(--primary);
+        }
+
+        .hero-stats .stat p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-illustration {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: float 6s ease-in-out infinite;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .floating-card:nth-child(1) {
+            top: 5%;
+            right: 0;
+            animation-delay: 0s;
+        }
+
+        .floating-card:nth-child(2) {
+            bottom: 20%;
+            left: -10%;
+            animation-delay: 2s;
+        }
+
+        .floating-card:nth-child(3) {
+            bottom: 5%;
+            right: 5%;
+            animation-delay: 4s;
+        }
+
+        .floating-card .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .floating-card .icon.purple {
+            background: rgba(108, 99, 249, 0.12);
+            color: var(--primary);
+        }
+
+        .floating-card .icon.warm {
+            background: rgba(255, 107, 107, 0.12);
+            color: var(--secondary);
+        }
+
+        .floating-card .icon.gold {
+            background: rgba(255, 217, 61, 0.2);
+            color: #F59E0B;
+        }
+
+        .floating-card .text {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .floating-card .text small {
+            display: block;
+            font-weight: 400;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .hero-illustration .main-shape {
+            width: 100%;
+            aspect-ratio: 1;
+            background: var(--gradient-main);
+            border-radius: 40% 60% 40% 60% / 60% 40% 60% 40%;
+            animation: morph 12s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            color: rgba(255, 255, 255, 0.15);
+            position: relative;
+            box-shadow: var(--shadow-lg);
+        }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 40% 60% 40% 60% / 60% 40% 60% 40%; }
+            25% { border-radius: 60% 40% 60% 40% / 40% 60% 40% 60%; }
+            50% { border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%; }
+            75% { border-radius: 40% 60% 60% 40% / 60% 40% 40% 60%; }
+        }
+
+        .hero-illustration .main-shape .emoji-big {
+            font-size: 80px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================================
+           СЕКЦИИ
+           ============================================================ */
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 56px;
+        }
+
+        .section-header .tag {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(108, 99, 249, 0.1);
+            padding: 4px 16px;
+            border-radius: 50px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            color: var(--dark);
+            margin-bottom: 16px;
+        }
+
+        .section-header h2 .highlight {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* ============================================================
+           ПРЕДМЕТЫ
+           ============================================================ */
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .subject-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 28px 20px;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .subject-card .icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .subject-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .subject-card p {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+
+        .subject-card .badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 2px 12px;
+            border-radius: 50px;
+            margin-top: 8px;
+        }
+
+        .subject-card .badge.exam {
+            background: rgba(255, 107, 107, 0.12);
+            color: var(--secondary);
+        }
+
+        .subject-card .badge.olympiad {
+            background: rgba(52, 211, 153, 0.12);
+            color: #10B981;
+        }
+
+        .subject-card .badge.popular {
+            background: rgba(108, 99, 249, 0.12);
+            color: var(--primary);
+        }
+
+        .subject-category-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 40px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .subject-category-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: var(--gray-light);
+        }
+
+        /* ============================================================
+           ПРОЦЕСС ОБУЧЕНИЯ
+           ============================================================ */
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .process-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 36px 28px;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-main);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .process-card:hover::before {
+            opacity: 1;
+        }
+
+        .process-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .process-card .number {
+            font-size: 48px;
+            font-weight: 900;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.15;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .process-card .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .process-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .process-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        /* ============================================================
+           О НАС
+           ============================================================ */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image .main-img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            background: var(--gradient-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .about-image .floating-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .about-image .floating-badge .big {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .about-image .floating-badge p {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+
+        .about-content .tag {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(108, 99, 249, 0.1);
+            padding: 4px 16px;
+            border-radius: 50px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .about-content h2 {
+            font-size: clamp(2rem, 3vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .about-content p {
+            color: var(--gray);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .about-content .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .about-content .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .about-content .feature .check {
+            width: 28px;
+            height: 28px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* ============================================================
+           НОВОСТИ
+           ============================================================ */
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .news-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .news-card .image {
+            height: 200px;
+            background: var(--gradient-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .news-card .body {
+            padding: 24px;
+        }
+
+        .news-card .body .date {
+            font-size: 13px;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .news-card .body h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .news-card .body p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .news-card .body .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .news-card .body .tags span {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 50px;
+            background: var(--gray-light);
+            color: var(--gray);
+        }
+
+        .news-card .body .tags span.special {
+            background: rgba(255, 107, 107, 0.12);
+            color: var(--secondary);
+        }
+
+        /* ============================================================
+           ФУТЕР
+           ============================================================ */
+
+        .footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 60px 0 30px;
+            margin-top: 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 30px;
+        }
+
+        .footer-brand .logo-text {
+            color: white;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 300px;
+        }
+
+        .footer h5 {
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer ul {
+            list-style: none;
+        }
+
+        .footer ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer ul a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .footer ul a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 14px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-socials a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-socials a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ============================================================
+           МОДАЛЬНОЕ ОКНО
+           ============================================================ */
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            max-width: 520px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h3 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: var(--gray-light);
+            color: var(--dark);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            background: var(--bg);
+            color: var(--dark);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(108, 99, 249, 0.1);
+            background: white;
+        }
+
+        .form-group input::placeholder {
+            color: var(--gray);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-main);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .form-success.show {
+            display: block;
+            animation: slideUp 0.4s ease;
+        }
+
+        .form-success .icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .form-success h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .form-success p {
+            color: var(--gray);
+        }
+
+        /* ============================================================
+           КНОПКА НАВЕРХ
+           ============================================================ */
+
+        .to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 900;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--gradient-main);
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .to-top.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ============================================================
+           МОБИЛЬНОЕ МЕНЮ
+           ============================================================ */
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 999;
+            padding: 80px 24px 40px;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu .close-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+        }
+
+        .mobile-menu ul li {
+            margin-bottom: 4px;
+        }
+
+        .mobile-menu ul a {
+            display: block;
+            padding: 16px 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gray-light);
+            transition: var(--transition);
+        }
+
+        .mobile-menu ul a:hover {
+            color: var(--primary);
+            padding-left: 12px;
+        }
+
+        .mobile-menu .actions {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .mobile-menu .actions .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ============================================================
+           АДАПТИВ
+           ============================================================ */
+
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-illustration {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .floating-card:nth-child(2) {
+                left: 0;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .about-content .features {
+                justify-content: center;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-actions .btn {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero {
+                padding: 100px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+
+            .hero-stats {
+                gap: 24px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-stats .stat h3 {
+                font-size: 1.6rem;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content .features {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .subjects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modal {
+                padding: 28px;
+            }
+
+            .floating-card {
+                display: none;
+            }
+
+            .hero-illustration .main-shape .emoji-big {
+                font-size: 56px;
+            }
+
+            .hero-illustration .main-shape {
+                font-size: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .subjects-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .subject-card {
+                padding: 20px 16px;
+            }
+
+            .subject-card .icon {
+                font-size: 28px;
+            }
+
+            .subject-card h4 {
+                font-size: 13px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 50px 0;
+            }
+
+            .section-header {
+                margin-bottom: 32px;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .modal {
+                padding: 20px;
+            }
+        }
+
+        /* ============================================================
+           АНИМАЦИЯ ПОЯВЛЕНИЯ
+           ============================================================ */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
+    </style>
 </head>
 <body>
-  <!-- Полоса прогресса чтения -->
-  <div class="progress-bar" id="progressBar"></div>
 
-  <div class="container">
+    <!-- ============================================================
+    ШАПКА
+    ============================================================ -->
 
-    <!-- Навигация -->
     <nav class="navbar" id="navbar">
-      <a href="#" class="logo" onclick="goHome()">
-        <div class="logo-icon">
-          <i class="fas fa-graduation-cap"></i>
+        <div class="container">
+            <a href="#" class="logo" onclick="goHome()">
+                <div class="logo-icon">ТО</div>
+                <span class="logo-text">Твоё <span>Окружение</span></span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#subjects">Предметы</a></li>
+                <li><a href="#process">Обучение</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#news">Новости</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="btn btn-primary" onclick="openForm()">
+                    <i class="fas fa-pen"></i> Записаться
+                </button>
+                <button class="mobile-menu-btn" id="mobileBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </div>
-        <div class="logo-text">
-          <span class="brand">Твоё Окружение</span>
-          <span class="sub">онлайн-класс</span>
-        </div>
-      </a>
-      <ul class="nav-links">
-        <li><a onclick="goHome()">Главная</a></li>
-        <li><a href="#subjects">Предметы</a></li>
-        <li><a href="#process">Обучение</a></li>
-        <li><a href="#about">О нас</a></li>
-        <li><a href="#news">Новости</a></li>
-      </ul>
-      <button class="btn-outline" onclick="openForm()">Записаться</button>
     </nav>
 
-    <!-- Герой -->
-    <section class="hero" id="hero">
-      <div class="hero-content">
-        <div class="hero-badge">🌟 Образование будущего</div>
-        <h1>Онлайн-класс <span class="hl">"Твоё Окружение"<span class="hl" style="color:#FFD84A;">✨</span></span></h1>
-        <p class="lead">Распахнутая дверь в мир знаний, где каждый ученик найдет свой путь к вершинам предмета. Здесь жаждущие глубины откроют неизведанные горизонты, стремящиеся к победам – отточат мастерство для олимпиадных баталий, а те, кто нуждается в поддержке, – обретут уверенность и подтянут "хвосты".</p>
-        <button class="btn btn-primary" onclick="openForm()">📚 Записаться на занятие →</button>
-        <div class="hero-stats">
-          <div><h3>12+</h3><p>направлений</p></div>
-          <div><h3>98%</h3><p>довольных учеников</p></div>
-          <div><h3>5 лет</h3><p>успешной работы</p></div>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <!-- Фигуры с картинками в герое -->
-        <div class="image-shape image-shape-circle floating" style="width: 180px; height: 180px; top: 10%; right: 8%;" data-title="Дистанционное обучение" data-text="Современные технологии позволяют проводить занятия онлайн с максимальной эффективностью.">
-          <img src="https://img.freepik.com/premium-photo/clever-kid-doing-homework-using-laptop-internet_159315-559.jpg?semt=ais_hybrid" alt="Ученик за компьютером">
-        </div>
-        <div class="image-shape image-shape-blob floating2" style="width: 160px; height: 160px; top: 55%; right: 3%;" data-title="Индивидуальный подход" data-text="Каждый ученик получает персональное внимание педагога и программу обучения, разработанную специально для него.">
-          <img src="https://og1.ru/wp-content/uploads/2022/02/16-3.png" alt="Учитель объясняет материал">
-        </div>
-        <div class="image-shape image-shape-droplet floating3" style="width: 170px; height: 170px; bottom: 10%; right: 15%;" data-title="Групповые занятия" data-text="Работа в небольших группах способствует лучшему усвоению материала и развитию коммуникативных навыков.">
-          <img src="https://avatars.mds.yandex.net/i?id=7777f48e1ffeaf7f4154ed74e20c0bb9e1d394be-12661511-images-thumbs&n=13" alt="Дети обсуждают задачу">
-        </div>
-        <div class="image-shape image-shape-organic floating" style="width: 150px; height: 150px; top: 25%; left: 5%;" data-title="Практические задания" data-text="Большое количество практических заданий помогает закрепить теорию и подготовиться к экзаменам.">
-          <img src="https://avatars.mds.yandex.net/i?id=d0d6ed4c94e72a17a29019b2081458c7dc18b037-5859556-images-thumbs&n=13" alt="Ученица решает задачи">
-        </div>
-      </div>
-    </section>
+    <!-- ============================================================
+    МОБИЛЬНОЕ МЕНЮ
+    ============================================================ -->
 
-    <!-- Бегущая строка направлений -->
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee-track" id="marqueeTrack">
-        <span class="m-item">Математика<em>✦</em></span>
-        <span class="m-item">Физика<em>✦</em></span>
-        <span class="m-item">Английский<em>✦</em></span>
-        <span class="m-item">Информатика<em>✦</em></span>
-        <span class="m-item">Программирование<em>✦</em></span>
-        <span class="m-item">Химия<em>✦</em></span>
-        <span class="m-item">Астрономия<em>✦</em></span>
-        <span class="m-item">Подготовка к школе<em>✦</em></span>
-        <span class="m-item">Скорочтение<em>✦</em></span>
-        <span class="m-item">Русский язык<em>✦</em></span>
-      </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-btn" id="mobileClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul>
+            <li><a href="#subjects" onclick="closeMobile()">Предметы</a></li>
+            <li><a href="#process" onclick="closeMobile()">Обучение</a></li>
+            <li><a href="#about" onclick="closeMobile()">О нас</a></li>
+            <li><a href="#news" onclick="closeMobile()">Новости</a></li>
+        </ul>
+        <div class="actions">
+            <button class="btn btn-primary" onclick="closeMobile(); openForm();">
+                <i class="fas fa-pen"></i> Записаться
+            </button>
+        </div>
     </div>
 
-    <!-- Плашка «Сезонные предложения» -->
-    <section class="seasonal" data-reveal>
-      <div class="seasonal-top">
-        <span class="seasonal-tag">🔥 Сезонные предложения</span>
-        <h3>Летние и зимние интенсивы — успей забронировать место!</h3>
-        <div class="seasonal-badge" id="seasonalBadge" onclick="openForm()">
-          <span>🔥</span>Забронировать место
-        </div>
-      </div>
-      <div class="intensives-grid">
-        <div class="intensive-card" onclick="alert('Летний интенсив: июнь–август. Интенсивные занятия по выбранному направлению.')">
-          <span class="emoji">☀️</span>
-          <h4>Летний интенсив</h4>
-          <p>Июнь–август</p>
-        </div>
-        <div class="intensive-card" onclick="alert('Зимний интенсив: декабрь–февраль. Углублённое погружение в предмет.')">
-          <span class="emoji">❄️</span>
-          <h4>Зимний интенсив</h4>
-          <p>Декабрь–февраль</p>
-        </div>
-      </div>
-    </section>
+    <!-- ============================================================
+    ГЕРОЙ
+    ============================================================ -->
 
-    <!-- Предметы -->
-    <section class="subjects-section" id="subjects" data-reveal>
-      <h2>📚 Предметы</h2>
-      <p>В нашем образовательном классе "Твоё окружение" мы предлагаем широкий выбор предметов для детей и подростков от 6 до 17 лет. Каждый курс разработан с учетом возрастных особенностей и индивидуальных потребностей учеников.</p>
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="dot"></span>
+                        Онлайн-класс нового поколения
+                    </div>
+                    <h1>
+                        Учись с <span class="highlight">удовольствием</span><br>
+                        и <span class="highlight-warm">достигай</span> вершин
+                    </h1>
+                    <p>
+                        Распахнутая дверь в мир знаний, где каждый ученик от 6 до 17 лет
+                        находит свой путь к успеху. Индивидуальный подход, современные
+                        методики и поддержка на каждом шагу.
+                    </p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="openForm()">
+                            <i class="fas fa-rocket"></i> Начать обучение
+                        </button>
+                        <button class="btn btn-outline" onclick="openForm()">
+                            <i class="fas fa-phone"></i> Консультация
+                        </button>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <h3>12 <span class="accent">+</span></h3>
+                            <p>направлений</p>
+                        </div>
+                        <div class="stat">
+                            <h3>98 <span class="accent">%</span></h3>
+                            <p>довольных учеников</p>
+                        </div>
+                        <div class="stat">
+                            <h3>5 <span class="accent">лет</span></h3>
+                            <p>успешной работы</p>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="subject-category">Основные предметы</div>
-      <div class="subjects-container">
-        <span class="subject-tag" data-title="Подготовка к школе" data-text="Комплексная программа для будущих первоклассников, развивающая логику, речь и моторику. Занятия проходят в игровой форме.">Подготовка к школе</span>
-        <span class="subject-tag" data-title="Скорочтение" data-text="Развитие навыков быстрого чтения с пониманием текста. Увеличиваем скорость чтения в 2-3 раза без потери понимания.">Скорочтение</span>
-        <span class="subject-tag" data-title="Английский язык" data-text="Изучение английского с нуля до продвинутого уровня. Развитие всех языковых навыков: говорение, аудирование, чтение, письмо.">Английский язык</span>
-        <span class="subject-tag" data-title="Русский язык" data-text="Качественная подготовка к экзаменам, повышение грамотности. Работаем над устранением ошибок и развитием речи.">Русский язык</span>
-        <span class="subject-tag" data-title="Математика" data-text="Углубленное изучение математики для успешной сдачи ОГЭ и ЕГЭ, подготовка к олимпиадам. Объясняем сложные темы простым языком.">Математика</span>
-        <span class="subject-tag" data-title="Физика" data-text="Изучение физики через практические эксперименты и решение задач. Подготовка к экзаменам и олимпиадам.">Физика</span>
-        <span class="subject-tag" data-title="Информатика" data-text="Изучение основ программирования, алгоритмов и компьютерных технологий. Подготовка к ЕГЭ по информатике.">Информатика</span>
-        <span class="subject-tag" data-title="Программирование" data-text="Курсы по программированию: от основ до создания собственных проектов. Изучаем Python, Scratch, веб-разработку.">Программирование</span>
-        <span class="subject-tag" data-title="Химия" data-text="Увлекательное изучение химии с проведением безопасных экспериментов. Подготовка к ОГЭ и ЕГЭ.">Химия</span>
-        <span class="subject-tag" data-title="Астрономия" data-text="Знакомство с основами астрономии, изучение звездного неба, планет и космических явлений.">Астрономия</span>
-      </div>
+                <div class="hero-visual">
+                    <div class="hero-illustration">
+                        <div class="main-shape">
+                            <span class="emoji-big">🚀</span>
+                        </div>
 
-      <div class="subject-category">Подготовка к ОГЭ/ЕГЭ</div>
-      <div class="subjects-container">
-        <span class="subject-tag exam-tag" data-title="ОГЭ/ЕГЭ Физика" data-text="Интенсивная подготовка к экзаменам по физике: решение типовых задач, разбор демоверсий, работа над сложными темами.">ОГЭ/ЕГЭ Физика</span>
-        <span class="subject-tag exam-tag" data-title="ОГЭ/ЕГЭ Математика (базовый)" data-text="Подготовка к базовому уровню ЕГЭ по математике: повторение школьной программы, отработка типовых заданий.">ОГЭ/ЕГЭ Математика (базовый)</span>
-        <span class="subject-tag exam-tag" data-title="ОГЭ/ЕГЭ Математика (профильный)" data-text="Профильная подготовка к ЕГЭ по математике: задачи повышенной сложности, параметры, экономические задачи.">ОГЭ/ЕГЭ Математика (профильный)</span>
-        <span class="subject-tag exam-tag" data-title="ОГЭ/ЕГЭ Информатика" data-text="Подготовка к экзаменам по информатике: программирование, алгоритмы, теория информации.">ОГЭ/ЕГЭ Информатика</span>
-      </div>
+                        <div class="floating-card" style="top: 5%; right: -5%;">
+                            <div class="icon purple"><i class="fas fa-users"></i></div>
+                            <div class="text">
+                                Групповые занятия
+                                <small>до 10 человек</small>
+                            </div>
+                        </div>
 
-      <div class="subject-category">Олимпиадная подготовка</div>
-      <div class="subjects-container">
-        <span class="subject-tag olympiad-tag" data-title="Олимпиадная математика" data-text="Специальный курс для подготовки к математическим олимпиадам различного уровня. Развитие нестандартного мышления.">Олимпиадная математика</span>
-        <span class="subject-tag olympiad-tag" data-title="Олимпиадная физика" data-text="Углубленный курс физики для подготовки к олимпиадам: решение нестандартных задач, экспериментальная физика.">Олимпиадная физика</span>
-        <span class="subject-tag olympiad-tag" data-title="Олимпиадная астрономия" data-text="Подготовка к астрономическим олимпиадам: небесная механика, астрофизика, работа с телескопами.">Олимпиадная астрономия</span>
-      </div>
+                        <div class="floating-card" style="bottom: 25%; left: -10%;">
+                            <div class="icon warm"><i class="fas fa-user-graduate"></i></div>
+                            <div class="text">
+                                Индивидуальный подход
+                                <small>персональная программа</small>
+                            </div>
+                        </div>
 
-      <div class="subject-description" id="subjectDescription">
-        <h3 id="subjectTitle">Название предмета</h3>
-        <p id="subjectText">Описание предмета появится здесь после выбора</p>
-        <button class="btn btn-primary" onclick="openForm()">Записаться на этот курс</button>
-      </div>
-    </section>
-
-    <!-- Процесс обучения -->
-    <section class="process-section" id="process" data-reveal>
-      <h2>🎯 Процесс обучения</h2>
-      <p><strong>Обучение в образовательном классе "Твоё окружение" - это интересный и увлекательный путь в освоение школьной программы и олимпиадного движения!</strong></p>
-      <p>В нашей онлайн-школе мы создали гибкую систему обучения, которая позволяет каждому ученику выбрать наиболее подходящий формат занятий.</p>
-
-      <div class="formats-container">
-        <div class="format-card">
-          <div class="format-icon"><i class="fas fa-user-graduate"></i></div>
-          <h3>Индивидуальный формат</h3>
-          <p>Персональные занятия с преподавателем один на один. Идеально для тех, кто хочет максимально сконцентрироваться на своих целях.</p>
-          <ul class="benefits-list">
-            <li>Индивидуальный подход к ученику</li>
-            <li>Авторская программа по гибкому расписанию</li>
-            <li>Темп занятий определяется с учетом особенностей ученика</li>
-          </ul>
-        </div>
-
-        <div class="format-card">
-          <div class="format-icon"><i class="fas fa-users"></i></div>
-          <h3>Групповой формат</h3>
-          <p>Занятия в небольших группах. Отличный вариант для тех, кто любит учиться в коллективе и обсуждать материал.</p>
-          <ul class="benefits-list">
-            <li>Мини-группы до 10 человек</li>
-            <li>Командообразование и развитие коммуникативных навыков</li>
-            <li>Обратная связь от педагога</li>
-            <li>Домашние задания для закрепления материала</li>
-          </ul>
-        </div>
-      </div>
-
-      <p style="margin-top: 30px;">Независимо от выбранного формата, все наши ученики получают доступ к учебным материалам, регулярные домашние задания, проверку работ преподавателями и постоянную поддержку куратора.</p>
-    </section>
-
-    <!-- О нас -->
-    <section class="about" id="about" data-reveal>
-      <div class="about-grid">
-        <div class="about-text">
-          <span class="eyebrow">о нас</span>
-          <h2>Об онлайн-классе "Твоё Окружение"</h2>
-          <p><strong>Погрузитесь в "Твое окружение" – онлайн-класс, где расцветают таланты детей, подростков от 6 до 17 лет и студентов!</strong> Мы стираем границы, предоставляя возможность учиться из любой точки земного шара, превращая образование в увлекательное путешествие. Здесь ученики не просто получают знания, а обретают компас, направляющий их по индивидуальной образовательной траектории.</p>
-
-          <div class="feedback-section">
-            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300&h=300&fit=crop" alt="Отзыв" class="feedback-image" onerror="this.style.display='none'">
-            <div class="feedback-text">
-              "Я занимаюсь в 'Твоем окружении' уже полгода, и мне очень нравится! Преподаватели объясняют все понятно и интересно. Благодаря занятиям по математике я стал лучше понимать предмет и даже помог одноклассникам на контрольной."
-              <div class="feedback-author">— Анна, 14 лет</div>
+                        <div class="floating-card" style="bottom: 5%; right: 0;">
+                            <div class="icon gold"><i class="fas fa-star"></i></div>
+                            <div class="text">
+                                Опытные преподаватели
+                                <small>5+ лет практики</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <div class="about-contacts">
-            <span class="c-chip"><i class="fas fa-phone"></i> 8 (950) 648-57-99</span>
-            <span class="c-chip"><i class="fas fa-envelope"></i> tvoiokruzeni@ya.ru</span>
-            <span class="c-chip"><i class="fab fa-telegram"></i> @tvoiokruzeni</span>
-          </div>
         </div>
-        <div class="about-quote">
-          <span class="q-mark">“</span>
-          <p>Знания, которые меняют мир</p>
-        </div>
-      </div>
     </section>
 
-    <!-- Баннер со скидкой -->
-    <section class="flyer" data-reveal>
-      <div class="flyer-left">
-        <h2>📬 Присоединяйся!</h2>
-        <p>Запишись на пробный урок и получи скидку 10% на первый месяц обучения. Действует до конца месяца.</p>
-        <button class="btn btn-primary" onclick="openForm()">Получить предложение</button>
-      </div>
-      <div class="flyer-tag">
-        <span class="flyer-pin">📌</span>
-        <span class="flyer-big" id="flyerBig">−10%</span>
-        <p>«Онлайн-класс нового поколения»<br>скидка 10%</p>
-      </div>
+    <!-- ============================================================
+    ПРЕДМЕТЫ
+    ============================================================ -->
+
+    <section class="section" id="subjects">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="tag">Направления</span>
+                <h2>Выбери свой <span class="highlight">предмет</span></h2>
+                <p>Широкий выбор курсов для детей и подростков. От подготовки к школе до олимпиадного уровня.</p>
+            </div>
+
+            <div class="subject-category-title">
+                <i class="fas fa-book" style="color: var(--primary);"></i> Основные предметы
+            </div>
+            <div class="subjects-grid reveal">
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">📚</span>
+                    <h4>Подготовка к школе</h4>
+                    <p>6–7 лет</p>
+                    <span class="badge popular">Популярный</span>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">⚡</span>
+                    <h4>Скорочтение</h4>
+                    <p>7–14 лет</p>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">🌍</span>
+                    <h4>Английский язык</h4>
+                    <p>6–17 лет</p>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">📝</span>
+                    <h4>Русский язык</h4>
+                    <p>7–17 лет</p>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">🔢</span>
+                    <h4>Математика</h4>
+                    <p>7–17 лет</p>
+                    <span class="badge popular">Популярный</span>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">⚛️</span>
+                    <h4>Физика</h4>
+                    <p>10–17 лет</p>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">💻</span>
+                    <h4>Информатика</h4>
+                    <p>10–17 лет</p>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">🧪</span>
+                    <h4>Химия</h4>
+                    <p>12–17 лет</p>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">🌌</span>
+                    <h4>Астрономия</h4>
+                    <p>10–17 лет</p>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">🤖</span>
+                    <h4>Программирование</h4>
+                    <p>10–17 лет</p>
+                </div>
+            </div>
+
+            <div class="subject-category-title" style="margin-top: 30px;">
+                <i class="fas fa-graduation-cap" style="color: var(--secondary);"></i> Подготовка к ОГЭ/ЕГЭ
+            </div>
+            <div class="subjects-grid reveal">
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">⚛️</span>
+                    <h4>ОГЭ/ЕГЭ Физика</h4>
+                    <span class="badge exam">Экзамен</span>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">🔢</span>
+                    <h4>ОГЭ/ЕГЭ Математика</h4>
+                    <span class="badge exam">Экзамен</span>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">💻</span>
+                    <h4>ОГЭ/ЕГЭ Информатика</h4>
+                    <span class="badge exam">Экзамен</span>
+                </div>
+            </div>
+
+            <div class="subject-category-title" style="margin-top: 30px;">
+                <i class="fas fa-trophy" style="color: #10B981;"></i> Олимпиадная подготовка
+            </div>
+            <div class="subjects-grid reveal">
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">🏆</span>
+                    <h4>Олимпиадная математика</h4>
+                    <span class="badge olympiad">Олимпиада</span>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">🏆</span>
+                    <h4>Олимпиадная физика</h4>
+                    <span class="badge olympiad">Олимпиада</span>
+                </div>
+                <div class="subject-card" onclick="openForm()">
+                    <span class="icon">🏆</span>
+                    <h4>Олимпиадная астрономия</h4>
+                    <span class="badge olympiad">Олимпиада</span>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Новости и акции -->
-    <section class="news-section" id="news" data-reveal>
-      <h2>📰 Новости и акции</h2>
-      <p>Будьте в курсе последних событий, акций и специальных предложений от "Твоего окружения"!</p>
+    <!-- ============================================================
+    ПРОЦЕСС ОБУЧЕНИЯ
+    ============================================================ -->
 
-      <div class="news-grid">
-        <div class="news-card">
-          <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600&h=200&fit=crop" alt="Бесплатный пробный урок" class="news-image">
-          <div class="news-content">
-            <div class="news-date"><i class="far fa-calendar"></i> 15 октября 2023</div>
-            <h3 class="news-title">Бесплатный пробный урок для новых учеников</h3>
-            <p class="news-text">Присоединяйтесь к нам и получите бесплатный пробный урок по любому предмету! Это отличная возможность познакомиться с преподавателем и методикой обучения.</p>
-            <div><span class="news-tag special">Акция</span><span class="news-tag">Новости</span></div>
-          </div>
-        </div>
+    <section class="section" id="process" style="background: white;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="tag">Как мы учим</span>
+                <h2>Выбери свой <span class="highlight">формат</span></h2>
+                <p>Гибкая система обучения, которая подстраивается под твои цели и график.</p>
+            </div>
 
-        <div class="news-card">
-          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=200&fit=crop" alt="Зимний интенсив" class="news-image">
-          <div class="news-content">
-            <div class="news-date"><i class="far fa-calendar"></i> 5 ноября 2023</div>
-            <h3 class="news-title">Запускаем зимний интенсив по подготовке к ОГЭ</h3>
-            <p class="news-text">Специально для выпускников 9 классов мы запускаем зимний интенсивный курс подготовки к ОГЭ. Занятия начнутся уже в декабре!</p>
-            <div><span class="news-tag">Курсы</span><span class="news-tag">ОГЭ</span></div>
-          </div>
-        </div>
+            <div class="process-grid">
+                <div class="process-card reveal reveal-delay-1">
+                    <span class="number">01</span>
+                    <span class="icon">👤</span>
+                    <h4>Индивидуальный формат</h4>
+                    <p>
+                        Персональные занятия один на один с преподавателем.
+                        Идеально для устранения пробелов, подготовки к экзаменам
+                        и олимпиадам. Гибкое расписание и индивидуальный темп.
+                    </p>
+                </div>
 
-        <div class="news-card">
-          <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&h=200&fit=crop" alt="Новые преподаватели" class="news-image">
-          <div class="news-content">
-            <div class="news-date"><i class="far fa-calendar"></i> 25 октября 2023</div>
-            <h3 class="news-title">Новые преподаватели присоединились к нашей команде</h3>
-            <p class="news-text">Рады сообщить, что к нашей команде присоединились три новых опытных педагога по математике, физике и английскому языку.</p>
-            <div><span class="news-tag">Команда</span><span class="news-tag">Развитие</span></div>
-          </div>
+                <div class="process-card reveal reveal-delay-2">
+                    <span class="number">02</span>
+                    <span class="icon">👥</span>
+                    <h4>Групповой формат</h4>
+                    <p>
+                        Занятия в мини-группах до 10 человек. Развиваем
+                        коммуникативные навыки, учимся работать в команде
+                        и обсуждать сложные темы вместе. Поддержка и обратная связь.
+                    </p>
+                </div>
+
+                <div class="process-card reveal reveal-delay-3">
+                    <span class="number">03</span>
+                    <span class="icon">🎯</span>
+                    <h4>Интенсивный формат</h4>
+                    <p>
+                        Ускоренные курсы для подготовки к экзаменам и олимпиадам.
+                        Погружение в предмет, решение сложных задач, разбор
+                        типичных ошибок и максимальная практика.
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <!-- Галерея -->
-    <section class="gallery-section" id="gallerySection" data-reveal>
-      <div class="section-head">
-        <span class="g-emoji">📸</span>
-        <h2>Галерея</h2>
-        <span class="head-line"></span>
-      </div>
-      <div class="gallery-grid" id="galleryGrid">
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=400&fit=crop" alt="Занятие" loading="lazy">
-          <div class="gallery-overlay"><span>Занятие</span></div>
+    <!-- ============================================================
+    О НАС
+    ============================================================ -->
+
+    <section class="section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image reveal">
+                    <div class="main-img" style="background: var(--gradient-main); display: flex; align-items: center; justify-content: center; font-size: 120px; color: rgba(255,255,255,0.15); border-radius: var(--radius-lg); aspect-ratio: 4/3;">
+                        🌟
+                    </div>
+                    <div class="floating-badge">
+                        <div class="big">5+ лет</div>
+                        <p>успешной работы</p>
+                    </div>
+                </div>
+
+                <div class="about-content reveal">
+                    <span class="tag">О нас</span>
+                    <h2>Почему <span class="highlight">"Твоё Окружение"</span>?</h2>
+                    <p>
+                        <strong>Погрузитесь в "Твое окружение" – онлайн-класс, где расцветают таланты детей,
+                        подростков от 6 до 17 лет!</strong> Мы стираем границы, предоставляя возможность учиться
+                        из любой точки мира, превращая образование в увлекательное путешествие.
+                    </p>
+                    <p>
+                        Здесь ученики не просто получают знания, а обретают компас, направляющий их
+                        по индивидуальной образовательной траектории. В "Твоем окружении" их ждет
+                        атмосфера тепла и вдохновения.
+                    </p>
+                    <div class="features">
+                        <div class="feature">
+                            <span class="check"><i class="fas fa-check"></i></span>
+                            Опытные преподаватели
+                        </div>
+                        <div class="feature">
+                            <span class="check"><i class="fas fa-check"></i></span>
+                            Индивидуальный подход
+                        </div>
+                        <div class="feature">
+                            <span class="check"><i class="fas fa-check"></i></span>
+                            Современные методики
+                        </div>
+                        <div class="feature">
+                            <span class="check"><i class="fas fa-check"></i></span>
+                            Поддержка 24/7
+                        </div>
+                    </div>
+                    <div style="margin-top: 24px;">
+                        <button class="btn btn-secondary" onclick="openForm()">
+                            <i class="fas fa-heart"></i> Записаться на пробный урок
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c7f1?w=400&h=400&fit=crop" alt="Ученики" loading="lazy">
-          <div class="gallery-overlay"><span>Ученики</span></div>
-        </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=400&fit=crop" alt="Обучение" loading="lazy">
-          <div class="gallery-overlay"><span>Обучение</span></div>
-        </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=400&fit=crop" alt="Команда" loading="lazy">
-          <div class="gallery-overlay"><span>Команда</span></div>
-        </div>
-      </div>
     </section>
 
-    <!-- Футер -->
+    <!-- ============================================================
+    НОВОСТИ
+    ============================================================ -->
+
+    <section class="section" id="news" style="background: white;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="tag">Новости и акции</span>
+                <h2>Будь в <span class="highlight">курсе</span></h2>
+                <p>Следи за последними событиями, акциями и специальными предложениями.</p>
+            </div>
+
+            <div class="news-grid">
+                <div class="news-card reveal reveal-delay-1">
+                    <div class="image" style="background: var(--gradient-warm);">
+                        🎁
+                    </div>
+                    <div class="body">
+                        <div class="date"><i class="far fa-calendar"></i> 15 октября 2023</div>
+                        <h4>Бесплатный пробный урок</h4>
+                        <p>Присоединяйтесь и получите бесплатный пробный урок по любому предмету!</p>
+                        <div class="tags">
+                            <span class="special">Акция</span>
+                            <span>Новости</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-card reveal reveal-delay-2">
+                    <div class="image" style="background: var(--gradient-main);">
+                        ❄️
+                    </div>
+                    <div class="body">
+                        <div class="date"><i class="far fa-calendar"></i> 5 ноября 2023</div>
+                        <h4>Зимний интенсив по ОГЭ</h4>
+                        <p>Специальный интенсивный курс подготовки к ОГЭ для выпускников 9 классов.</p>
+                        <div class="tags">
+                            <span>Курсы</span>
+                            <span>ОГЭ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-card reveal reveal-delay-3">
+                    <div class="image" style="background: var(--gray-light); color: var(--primary);">
+                        👨‍🏫
+                    </div>
+                    <div class="body">
+                        <div class="date"><i class="far fa-calendar"></i> 25 октября 2023</div>
+                        <h4>Новые преподаватели в команде</h4>
+                        <p>К нашей команде присоединились три опытных педагога по математике, физике и английскому.</p>
+                        <div class="tags">
+                            <span>Команда</span>
+                            <span>Развитие</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    ФУТЕР
+    ============================================================ -->
+
     <footer class="footer">
-      <span class="copy">© 2026 Онлайн-класс "Твоё Окружение" · Все права защищены</span>
-      <div class="footer-links">
-        <a onclick="goHome()">Главная</a>
-        <a href="#about">О нас</a>
-        <a href="#news">Новости</a>
-        <button class="policy-btn" onclick="openPolicy()">Политика конфиденциальности</button>
-      </div>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="logo-text">Твоё <span>Окружение</span></span>
+                    <p>
+                        Онлайн-класс для детей и подростков от 6 до 17 лет.
+                        Индивидуальный подход, современные методики и поддержка на каждом шагу.
+                    </p>
+                </div>
+                <div>
+                    <h5>Навигация</h5>
+                    <ul>
+                        <li><a href="#subjects">Предметы</a></li>
+                        <li><a href="#process">Обучение</a></li>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#news">Новости</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Контакты</h5>
+                    <ul>
+                        <li><a href="tel:89506485799"><i class="fas fa-phone"></i> 8 (950) 648-57-99</a></li>
+                        <li><a href="mailto:tvoiokruzeni@ya.ru"><i class="fas fa-envelope"></i> tvoiokruzeni@ya.ru</a></li>
+                        <li><a href="#"><i class="fab fa-telegram"></i> @tvoiokruzeni</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Соцсети</h5>
+                    <div class="footer-socials">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2026 Твоё Окружение. Все права защищены.</span>
+                <button class="btn-ghost" style="background: none; border: none; color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;" onclick="openPolicy()">
+                    Политика конфиденциальности
+                </button>
+            </div>
+        </div>
     </footer>
 
-  </div>
+    <!-- ============================================================
+    МОДАЛЬНОЕ ОКНО ФОРМЫ
+    ============================================================ -->
 
-  <!-- Модальное окно формы записи -->
-  <div class="form-overlay" id="formModal">
-    <div class="form-modal">
-      <div class="form-header">
-        <h2>📝 Запись на курс</h2>
-        <button class="form-close" onclick="closeForm()">✕</button>
-      </div>
-      <form id="enrollForm" onsubmit="submitForm(event)">
-        <div class="form-group">
-          <label for="fullName">✔️ Ваше имя (родителя) *</label>
-          <input type="text" id="fullName" name="fullName" placeholder="Иванов Иван Иванович" required>
+    <div class="modal-overlay" id="formModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>📝 Запись на курс</h3>
+                <button class="modal-close" onclick="closeForm()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="enrollForm" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label for="fullName">Ваше имя (родителя) *</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Иванов Иван Иванович" required>
+                </div>
+                <div class="form-group">
+                    <label for="childName">Имя ребенка *</label>
+                    <input type="text" id="childName" name="childName" placeholder="Иван" required>
+                </div>
+                <div class="form-group">
+                    <label for="childAge">Возраст ребенка *</label>
+                    <input type="text" id="childAge" name="childAge" placeholder="Например: 14 лет" required>
+                </div>
+                <div class="form-group">
+                    <label for="direction">Направление *</label>
+                    <select id="direction" name="direction" required>
+                        <option value="">Выберите направление</option>
+                        <option value="Подготовка к школе">Подготовка к школе</option>
+                        <option value="Скорочтение">Скорочтение</option>
+                        <option value="Английский язык">Английский язык</option>
+                        <option value="Русский язык">Русский язык</option>
+                        <option value="Математика">Математика</option>
+                        <option value="Физика">Физика</option>
+                        <option value="Информатика">Информатика</option>
+                        <option value="Программирование">Программирование</option>
+                        <option value="Химия">Химия</option>
+                        <option value="Астрономия">Астрономия</option>
+                        <option value="ОГЭ/ЕГЭ">ОГЭ/ЕГЭ</option>
+                        <option value="Олимпиадная подготовка">Олимпиадная подготовка</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Номер телефона *</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+7 (950) 648-57-99" required>
+                </div>
+                <button type="submit" class="form-submit">
+                    <i class="fas fa-paper-plane"></i> Отправить заявку
+                </button>
+            </form>
+
+            <div class="form-success" id="formSuccess">
+                <span class="icon">✅</span>
+                <h4>Заявка отправлена!</h4>
+                <p>Мы свяжемся с вами в ближайшее время, чтобы подобрать курс.</p>
+            </div>
         </div>
-        <div class="form-group">
-          <label for="childName">✔️ Имя ребенка *</label>
-          <input type="text" id="childName" name="childName" placeholder="Иван" required>
-        </div>
-        <div class="form-group">
-          <label for="childAge">✔️ Возраст ребенка *</label>
-          <input type="text" id="childAge" name="childAge" placeholder="Например: 14 лет" required>
-        </div>
-        <div class="form-group">
-          <label for="direction">✔️ Направление *</label>
-          <select id="direction" name="direction" required>
-            <option value="">Выберите направление</option>
-            <option value="Подготовка к школе">Подготовка к школе</option>
-            <option value="Скорочтение">Скорочтение</option>
-            <option value="Английский язык">Английский язык</option>
-            <option value="Русский язык">Русский язык</option>
-            <option value="Математика">Математика</option>
-            <option value="Физика">Физика</option>
-            <option value="Информатика">Информатика</option>
-            <option value="Программирование">Программирование</option>
-            <option value="Химия">Химия</option>
-            <option value="Астрономия">Астрономия</option>
-            <option value="ОГЭ/ЕГЭ">ОГЭ/ЕГЭ</option>
-            <option value="Олимпиадная подготовка">Олимпиадная подготовка</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="phone">✔️ Номер телефона *</label>
-          <input type="tel" id="phone" name="phone" placeholder="+7 (950) 648-57-99" required>
-        </div>
-        <button type="submit" class="form-submit">✅ Отправить заявку</button>
-      </form>
-      <div class="form-success" id="formSuccess">
-        <div class="s-icon">✅</div>
-        <h3>Заявка отправлена!</h3>
-        <p>Мы свяжемся с вами в ближайшее время, чтобы подобрать курс.</p>
-      </div>
     </div>
-  </div>
 
-  <!-- Модальное окно «Политика конфиденциальности» -->
-  <div class="info-overlay policy-modal" id="policyModal">
-    <div class="info-modal">
-      <div class="info-header">
-        <h2>📄 Политика конфиденциальности</h2>
-        <button class="info-close" onclick="closePolicy()">✕</button>
-      </div>
-      <div class="info-content">
-        <h3>1. Общие положения</h3>
-        <p>Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. № 152-ФЗ «О персональных данных».</p>
-        <h3>2. Цели обработки персональных данных</h3>
-        <p>Сбор и обработка персональных данных осуществляется для заключения и исполнения договоров с клиентами, а также для информирования о наших услугах и акциях.</p>
-        <h3>3. Условия обработки персональных данных</h3>
-        <p>Обработка персональных данных осуществляется с согласия субъекта персональных данных на обработку его персональных данных.</p>
-        <h3>4. Контактная информация</h3>
-        <p>По всем вопросам, связанным с обработкой персональных данных, вы можете обратиться по email: tvoiokruzeni@ya.ru</p>
-      </div>
+    <!-- ============================================================
+    МОДАЛЬНОЕ ОКНО ПОЛИТИКИ
+    ============================================================ -->
+
+    <div class="modal-overlay" id="policyModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>📄 Политика конфиденциальности</h3>
+                <button class="modal-close" onclick="closePolicy()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div style="color: var(--gray); line-height: 1.8; font-size: 14px;">
+                <p><strong>1. Общие положения</strong></p>
+                <p>Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. № 152-ФЗ «О персональных данных».</p>
+                <br>
+                <p><strong>2. Цели обработки персональных данных</strong></p>
+                <p>Сбор и обработка персональных данных осуществляется для заключения и исполнения договоров с клиентами, а также для информирования о наших услугах и акциях.</p>
+                <br>
+                <p><strong>3. Условия обработки персональных данных</strong></p>
+                <p>Обработка персональных данных осуществляется с согласия субъекта персональных данных на обработку его персональных данных.</p>
+                <br>
+                <p><strong>4. Контактная информация</strong></p>
+                <p>По всем вопросам, связанным с обработкой персональных данных, вы можете обратиться по email: tvoiokruzeni@ya.ru</p>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Кнопка «наверх» -->
-  <button class="to-top" id="toTop" aria-label="Наверх" title="Взлетаем!">🚀</button>
+    <!-- ============================================================
+    КНОПКА НАВЕРХ
+    ============================================================ -->
 
-  <script>
-    // ============================================================
-    // ОСНОВНОЙ JAVASCRIPT
-    // ============================================================
+    <button class="to-top" id="toTop" aria-label="Наверх">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-    // Плавный скролл к якорям
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          const headerHeight = document.querySelector('.navbar').offsetHeight || 80;
-          const top = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
-          window.scrollTo({ top, behavior: 'smooth' });
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+
+    <script>
+        // ============================================================
+        // НАВИГАЦИЯ
+        // ============================================================
+
+        const navbar = document.getElementById('navbar');
+        const toTop = document.getElementById('toTop');
+
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY;
+            navbar.classList.toggle('scrolled', y > 20);
+            toTop.classList.toggle('show', y > 400);
+
+            // Активная ссылка в меню
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const rect = target.getBoundingClientRect();
+                        if (rect.top <= 120 && rect.bottom >= 120) {
+                            link.classList.add('active');
+                        }
+                    }
+                }
+            });
+        }, { passive: true });
+
+        toTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        function goHome() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-      });
-    });
 
-    // Функции для навигации
-    function goHome() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        // ============================================================
+        // МОБИЛЬНОЕ МЕНЮ
+        // ============================================================
 
-    // Прогресс-бар
-    const bar = document.getElementById('progressBar');
-    const toTop = document.getElementById('toTop');
-    let launching = false;
+        const mobileBtn = document.getElementById('mobileBtn');
+        const mobileClose = document.getElementById('mobileClose');
+        const mobileMenu = document.getElementById('mobileMenu');
 
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      document.getElementById('navbar').classList.toggle('scrolled', y > 10);
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.width = (max > 0 ? (y / max * 100) : 0) + '%';
-      if (!launching) toTop.classList.toggle('show', y > 500);
-    }, { passive: true });
-
-    toTop.addEventListener('click', () => {
-      launching = true;
-      toTop.classList.add('launch');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(() => { launching = false; toTop.classList.remove('launch', 'show'); }, 900);
-    });
-
-    // Reveal-анимация
-    document.querySelectorAll('[data-reveal]').forEach(el => {
-      el.classList.add('pre-reveal');
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
-      }, { threshold: 0.1 });
-      observer.observe(el);
-    });
 
-    // Бегущая строка
-    const track = document.getElementById('marqueeTrack');
-    if (track) track.innerHTML += track.innerHTML;
+        mobileClose.addEventListener('click', closeMobile);
 
-    // Анимация цифры скидки
-    (function animateDiscount() {
-      const el = document.getElementById('flyerBig');
-      if (!el) return;
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            observer.disconnect();
-            const startTime = performance.now();
-            const duration = 1100;
-            function tick(time) {
-              const progress = Math.min((time - startTime) / duration, 1);
-              const eased = 1 - Math.pow(1 - progress, 3);
-              el.textContent = '−' + Math.round(10 * eased) + '%';
-              if (progress < 1) requestAnimationFrame(tick);
+        function closeMobile() {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', (e) => {
+            if (mobileMenu.classList.contains('active') &&
+                !e.target.closest('.mobile-menu') &&
+                !e.target.closest('.mobile-menu-btn')) {
+                closeMobile();
             }
-            requestAnimationFrame(tick);
-          }
         });
-      }, { threshold: 0.5 });
-      observer.observe(el);
-    })();
 
-    // Описание предметов
-    const subjectTags = document.querySelectorAll('.subject-tag');
-    const subjectDesc = document.getElementById('subjectDescription');
-    const subjectTitle = document.getElementById('subjectTitle');
-    const subjectText = document.getElementById('subjectText');
+        // ============================================================
+        // ПЛАВНЫЙ СКРОЛЛ К ЯКОРЯМ
+        // ============================================================
 
-    subjectTags.forEach(tag => {
-      tag.addEventListener('click', function() {
-        const title = this.dataset.title || this.textContent.trim();
-        const text = this.dataset.text || 'Описание предмета. Подробности уточняйте у администратора.';
-        subjectTitle.textContent = title;
-        subjectText.textContent = text;
-        subjectDesc.style.display = 'block';
-        subjectDesc.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      });
-    });
-
-    // Фигуры с картинками в герое - модалка
-    const imageShapes = document.querySelectorAll('.image-shape');
-    const shapeModal = document.createElement('div');
-    shapeModal.className = 'modal-overlay';
-    shapeModal.id = 'shapeModal';
-    shapeModal.innerHTML = `
-      <div class="modal" style="max-width:500px;">
-        <div class="modal-header">
-          <h2 id="shapeModalTitle">Информация</h2>
-          <button class="modal-close" onclick="closeShapeModal()">✕</button>
-        </div>
-        <p id="shapeModalText" style="color:var(--muted);font-size:1.05rem;line-height:1.7;"></p>
-      </div>
-    `;
-    document.body.appendChild(shapeModal);
-
-    function openShapeModal(title, text) {
-      document.getElementById('shapeModalTitle').textContent = title;
-      document.getElementById('shapeModalText').textContent = text;
-      shapeModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeShapeModal() {
-      shapeModal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    shapeModal.addEventListener('click', e => {
-      if (e.target === shapeModal) closeShapeModal();
-    });
-
-    imageShapes.forEach(shape => {
-      shape.addEventListener('click', function() {
-        const title = this.dataset.title || 'Информация';
-        const text = this.dataset.text || 'Подробности уточняйте у администратора.';
-        openShapeModal(title, text);
-      });
-    });
-
-    // Форма записи
-    const formModal = document.getElementById('formModal');
-
-    function openForm() {
-      document.getElementById('enrollForm').style.display = '';
-      document.getElementById('enrollForm').reset();
-      document.getElementById('formSuccess').classList.remove('show');
-      formModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeForm() {
-      formModal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    formModal.addEventListener('click', e => {
-      if (e.target === formModal) closeForm();
-    });
-
-    function submitForm(e) {
-      e.preventDefault();
-      const form = document.getElementById('enrollForm');
-      const formData = new FormData(form);
-      
-      // Имитация отправки
-      const btn = form.querySelector('.form-submit');
-      const originalText = btn.textContent;
-      btn.textContent = '⏳ Отправка...';
-      btn.disabled = true;
-
-      setTimeout(() => {
-        form.style.display = 'none';
-        document.getElementById('formSuccess').classList.add('show');
-        btn.textContent = originalText;
-        btn.disabled = false;
-        fireConfetti();
-      }, 1200);
-    }
-
-    // Политика конфиденциальности
-    const policyModal = document.getElementById('policyModal');
-
-    function openPolicy() {
-      policyModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closePolicy() {
-      policyModal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    policyModal.addEventListener('click', e => {
-      if (e.target === policyModal) closePolicy();
-    });
-
-    // Конфетти при отправке формы
-    const CONFETTI_COLORS = ['#2c5aa0', '#4a7ec9', '#FFD84A', '#e6f0ff', '#1c3b6f'];
-    let cCanvas = null, cCtx = null, cParts = [], cRunning = false;
-
-    function confettiLoop() {
-      if (!cRunning) return;
-      cCtx.clearRect(0, 0, cCanvas.width, cCanvas.height);
-      cParts = cParts.filter(p => p.y < cCanvas.height + 40 && p.life > 0);
-      cParts.forEach(p => {
-        p.life--; p.vy += 0.14; p.vx *= 0.992;
-        p.x += p.vx + Math.sin(p.life * 0.08 + p.seed) * 0.8;
-        p.y += p.vy; p.rot += p.vr;
-        cCtx.save();
-        cCtx.translate(p.x, p.y);
-        cCtx.rotate(p.rot);
-        cCtx.globalAlpha = Math.min(1, p.life / 40);
-        cCtx.fillStyle = p.color;
-        cCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-        cCtx.restore();
-      });
-      if (cParts.length) requestAnimationFrame(confettiLoop);
-      else { cRunning = false; if (cCanvas) cCanvas.remove(); cCanvas = null; }
-    }
-
-    function confettiBurst(x, y, count, ang) {
-      for (let i = 0; i < count; i++) {
-        const a = ang + (Math.random() - 0.5) * 1.1;
-        const v = 7 + Math.random() * 8;
-        cParts.push({
-          x, y,
-          vx: Math.cos(a) * v,
-          vy: Math.sin(a) * v,
-          w: 6 + Math.random() * 7,
-          h: 4 + Math.random() * 5,
-          color: CONFETTI_COLORS[(Math.random() * CONFETTI_COLORS.length) | 0],
-          rot: Math.random() * Math.PI,
-          vr: (Math.random() - 0.5) * 0.3,
-          life: 90 + Math.random() * 50,
-          seed: Math.random() * 10
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    const offset = 80;
+                    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+                closeMobile();
+            });
         });
-      }
-    }
 
-    function fireConfetti() {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      if (!cCanvas) {
-        cCanvas = document.createElement('canvas');
-        cCanvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:1400';
-        document.body.appendChild(cCanvas);
-        cCtx = cCanvas.getContext('2d');
-      }
-      cCanvas.width = window.innerWidth;
-      cCanvas.height = window.innerHeight;
-      const W = cCanvas.width, H = cCanvas.height;
-      confettiBurst(W * 0.12, H * 0.8, 55, -Math.PI / 2.6);
-      confettiBurst(W * 0.88, H * 0.8, 55, -Math.PI + Math.PI / 2.6);
-      setTimeout(() => confettiBurst(W * 0.5, H * 0.35, 70, -Math.PI / 2), 250);
-      if (!cRunning) { cRunning = true; confettiLoop(); }
-    }
+        // ============================================================
+        // REVEAL АНИМАЦИЯ
+        // ============================================================
 
-    // Закрытие модалок по Escape
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        if (formModal.classList.contains('active')) closeForm();
-        if (policyModal.classList.contains('active')) closePolicy();
-        if (shapeModal.classList.contains('active')) closeShapeModal();
-      }
-    });
+        const revealElements = document.querySelectorAll('.reveal');
 
-    // Плавное появление галереи
-    document.querySelectorAll('.gallery-item').forEach((item, i) => {
-      item.style.opacity = '0';
-      item.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        item.style.opacity = '1';
-        item.style.transform = 'translateY(0)';
-      }, 200 + i * 100);
-    });
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
 
-    console.log('🚀 Онлайн-класс "Твоё Окружение" загружен!');
-  </script>
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ============================================================
+        // МОДАЛЬНЫЕ ОКНА
+        // ============================================================
+
+        const formModal = document.getElementById('formModal');
+        const policyModal = document.getElementById('policyModal');
+
+        function openForm() {
+            document.getElementById('enrollForm').style.display = '';
+            document.getElementById('enrollForm').reset();
+            document.getElementById('formSuccess').classList.remove('show');
+            formModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeForm() {
+            formModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function openPolicy() {
+            policyModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePolicy() {
+            policyModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        formModal.addEventListener('click', e => {
+            if (e.target === formModal) closeForm();
+        });
+
+        policyModal.addEventListener('click', e => {
+            if (e.target === policyModal) closePolicy();
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                if (formModal.classList.contains('active')) closeForm();
+                if (policyModal.classList.contains('active')) closePolicy();
+            }
+        });
+
+        // ============================================================
+        // ОТПРАВКА ФОРМЫ
+        // ============================================================
+
+        function submitForm(e) {
+            e.preventDefault();
+            const form = document.getElementById('enrollForm');
+            const btn = form.querySelector('.form-submit');
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                form.style.display = 'none';
+                document.getElementById('formSuccess').classList.add('show');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                fireConfetti();
+            }, 1500);
+        }
+
+        // ============================================================
+        // КОНФЕТТИ
+        // ============================================================
+
+        const confettiColors = ['#6C63F9', '#FF6B6B', '#FFD93D', '#10B981', '#8B83FF'];
+
+        function fireConfetti() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            const canvas = document.createElement('canvas');
+            canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999';
+            document.body.appendChild(canvas);
+
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = confettiColors;
+
+            for (let i = 0; i < 120; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    w: 6 + Math.random() * 8,
+                    h: 4 + Math.random() * 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: 2 + Math.random() * 4,
+                    rot: Math.random() * 360,
+                    vr: (Math.random() - 0.5) * 6,
+                    life: 1
+                });
+            }
+
+            let frame = 0;
+
+            function animate() {
+                frame++;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                let alive = false;
+
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.06;
+                    p.rot += p.vr;
+                    p.life -= 0.002;
+
+                    if (p.life > 0) {
+                        alive = true;
+                        ctx.save();
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate((p.rot * Math.PI) / 180);
+                        ctx.globalAlpha = Math.min(p.life, 1);
+                        ctx.fillStyle = p.color;
+                        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                        ctx.restore();
+                    }
+                });
+
+                if (alive && frame < 300) {
+                    requestAnimationFrame(animate);
+                } else {
+                    canvas.remove();
+                }
+            }
+
+            animate();
+        }
+    </script>
+
 </body>
 </html>
