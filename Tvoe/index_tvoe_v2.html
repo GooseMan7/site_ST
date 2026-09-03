@@ -27,9 +27,11 @@
             --gray: #6B7A8F;
             --gray-light: #E8ECF1;
             --white: #FFFFFF;
-            --bg: #F8F9FE;
+            --bg: #F0EDFF;
+            --bg-pastel: #F5F0FF;
             --gradient-main: linear-gradient(135deg, #6C63F9 0%, #5A52D9 50%, #4A42C9 100%);
             --gradient-warm: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            --gradient-pastel: linear-gradient(135deg, #F5F0FF 0%, #EDE4FF 50%, #E8DDFF 100%);
             --shadow-sm: 0 4px 20px rgba(108, 99, 249, 0.15);
             --shadow-md: 0 8px 40px rgba(108, 99, 249, 0.2);
             --shadow-lg: 0 20px 60px rgba(108, 99, 249, 0.25);
@@ -47,7 +49,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--bg);
+            background: var(--bg-pastel);
             color: var(--dark);
             line-height: 1.6;
             overflow-x: hidden;
@@ -250,7 +252,7 @@
             padding: 120px 0 80px;
             position: relative;
             overflow: hidden;
-            background: var(--bg);
+            background: var(--bg-pastel);
         }
 
         .hero::before {
@@ -260,7 +262,7 @@
             right: -20%;
             width: 800px;
             height: 800px;
-            background: radial-gradient(circle, rgba(108, 99, 249, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(108, 99, 249, 0.06) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -272,7 +274,7 @@
             left: -10%;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(255, 107, 107, 0.06) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.04) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -388,36 +390,36 @@
         .hero-illustration {
             position: relative;
             width: 100%;
-            max-width: 500px;
+            max-width: 480px;
             aspect-ratio: 1;
         }
 
         /* ============================================================
-           БЕЛЫЙ ПРЯМОУГОЛЬНИК floating-container
+           БЕЛЫЙ ПРЯМОУГОЛЬНИК floating-container (УМЕНЬШЕННЫЙ)
            ============================================================ */
 
         .floating-container {
             position: absolute;
             inset: 0;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
             border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 24px;
+            padding: 16px 20px;
             display: flex;
             flex-wrap: wrap;
             align-content: center;
             justify-content: center;
-            gap: 12px 20px;
+            gap: 8px 14px;
             z-index: 2;
             animation: float-container 8s ease-in-out infinite;
         }
 
         @keyframes float-container {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
 
         .floating-container .floating-card {
@@ -431,22 +433,22 @@
             box-shadow: none;
             backdrop-filter: none;
             border: none;
-            padding: 8px 12px;
+            padding: 4px 10px;
             min-width: auto;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex: 0 1 auto;
         }
 
         .floating-container .floating-card .icon {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 14px;
             flex-shrink: 0;
         }
 
@@ -476,7 +478,7 @@
         }
 
         .floating-container .floating-card .text {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--dark);
             white-space: nowrap;
@@ -485,42 +487,11 @@
         .floating-container .floating-card .text small {
             display: block;
             font-weight: 400;
-            font-size: 11px;
+            font-size: 10px;
             color: var(--gray);
         }
 
-        /* Карточка с преимуществами внутри контейнера */
-        .floating-container .floating-card.benefits-card {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 2px;
-            padding: 8px 12px;
-            background: rgba(108, 99, 249, 0.04);
-            border-radius: var(--radius-sm);
-            border-left: 3px solid var(--primary);
-        }
-
-        .floating-container .floating-card.benefits-card .benefit-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--dark);
-            width: 100%;
-        }
-
-        .floating-container .floating-card.benefits-card .benefit-item .check-mark {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 13px;
-            flex-shrink: 0;
-        }
-
-        .floating-container .floating-card.benefits-card .benefit-item small {
-            font-weight: 400;
-            color: var(--gray);
-        }
+        /* Удален benefits-card */
 
         .hero-illustration .main-shape {
             width: 100%;
@@ -1064,7 +1035,7 @@
         }
 
         .modal-subject-card {
-            background: var(--bg);
+            background: var(--bg-pastel);
             border-radius: var(--radius-md);
             padding: 24px 20px;
             text-align: center;
@@ -1142,11 +1113,128 @@
             background: var(--gray-light);
         }
 
-        .modal-footer {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid var(--gray-light);
+        /* ============================================================
+           МОДАЛЬНОЕ ОКНО ДЕТАЛЕЙ ПРЕДМЕТА
+           ============================================================ */
+
+        .detail-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            z-index: 2100;
+            animation: fadeInModal 0.3s ease;
+        }
+
+        .detail-overlay.active {
             display: flex;
+        }
+
+        .detail-modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            max-width: 520px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUpModal 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .detail-modal .detail-icon {
+            font-size: 56px;
+            text-align: center;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .detail-modal h3 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .detail-modal .detail-sub {
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .detail-modal .detail-desc {
+            color: var(--gray);
+            font-size: 15px;
+            line-height: 1.8;
+            padding: 20px;
+            background: var(--bg-pastel);
+            border-radius: var(--radius-sm);
+            margin-bottom: 24px;
+        }
+
+        .detail-modal .detail-tags {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .detail-modal .detail-tags span {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 50px;
+            background: var(--gray-light);
+            color: var(--gray);
+        }
+
+        .detail-modal .detail-tags span.special {
+            background: rgba(108, 99, 249, 0.12);
+            color: var(--primary);
+        }
+
+        .detail-modal .detail-tags span.exam {
+            background: rgba(255, 107, 107, 0.12);
+            color: var(--secondary);
+        }
+
+        .detail-modal .detail-tags span.olympiad {
+            background: rgba(52, 211, 153, 0.12);
+            color: #10B981;
+        }
+
+        .detail-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-close:hover {
+            background: var(--gray-light);
+            color: var(--dark);
+        }
+
+        .detail-modal .btn {
+            width: 100%;
             justify-content: center;
         }
 
@@ -1179,7 +1267,7 @@
             font-size: 15px;
             font-family: 'Inter', sans-serif;
             transition: var(--transition);
-            background: var(--bg);
+            background: var(--bg-pastel);
             color: var(--dark);
         }
 
@@ -1374,22 +1462,22 @@
             }
 
             .floating-container {
-                padding: 16px;
-                gap: 8px 14px;
+                padding: 12px 16px;
+                gap: 6px 10px;
             }
 
             .floating-container .floating-card .text {
-                font-size: 12px;
+                font-size: 11px;
             }
 
             .floating-container .floating-card .text small {
-                font-size: 10px;
+                font-size: 9px;
             }
 
             .floating-container .floating-card .icon {
-                width: 30px;
-                height: 30px;
-                font-size: 14px;
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
             }
 
             .about-grid {
@@ -1450,40 +1538,28 @@
             }
 
             .floating-container {
-                padding: 14px;
-                gap: 6px 10px;
-                flex-wrap: wrap;
-                justify-content: center;
+                padding: 10px 14px;
+                gap: 4px 8px;
+                border-radius: var(--radius-md);
             }
 
             .floating-container .floating-card {
-                padding: 4px 8px;
+                padding: 2px 6px;
+                gap: 6px;
             }
 
             .floating-container .floating-card .text {
-                font-size: 11px;
-            }
-
-            .floating-container .floating-card .text small {
-                font-size: 9px;
-            }
-
-            .floating-container .floating-card .icon {
-                width: 26px;
-                height: 26px;
-                font-size: 12px;
-            }
-
-            .floating-container .floating-card.benefits-card {
-                padding: 6px 10px;
-            }
-
-            .floating-container .floating-card.benefits-card .benefit-item {
                 font-size: 10px;
             }
 
-            .floating-container .floating-card.benefits-card .benefit-item .check-mark {
-                font-size: 11px;
+            .floating-container .floating-card .text small {
+                font-size: 8px;
+            }
+
+            .floating-container .floating-card .icon {
+                width: 24px;
+                height: 24px;
+                font-size: 10px;
             }
 
             .hero-illustration .main-shape {
@@ -1492,7 +1568,7 @@
             }
 
             .hero-illustration .main-shape .emoji-big {
-                font-size: 56px;
+                font-size: 48px;
             }
 
             .process-grid {
@@ -1523,6 +1599,10 @@
 
             .modal-subjects-grid {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            .detail-modal {
+                padding: 28px;
             }
         }
 
@@ -1568,27 +1648,42 @@
                 font-size: 22px;
             }
 
+            .detail-modal {
+                padding: 20px;
+            }
+
+            .detail-modal .detail-icon {
+                font-size: 40px;
+            }
+
+            .detail-modal h3 {
+                font-size: 20px;
+            }
+
             .floating-container {
-                padding: 10px;
-                gap: 4px 8px;
+                padding: 8px 10px;
+                gap: 3px 6px;
+                border-radius: var(--radius-sm);
             }
 
             .floating-container .floating-card {
-                padding: 3px 6px;
+                padding: 2px 4px;
+                gap: 4px;
             }
 
             .floating-container .floating-card .text {
-                font-size: 10px;
-            }
-
-            .floating-container .floating-card .text small {
                 font-size: 8px;
             }
 
+            .floating-container .floating-card .text small {
+                font-size: 7px;
+            }
+
             .floating-container .floating-card .icon {
-                width: 22px;
-                height: 22px;
-                font-size: 10px;
+                width: 18px;
+                height: 18px;
+                font-size: 8px;
+                border-radius: 6px;
             }
         }
 
@@ -1715,7 +1810,7 @@
                             <span class="emoji-big">🚀</span>
                         </div>
 
-                        <!-- БЕЛЫЙ ПРЯМОУГОЛЬНИК floating-container -->
+                        <!-- БЕЛЫЙ ПРЯМОУГОЛЬНИК floating-container (УМЕНЬШЕННЫЙ) -->
                         <div class="floating-container">
 
                             <!-- Карточка 1: Групповые занятия -->
@@ -1760,25 +1855,6 @@
                                 <div class="text">
                                     Гибкое расписание
                                     <small>под ваш график</small>
-                                </div>
-                            </div>
-
-                            <!-- Карточка 6: Дополнительные преимущества -->
-                            <div class="floating-card benefits-card">
-                                <div class="benefit-item">
-                                    <span class="check-mark">✓</span>
-                                    Обратная связь
-                                    <small>после каждого занятия</small>
-                                </div>
-                                <div class="benefit-item">
-                                    <span class="check-mark">✓</span>
-                                    Поддержка 24/7
-                                    <small>куратор всегда на связи</small>
-                                </div>
-                                <div class="benefit-item">
-                                    <span class="check-mark">✓</span>
-                                    Домашние задания
-                                    <small>с проверкой</small>
                                 </div>
                             </div>
 
@@ -2028,54 +2104,54 @@
                 <i class="fas fa-book" style="color: var(--primary);"></i> Основные предметы
             </div>
             <div class="modal-subjects-grid">
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Подготовка к школе', '📚', '6–7 лет', 'Комплексная программа для будущих первоклассников. Развитие логики, речи, моторики. Занятия в игровой форме помогают легко адаптироваться к школе.', 'popular')">
                     <span class="icon">📚</span>
                     <h4>Подготовка к школе</h4>
                     <p>6–7 лет</p>
                     <span class="badge popular">Популярный</span>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Скорочтение', '⚡', '7–14 лет', 'Развитие навыков быстрого чтения с пониманием текста. Увеличиваем скорость чтения в 2-3 раза без потери понимания.', '')">
                     <span class="icon">⚡</span>
                     <h4>Скорочтение</h4>
                     <p>7–14 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Английский язык', '🌍', '6–17 лет', 'Изучение английского с нуля до продвинутого уровня. Развитие всех навыков: говорение, аудирование, чтение, письмо.', '')">
                     <span class="icon">🌍</span>
                     <h4>Английский язык</h4>
                     <p>6–17 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Русский язык', '📝', '7–17 лет', 'Качественная подготовка к экзаменам, повышение грамотности. Работаем над устранением ошибок и развитием речи.', '')">
                     <span class="icon">📝</span>
                     <h4>Русский язык</h4>
                     <p>7–17 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Математика', '🔢', '7–17 лет', 'Углубленное изучение математики для успешной сдачи ОГЭ и ЕГЭ, подготовка к олимпиадам. Объясняем сложные темы простым языком.', 'popular')">
                     <span class="icon">🔢</span>
                     <h4>Математика</h4>
                     <p>7–17 лет</p>
                     <span class="badge popular">Популярный</span>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Физика', '⚛️', '10–17 лет', 'Изучение физики через практические эксперименты и решение задач. Подготовка к экзаменам и олимпиадам.', '')">
                     <span class="icon">⚛️</span>
                     <h4>Физика</h4>
                     <p>10–17 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Информатика', '💻', '10–17 лет', 'Изучение основ программирования, алгоритмов и компьютерных технологий. Подготовка к ЕГЭ по информатике.', '')">
                     <span class="icon">💻</span>
                     <h4>Информатика</h4>
                     <p>10–17 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Химия', '🧪', '12–17 лет', 'Увлекательное изучение химии с проведением безопасных экспериментов. Подготовка к ОГЭ и ЕГЭ.', '')">
                     <span class="icon">🧪</span>
                     <h4>Химия</h4>
                     <p>12–17 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Астрономия', '🌌', '10–17 лет', 'Знакомство с основами астрономии, изучение звездного неба, планет и космических явлений.', '')">
                     <span class="icon">🌌</span>
                     <h4>Астрономия</h4>
                     <p>10–17 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Программирование', '🤖', '10–17 лет', 'Курсы по программированию: от основ до создания собственных проектов. Изучаем Python, Scratch, веб-разработку.', '')">
                     <span class="icon">🤖</span>
                     <h4>Программирование</h4>
                     <p>10–17 лет</p>
@@ -2086,17 +2162,17 @@
                 <i class="fas fa-graduation-cap" style="color: var(--secondary);"></i> Подготовка к ОГЭ/ЕГЭ
             </div>
             <div class="modal-subjects-grid">
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Физика', '⚛️', '9–11 класс', 'Интенсивная подготовка к экзаменам по физике: решение типовых задач, разбор демоверсий, работа над сложными темами.', 'exam')">
                     <span class="icon">⚛️</span>
                     <h4>ОГЭ/ЕГЭ Физика</h4>
                     <span class="badge exam">Экзамен</span>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Математика', '🔢', '9–11 класс', 'Подготовка к базовому и профильному уровню ЕГЭ по математике: повторение программы, отработка типовых заданий.', 'exam')">
                     <span class="icon">🔢</span>
                     <h4>ОГЭ/ЕГЭ Математика</h4>
                     <span class="badge exam">Экзамен</span>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Информатика', '💻', '9–11 класс', 'Подготовка к экзаменам по информатике: программирование, алгоритмы, теория информации.', 'exam')">
                     <span class="icon">💻</span>
                     <h4>ОГЭ/ЕГЭ Информатика</h4>
                     <span class="badge exam">Экзамен</span>
@@ -2107,28 +2183,42 @@
                 <i class="fas fa-trophy" style="color: #10B981;"></i> Олимпиадная подготовка
             </div>
             <div class="modal-subjects-grid">
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Олимпиадная математика', '🏆', '7–17 лет', 'Специальный курс для подготовки к математическим олимпиадам различного уровня. Развитие нестандартного мышления.', 'olympiad')">
                     <span class="icon">🏆</span>
                     <h4>Олимпиадная математика</h4>
                     <span class="badge olympiad">Олимпиада</span>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Олимпиадная физика', '🏆', '7–17 лет', 'Углубленный курс физики для подготовки к олимпиадам: решение нестандартных задач, экспериментальная физика.', 'olympiad')">
                     <span class="icon">🏆</span>
                     <h4>Олимпиадная физика</h4>
                     <span class="badge olympiad">Олимпиада</span>
                 </div>
-                <div class="modal-subject-card" onclick="closeSubjectsModal(); openForm();">
+                <div class="modal-subject-card" onclick="openDetail('Олимпиадная астрономия', '🏆', '7–17 лет', 'Подготовка к астрономическим олимпиадам: небесная механика, астрофизика, работа с телескопами.', 'olympiad')">
                     <span class="icon">🏆</span>
                     <h4>Олимпиадная астрономия</h4>
                     <span class="badge olympiad">Олимпиада</span>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="closeSubjectsModal(); openForm();">
-                    <i class="fas fa-pen"></i> Записаться на курс
-                </button>
-            </div>
+    <!-- ============================================================
+    МОДАЛЬНОЕ ОКНО ДЕТАЛЕЙ ПРЕДМЕТА
+    ============================================================ -->
+
+    <div class="detail-overlay" id="detailModal">
+        <div class="detail-modal" style="position: relative;">
+            <button class="detail-close" onclick="closeDetail()">
+                <i class="fas fa-times"></i>
+            </button>
+            <span class="detail-icon" id="detailIcon">📚</span>
+            <h3 id="detailTitle">Название предмета</h3>
+            <div class="detail-sub" id="detailSub">Возрастная группа</div>
+            <div class="detail-desc" id="detailDesc">Описание предмета</div>
+            <div class="detail-tags" id="detailTags"></div>
+            <button class="btn btn-primary" onclick="closeDetail(); openForm();">
+                <i class="fas fa-pen"></i> Записаться на курс
+            </button>
         </div>
     </div>
 
@@ -2304,6 +2394,55 @@
         });
 
         // ============================================================
+        // МОДАЛЬНОЕ ОКНО ДЕТАЛЕЙ ПРЕДМЕТА
+        // ============================================================
+
+        const detailModal = document.getElementById('detailModal');
+
+        function openDetail(title, icon, sub, desc, tag) {
+            document.getElementById('detailIcon').textContent = icon;
+            document.getElementById('detailTitle').textContent = title;
+            document.getElementById('detailSub').textContent = sub;
+            document.getElementById('detailDesc').textContent = desc;
+
+            const tagsContainer = document.getElementById('detailTags');
+            tagsContainer.innerHTML = '';
+
+            if (tag === 'popular') {
+                const span = document.createElement('span');
+                span.className = 'special';
+                span.textContent = '⭐ Популярный';
+                tagsContainer.appendChild(span);
+            } else if (tag === 'exam') {
+                const span = document.createElement('span');
+                span.className = 'exam';
+                span.textContent = '📝 Экзамен';
+                tagsContainer.appendChild(span);
+            } else if (tag === 'olympiad') {
+                const span = document.createElement('span');
+                span.className = 'olympiad';
+                span.textContent = '🏆 Олимпиада';
+                tagsContainer.appendChild(span);
+            }
+
+            // Добавляем тег возраста
+            const ageSpan = document.createElement('span');
+            ageSpan.textContent = '👶 ' + sub;
+            tagsContainer.appendChild(ageSpan);
+
+            detailModal.classList.add('active');
+            // Не закрываем модалку предметов
+        }
+
+        function closeDetail() {
+            detailModal.classList.remove('active');
+        }
+
+        detailModal.addEventListener('click', e => {
+            if (e.target === detailModal) closeDetail();
+        });
+
+        // ============================================================
         // МОДАЛЬНЫЕ ОКНА ФОРМЫ И ПОЛИТИКИ
         // ============================================================
 
@@ -2343,6 +2482,7 @@
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
+                if (detailModal.classList.contains('active')) closeDetail();
                 if (subjectsModal.classList.contains('active')) closeSubjectsModal();
                 if (formModal.classList.contains('active')) closeForm();
                 if (policyModal.classList.contains('active')) closePolicy();
