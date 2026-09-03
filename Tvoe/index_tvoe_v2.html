@@ -393,138 +393,133 @@
         }
 
         /* ============================================================
-           ПЛАВАЮЩИЕ КАРТОЧКИ
+           БЕЛЫЙ ПРЯМОУГОЛЬНИК floating-container
            ============================================================ */
 
-        .floating-card {
+        .floating-container {
             position: absolute;
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 16px 20px;
-            box-shadow: var(--shadow-md);
+            inset: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: center;
+            justify-content: center;
+            gap: 12px 20px;
+            z-index: 2;
+            animation: float-container 8s ease-in-out infinite;
+        }
+
+        @keyframes float-container {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating-container .floating-card {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+            bottom: auto;
+            animation: none;
+            background: transparent;
+            box-shadow: none;
+            backdrop-filter: none;
+            border: none;
+            padding: 8px 12px;
+            min-width: auto;
             display: flex;
             align-items: center;
-            gap: 12px;
-            animation: float 6s ease-in-out infinite;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            min-width: 180px;
+            gap: 10px;
+            flex: 0 1 auto;
         }
 
-        .floating-card:nth-child(1) {
-            top: 0%;
-            right: -5%;
-            animation-delay: 0s;
-        }
-
-        .floating-card:nth-child(2) {
-            bottom: 20%;
-            left: -12%;
-            animation-delay: 2s;
-        }
-
-        .floating-card:nth-child(3) {
-            bottom: -5%;
-            right: -8%;
-            animation-delay: 4s;
-        }
-
-        .floating-card:nth-child(4) {
-            top: 35%;
-            right: -15%;
-            animation-delay: 1s;
-        }
-
-        .floating-card:nth-child(5) {
-            top: 55%;
-            left: -15%;
-            animation-delay: 3s;
-        }
-
-        .floating-card .icon {
-            width: 40px;
-            height: 40px;
+        .floating-container .floating-card .icon {
+            width: 36px;
+            height: 36px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 16px;
             flex-shrink: 0;
         }
 
-        .floating-card .icon.purple {
+        .floating-container .floating-card .icon.purple {
             background: rgba(108, 99, 249, 0.12);
             color: var(--primary);
         }
 
-        .floating-card .icon.warm {
+        .floating-container .floating-card .icon.warm {
             background: rgba(255, 107, 107, 0.12);
             color: var(--secondary);
         }
 
-        .floating-card .icon.gold {
+        .floating-container .floating-card .icon.gold {
             background: rgba(255, 217, 61, 0.2);
             color: #F59E0B;
         }
 
-        .floating-card .icon.green {
+        .floating-container .floating-card .icon.green {
             background: rgba(16, 185, 129, 0.12);
             color: #10B981;
         }
 
-        .floating-card .icon.blue {
+        .floating-container .floating-card .icon.blue {
             background: rgba(59, 130, 246, 0.12);
             color: #3B82F6;
         }
 
-        .floating-card .text {
+        .floating-container .floating-card .text {
             font-size: 13px;
             font-weight: 600;
             color: var(--dark);
+            white-space: nowrap;
         }
 
-        .floating-card .text small {
+        .floating-container .floating-card .text small {
             display: block;
             font-weight: 400;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--gray);
         }
 
-        /* Карточка с преимуществами — отдельные пункты внутри */
-        .floating-card.benefits-card {
+        /* Карточка с преимуществами внутри контейнера */
+        .floating-container .floating-card.benefits-card {
             flex-direction: column;
             align-items: flex-start;
-            gap: 6px;
-            padding: 18px 22px;
-            min-width: 200px;
-            animation-delay: 4s;
+            gap: 2px;
+            padding: 8px 12px;
+            background: rgba(108, 99, 249, 0.04);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--primary);
         }
 
-        .floating-card.benefits-card .benefit-item {
+        .floating-container .floating-card.benefits-card .benefit-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 13px;
+            gap: 8px;
+            font-size: 12px;
             font-weight: 500;
             color: var(--dark);
             width: 100%;
         }
 
-        .floating-card.benefits-card .benefit-item .check-mark {
+        .floating-container .floating-card.benefits-card .benefit-item .check-mark {
             color: var(--primary);
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13px;
             flex-shrink: 0;
         }
 
-        .floating-card.benefits-card .benefit-item small {
+        .floating-container .floating-card.benefits-card .benefit-item small {
             font-weight: 400;
             color: var(--gray);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
         }
 
         .hero-illustration .main-shape {
@@ -540,6 +535,7 @@
             color: rgba(255, 255, 255, 0.15);
             position: relative;
             box-shadow: var(--shadow-lg);
+            z-index: 1;
         }
 
         @keyframes morph {
@@ -969,7 +965,7 @@
         }
 
         /* ============================================================
-           МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ (КАК НА ПЕРВОМ САЙТЕ)
+           МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ
            ============================================================ */
 
         .modal-overlay {
@@ -983,11 +979,16 @@
             align-items: center;
             padding: 24px;
             z-index: 2000;
-            animation: fadeIn 0.3s ease;
+            animation: fadeInModal 0.3s ease;
         }
 
         .modal-overlay.active {
             display: flex;
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal {
@@ -998,15 +999,10 @@
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: slideUpModal 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
+        @keyframes slideUpModal {
             from { opacity: 0; transform: translateY(30px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
@@ -1155,7 +1151,7 @@
         }
 
         /* ============================================================
-           ФОРМА ЗАПИСИ (отдельное модальное окно)
+           ФОРМА ЗАПИСИ
            ============================================================ */
 
         .form-modal {
@@ -1226,7 +1222,7 @@
 
         .form-success.show {
             display: block;
-            animation: slideUp 0.4s ease;
+            animation: slideUpModal 0.4s ease;
         }
 
         .form-success .icon {
@@ -1377,17 +1373,23 @@
                 margin: 0 auto;
             }
 
-            .floating-card:nth-child(2) {
-                left: 0;
+            .floating-container {
+                padding: 16px;
+                gap: 8px 14px;
             }
-            .floating-card:nth-child(3) {
-                right: 0;
+
+            .floating-container .floating-card .text {
+                font-size: 12px;
             }
-            .floating-card:nth-child(4) {
-                right: 0;
+
+            .floating-container .floating-card .text small {
+                font-size: 10px;
             }
-            .floating-card:nth-child(5) {
-                left: 0;
+
+            .floating-container .floating-card .icon {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
             }
 
             .about-grid {
@@ -1447,8 +1449,41 @@
                 font-size: 1.6rem;
             }
 
-            .floating-card {
-                display: none !important;
+            .floating-container {
+                padding: 14px;
+                gap: 6px 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .floating-container .floating-card {
+                padding: 4px 8px;
+            }
+
+            .floating-container .floating-card .text {
+                font-size: 11px;
+            }
+
+            .floating-container .floating-card .text small {
+                font-size: 9px;
+            }
+
+            .floating-container .floating-card .icon {
+                width: 26px;
+                height: 26px;
+                font-size: 12px;
+            }
+
+            .floating-container .floating-card.benefits-card {
+                padding: 6px 10px;
+            }
+
+            .floating-container .floating-card.benefits-card .benefit-item {
+                font-size: 10px;
+            }
+
+            .floating-container .floating-card.benefits-card .benefit-item .check-mark {
+                font-size: 11px;
             }
 
             .hero-illustration .main-shape {
@@ -1531,6 +1566,29 @@
 
             .modal-header h3 {
                 font-size: 22px;
+            }
+
+            .floating-container {
+                padding: 10px;
+                gap: 4px 8px;
+            }
+
+            .floating-container .floating-card {
+                padding: 3px 6px;
+            }
+
+            .floating-container .floating-card .text {
+                font-size: 10px;
+            }
+
+            .floating-container .floating-card .text small {
+                font-size: 8px;
+            }
+
+            .floating-container .floating-card .icon {
+                width: 22px;
+                height: 22px;
+                font-size: 10px;
             }
         }
 
@@ -1657,69 +1715,76 @@
                             <span class="emoji-big">🚀</span>
                         </div>
 
-                        <!-- Карточка 1: Групповые занятия -->
-                        <div class="floating-card">
-                            <div class="icon purple"><i class="fas fa-users"></i></div>
-                            <div class="text">
-                                Групповые занятия
-                                <small>до 10 человек</small>
-                            </div>
-                        </div>
+                        <!-- БЕЛЫЙ ПРЯМОУГОЛЬНИК floating-container -->
+                        <div class="floating-container">
 
-                        <!-- Карточка 2: Индивидуальный подход -->
-                        <div class="floating-card">
-                            <div class="icon warm"><i class="fas fa-user-graduate"></i></div>
-                            <div class="text">
-                                Индивидуальный подход
-                                <small>персональная программа</small>
+                            <!-- Карточка 1: Групповые занятия -->
+                            <div class="floating-card">
+                                <div class="icon purple"><i class="fas fa-users"></i></div>
+                                <div class="text">
+                                    Групповые занятия
+                                    <small>до 10 человек</small>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Карточка 3: Опытные преподаватели -->
-                        <div class="floating-card">
-                            <div class="icon gold"><i class="fas fa-star"></i></div>
-                            <div class="text">
-                                Опытные преподаватели
-                                <small>5+ лет практики</small>
+                            <!-- Карточка 2: Индивидуальный подход -->
+                            <div class="floating-card">
+                                <div class="icon warm"><i class="fas fa-user-graduate"></i></div>
+                                <div class="text">
+                                    Индивидуальный подход
+                                    <small>персональная программа</small>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Карточка 4: Современные методики -->
-                        <div class="floating-card">
-                            <div class="icon green"><i class="fas fa-laptop-code"></i></div>
-                            <div class="text">
-                                Современные методики
-                                <small>интерактивные уроки</small>
+                            <!-- Карточка 3: Опытные преподаватели -->
+                            <div class="floating-card">
+                                <div class="icon gold"><i class="fas fa-star"></i></div>
+                                <div class="text">
+                                    Опытные преподаватели
+                                    <small>5+ лет практики</small>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Карточка 5: Гибкое расписание -->
-                        <div class="floating-card">
-                            <div class="icon blue"><i class="fas fa-clock"></i></div>
-                            <div class="text">
-                                Гибкое расписание
-                                <small>под ваш график</small>
+                            <!-- Карточка 4: Современные методики -->
+                            <div class="floating-card">
+                                <div class="icon green"><i class="fas fa-laptop-code"></i></div>
+                                <div class="text">
+                                    Современные методики
+                                    <small>интерактивные уроки</small>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Карточка 6: Обратная связь -->
-                        <div class="floating-card benefits-card">
-                            <div class="benefit-item">
-                                <span class="check-mark">✓</span>
-                                Обратная связь
-                                <small>после каждого занятия</small>
+                            <!-- Карточка 5: Гибкое расписание -->
+                            <div class="floating-card">
+                                <div class="icon blue"><i class="fas fa-clock"></i></div>
+                                <div class="text">
+                                    Гибкое расписание
+                                    <small>под ваш график</small>
+                                </div>
                             </div>
-                            <div class="benefit-item">
-                                <span class="check-mark">✓</span>
-                                Поддержка 24/7
-                                <small>куратор всегда на связи</small>
+
+                            <!-- Карточка 6: Дополнительные преимущества -->
+                            <div class="floating-card benefits-card">
+                                <div class="benefit-item">
+                                    <span class="check-mark">✓</span>
+                                    Обратная связь
+                                    <small>после каждого занятия</small>
+                                </div>
+                                <div class="benefit-item">
+                                    <span class="check-mark">✓</span>
+                                    Поддержка 24/7
+                                    <small>куратор всегда на связи</small>
+                                </div>
+                                <div class="benefit-item">
+                                    <span class="check-mark">✓</span>
+                                    Домашние задания
+                                    <small>с проверкой</small>
+                                </div>
                             </div>
-                            <div class="benefit-item">
-                                <span class="check-mark">✓</span>
-                                Домашние задания
-                                <small>с проверкой</small>
-                            </div>
+
                         </div>
+                        <!-- /floating-container -->
+
                     </div>
                 </div>
             </div>
