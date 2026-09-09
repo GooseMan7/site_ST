@@ -1,51 +1,114 @@
 <?php
-// send-mail.php - с отправкой через SMTP (рекомендуется!)
+// ============================================================
+// НАСТРОЙКИ - ЗАПОЛНИТЕ ТОЛЬКО ЭТИ 4 СТРОЧКИ!
+// ============================================================
 
-// ===== НАСТРОЙКИ - ЗАМЕНИТЕ ЭТИ ДАННЫЕ! =====
-$smtp_host = 'smtp.mail.ru';     // SMTP сервер
-$smtp_port = 587;                // Порт
-$smtp_user = 'start_tuapse_from@mail.ru'; // ВАШ EMAIL (отправитель)
-$smtp_password = 'z5nGftAa9YaSyTyShRAY';  // ПАРОЛЬ от почты
-$to_email = 'start_tuapse_to@mail.ru';    // КОМУ отправлять (получатель)
-// =============================================
+$mailru_email = 'start_tuapse_from@mail.ru';      // ВАШ EMAIL на mail.ru
+$mailru_password = 'z5nGftAa9YaSyTyShRAY';  // ПАРОЛЬ ПРИЛОЖЕНИЯ (см. инструкцию ниже)
+$to_email = 'start_tuapse_fromк@mail.ru';          // КУДА приходят письма (можно тот же)
+$site_name = 'Школа-студия STARt';       // Имя отправителя
+
+// ============================================================
+// ДАЛЬШЕ НИЧЕГО НЕ МЕНЯЙТЕ
+// ============================================================
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+header('Content-Type: application/json; charset=utf-8');
 
 // Получаем данные из формы
-$name = isset($_POST['fullName']) ? trim($_POST['fullName']) : '';
+$fullName = isset($_POST['fullName']) ? trim($_POST['fullName']) : '';
+$childName = isset($_POST['childName']) ? trim($_POST['childName']) : '';
+$childAge = isset($_POST['childAge']) ? trim($_POST['childAge']) : '';
+$direction = isset($_POST['direction']) ? trim($_POST['direction']) : '';
 $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
-$email = isset($_POST['email']) ? trim($_POST['email']) : '';
-$comment = isset($_POST['comment']) ? trim($_POST['comment']) : '';
 
-// Проверка
-if (empty($name) || empty($phone) || empty($email)) {
-    echo json_encode(['success' => false, 'message' => 'Заполните все обязательные поля']);
+// Проверка обязательных полей
+if (empty($fullName) || empty($childName) || empty($childAge) || empty($direction) || empty($phone)) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Пожалуйста, заполните все обязательные поля'
+    ]);
     exit;
 }
 
-// Текст письма
-$subject = "Новая заявка с сайта STARТ";
-$message = "==========================================\n";
-$message .= "📝 НОВАЯ ЗАЯВКА С САЙТА STARТ\n";
-$message .= "==========================================\n\n";
-$message .= "👤 ФИО: " . $name . "\n";
-$message .= "📞 Телефон: " . $phone . "\n";
-$message .= "✉️ Email: " . $email . "\n";
-$message .= "💬 Комментарий: " . ($comment ?: "Не указан") . "\n\n";
-$message .= "📅 Дата: " . date("d.m.Y H:i:s") . "\n";
-$message .= "🌐 IP: " . $_SERVER['REMOTE_ADDR'] . "\n";
-$message .= "==========================================\n";
+// Формируем тело письма
+$body = "
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f1e3; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .header { text-align: center; border-bottom: 3px solid #FFD84A; padding-bottom: 20px; margin-bottom: 20px; }
+        .header h1 { font-family: 'Unbounded', sans-serif; color: #241638; font-size: 24px; margin: 0; }
+        .field { margin: 12px 0; padding: 10px 14px; background: #f7f1e3; border-radius: 10px; }
+        .field strong { color: #632895; display: inline-block; min-width: 140px; }
+        .footer { margin-top: 25px; padding-top: 15px; border-top: 2px solid #efefe0; text-align: center; color: #6E6288; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>
+            <h1>✨ Новая заявка ✨</h1>
+        </div>
+        <div class='field'><strong>👤 ФИО родителя:</strong> " . htmlspecialchars($fullName) . "</div>
+        <div class='field'><strong>🧒 Имя ребенка:</strong> " . htmlspecialchars($childName) . "</div>
+        <div class='field'><strong>📅 Возраст:</strong> " . htmlspecialchars($childAge) . "</div>
+        <div class='field'><strong>📚 Направление:</strong> " . htmlspecialchars($direction) . "</div>
+        <div class='field'><strong>📞 Телефон:</strong> <a href='tel:" . htmlspecialchars($phone) . "'>" . htmlspecialchars($phone) . "</a></div>
+        <div class='footer'>
+            📩 Заявка отправлена с сайта " . htmlspecialchars($_SERVER['HTTP_HOST']) . "
+        </div>
+    </div>
+</body>
+</html>
+";
 
-// Формируем заголовки
-$headers = "MIME-Version: 1.0\r\n";
-$headers .= "Content-type: text/plain; charset=utf-8\r\n";
-$headers .= "From: " . $smtp_user . "\r\n";
-$headers .= "Reply-To: " . $email . "\r\n";
+// Альтернативный текст для старых почтовых клиентов
+$altBody = "
+Новая заявка с сайта
 
-// Отправляем через SMTP
-$result = mail($to_email, $subject, $message, $headers, "-f" . $smtp_user);
+ФИО родителя: $fullName
+Имя ребенка: $childName
+Возраст: $childAge
+Направление: $direction
+Телефон: $phone
+";
 
-if ($result) {
-    echo json_encode(['success' => true, 'message' => 'Заявка успешно отправлена!']);
-} else {
-    echo json_encode(['success' => false, 'message' => 'Ошибка отправки. Попробуйте позже.']);
+$mail = new PHPMailer(true);
+
+try {
+    // Настройки сервера
+    $mail->SMTPDebug = 0;                         // 0 - отключить отладку, 1 - ошибки, 2 - подробно
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.mail.ru';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = $mailru_email;
+    $mail->Password   = $mailru_password;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL
+    $mail->Port       = 465;
+    $mail->CharSet    = 'UTF-8';
+
+    // Отправитель и получатель
+    $mail->setFrom($mailru_email, $site_name);
+    $mail->addAddress($to_email);
+    $mail->addReplyTo($mailru_email, $site_name);
+
+    // Содержание письма
+    $mail->isHTML(true);
+    $mail->Subject = 'Новая заявка с сайта ' . $_SERVER['HTTP_HOST'];
+    $mail->Body    = $body;
+    $mail->AltBody = $altBody;
+
+    $mail->send();
+    echo json_encode(['success' => true, 'message' => 'Письмо отправлено']);
+
+} catch (Exception $e) {
+    echo json_encode(['success' => false, 'message' => 'Ошибка: ' . $mail->ErrorInfo]);
 }
 ?>
