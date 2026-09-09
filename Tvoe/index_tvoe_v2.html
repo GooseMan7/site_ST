@@ -940,7 +940,7 @@
         }
 
         /* ============================================================
-           МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ
+           МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ (СКРОЛЛБАР СКРЫТ)
            ============================================================ */
 
         .modal-overlay {
@@ -975,6 +975,13 @@
             max-height: 90vh;
             overflow-y: auto;
             animation: slideUpModal 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            /* Скрываем скроллбар */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .modal::-webkit-scrollbar {
+            display: none;
         }
 
         @keyframes slideUpModal {
