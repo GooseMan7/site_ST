@@ -1,0 +1,2827 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Твоё Окружение — онлайн-класс</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%236C63F9' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6C63F9;
+            --primary-dark: #5A52D9;
+            --primary-light: #8B83FF;
+            --secondary: #FF6B6B;
+            --accent: #FFD93D;
+            --dark: #1A1A2E;
+            --dark-2: #16213E;
+            --gray: #6B7A8F;
+            --gray-light: #E8ECF1;
+            --white: #FFFFFF;
+            --bg: #F0EDFF;
+            --bg-pastel: #F5F0FF;
+            --gradient-main: linear-gradient(135deg, #6C63F9 0%, #5A52D9 50%, #4A42C9 100%);
+            --gradient-warm: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            --gradient-pastel: linear-gradient(135deg, #F5F0FF 0%, #EDE4FF 50%, #E8DDFF 100%);
+            --shadow-sm: 0 4px 20px rgba(108, 99, 249, 0.15);
+            --shadow-md: 0 8px 40px rgba(108, 99, 249, 0.2);
+            --shadow-lg: 0 20px 60px rgba(108, 99, 249, 0.25);
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 30px;
+            --radius-xl: 40px;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-pastel);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ============================================================
+           ШАПКА
+           ============================================================ */
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: var(--transition);
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+            padding: 12px 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0,0,0,0);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 15px;
+            padding: 8px 18px;
+            border-radius: 50px;
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(108, 99, 249, 0.08);
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+            background: rgba(108, 99, 249, 0.1);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--gradient-main);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--dark);
+            border: 2px solid var(--gray-light);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--gradient-warm);
+            color: white;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(108, 99, 249, 0.08);
+        }
+
+        /* ============================================================
+           ГЕРОЙ
+           ============================================================ */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-pastel);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(108, 99, 249, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(108, 99, 249, 0.1);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 5vw, 4.2rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 .highlight-warm {
+            background: var(--gradient-warm);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--gray);
+            max-width: 520px;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 2px solid var(--gray-light);
+        }
+
+        .hero-stats .stat h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -1px;
+        }
+
+        .hero-stats .stat h3 .accent {
+            color: var(--primary);
+        }
+
+        .hero-stats .stat p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-illustration {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            aspect-ratio: 1;
+        }
+
+        /* ============================================================
+           3D ПЛАНЕТА ЗЕМЛЯ
+           ============================================================ */
+
+        .planet-3d {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            cursor: grab;
+            touch-action: none;
+        }
+
+        .planet-3d:active {
+            cursor: grabbing;
+        }
+
+        .planet-3d canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+            filter: drop-shadow(0 20px 60px rgba(40, 80, 200, 0.5));
+        }
+
+        /* Мягкое свечение атмосферы позади планеты */
+        .planet-3d::before {
+            content: '';
+            position: absolute;
+            inset: 5%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                rgba(108, 99, 249, 0.35) 0%,
+                rgba(90, 130, 255, 0.2) 40%,
+                transparent 70%
+            );
+            filter: blur(30px);
+            animation: atmosphere-pulse 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes atmosphere-pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        /* ============================================================
+           БЕЛЫЙ ПРЯМОУГОЛЬНИК floating-container
+           ============================================================ */
+
+        .floating-container {
+            width: 83%;
+            height: 83%;
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 16px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: center;
+            justify-content: center;
+            gap: 8px 14px;
+            z-index: 2;
+            animation: float-container 8s ease-in-out infinite;
+            left: 40px;
+            top: 40px;
+        }
+
+        @keyframes float-container {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .floating-container .floating-card {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+            bottom: auto;
+            animation: none;
+            background: transparent;
+            box-shadow: none;
+            backdrop-filter: none;
+            border: none;
+            padding: 4px 10px;
+            min-width: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 0 1 auto;
+        }
+
+        .floating-container .floating-card .icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .floating-container .floating-card .icon.purple {
+            background: rgba(108, 99, 249, 0.12);
+            color: var(--primary);
+        }
+
+        .floating-container .floating-card .icon.warm {
+            background: rgba(255, 107, 107, 0.12);
+            color: var(--secondary);
+        }
+
+        .floating-container .floating-card .icon.gold {
+            background: rgba(255, 217, 61, 0.2);
+            color: #F59E0B;
+        }
+
+        .floating-container .floating-card .icon.green {
+            background: rgba(16, 185, 129, 0.12);
+            color: #10B981;
+        }
+
+        .floating-container .floating-card .icon.blue {
+            background: rgba(59, 130, 246, 0.12);
+            color: #3B82F6;
+        }
+
+        .floating-container .floating-card .text {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--dark);
+            white-space: nowrap;
+        }
+
+        .floating-container .floating-card .text small {
+            display: block;
+            font-weight: 400;
+            font-size: 10px;
+            color: var(--gray);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================================
+           СЕКЦИИ
+           ============================================================ */
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 56px;
+        }
+
+        .section-header .tag {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(108, 99, 249, 0.1);
+            padding: 4px 16px;
+            border-radius: 50px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            color: var(--dark);
+            margin-bottom: 16px;
+        }
+
+        .section-header h2 .highlight {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* ============================================================
+           ПРОЦЕСС ОБУЧЕНИЯ
+           ============================================================ */
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .process-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 36px 28px;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-main);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .process-card:hover::before {
+            opacity: 1;
+        }
+
+        .process-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .process-card .number {
+            font-size: 48px;
+            font-weight: 900;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.15;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .process-card .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .process-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .process-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        /* ============================================================
+           О НАС
+           ============================================================ */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image .main-img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            background: var(--gradient-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .about-image .floating-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .about-image .floating-badge .big {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .about-image .floating-badge p {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+
+        .about-content .tag {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(108, 99, 249, 0.1);
+            padding: 4px 16px;
+            border-radius: 50px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .about-content h2 {
+            font-size: clamp(2rem, 3vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .about-content p {
+            color: var(--gray);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .about-content .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .about-content .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .about-content .feature .check {
+            width: 28px;
+            height: 28px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* ============================================================
+           НОВОСТИ
+           ============================================================ */
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .news-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .news-card .image {
+            height: 200px;
+            background: var(--gradient-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .news-card .body {
+            padding: 24px;
+        }
+
+        .news-card .body .date {
+            font-size: 13px;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .news-card .body h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .news-card .body p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .news-card .body .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .news-card .body .tags span {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 50px;
+            background: var(--gray-light);
+            color: var(--gray);
+        }
+
+        .news-card .body .tags span.special {
+            background: rgba(255, 107, 107, 0.12);
+            color: var(--secondary);
+        }
+
+        /* ============================================================
+           ФУТЕР
+           ============================================================ */
+
+        .footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 60px 0 30px;
+            margin-top: 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 30px;
+        }
+
+        .footer-brand .logo-text {
+            color: white;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 300px;
+        }
+
+        .footer h5 {
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer ul {
+            list-style: none;
+        }
+
+        .footer ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer ul a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .footer ul a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 14px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-socials a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-socials a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ============================================================
+           МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ
+           ============================================================ */
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            z-index: 2000;
+            animation: fadeInModal 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUpModal 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .modal::-webkit-scrollbar {
+            display: none;
+        }
+
+        @keyframes slideUpModal {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .modal-header h3 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .modal-header h3 .highlight {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-light);
+        }
+
+        .modal-close:hover {
+            background: var(--primary);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-subtitle {
+            color: var(--gray);
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+        }
+
+        .modal-subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .modal-subject-card {
+            background: var(--bg-pastel);
+            border-radius: var(--radius-md);
+            padding: 24px 20px;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .modal-subject-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+            background: white;
+        }
+
+        .modal-subject-card .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .modal-subject-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .modal-subject-card p {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+
+        .modal-subject-card .badge {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 2px 10px;
+            border-radius: 50px;
+            margin-top: 6px;
+        }
+
+        .modal-subject-card .badge.exam {
+            background: rgba(255, 107, 107, 0.12);
+            color: var(--secondary);
+        }
+
+        .modal-subject-card .badge.olympiad {
+            background: rgba(52, 211, 153, 0.12);
+            color: #10B981;
+        }
+
+        .modal-subject-card .badge.popular {
+            background: rgba(108, 99, 249, 0.12);
+            color: var(--primary);
+        }
+
+        .modal-category-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 30px 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-category-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: var(--gray-light);
+        }
+
+        /* ============================================================
+           МОДАЛЬНОЕ ОКНО ДЕТАЛЕЙ ПРЕДМЕТА
+           ============================================================ */
+
+        .detail-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            z-index: 2100;
+            animation: fadeInModal 0.3s ease;
+        }
+
+        .detail-overlay.active {
+            display: flex;
+        }
+
+        .detail-modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            max-width: 520px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUpModal 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .detail-modal .detail-icon {
+            font-size: 56px;
+            text-align: center;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .detail-modal h3 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .detail-modal .detail-sub {
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .detail-modal .detail-desc {
+            color: var(--gray);
+            font-size: 15px;
+            line-height: 1.8;
+            padding: 20px;
+            background: var(--bg-pastel);
+            border-radius: var(--radius-sm);
+            margin-bottom: 24px;
+        }
+
+        .detail-modal .detail-tags {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .detail-modal .detail-tags span {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 50px;
+            background: var(--gray-light);
+            color: var(--gray);
+        }
+
+        .detail-modal .detail-tags span.special {
+            background: rgba(108, 99, 249, 0.12);
+            color: var(--primary);
+        }
+
+        .detail-modal .detail-tags span.exam {
+            background: rgba(255, 107, 107, 0.12);
+            color: var(--secondary);
+        }
+
+        .detail-modal .detail-tags span.olympiad {
+            background: rgba(52, 211, 153, 0.12);
+            color: #10B981;
+        }
+
+        .detail-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-close:hover {
+            background: var(--gray-light);
+            color: var(--dark);
+        }
+
+        .detail-modal .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ============================================================
+           ФОРМА ЗАПИСИ
+           ============================================================ */
+
+        .form-modal {
+            max-width: 520px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            background: var(--bg-pastel);
+            color: var(--dark);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(108, 99, 249, 0.1);
+            background: white;
+        }
+
+        .form-group input::placeholder {
+            color: var(--gray);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-main);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .form-success.show {
+            display: block;
+            animation: slideUpModal 0.4s ease;
+        }
+
+        .form-success .icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .form-success h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .form-success p {
+            color: var(--gray);
+        }
+
+        /* ============================================================
+           КНОПКА НАВЕРХ
+           ============================================================ */
+
+        .to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 900;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--gradient-main);
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .to-top.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ============================================================
+           МОБИЛЬНОЕ МЕНЮ
+           ============================================================ */
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 999;
+            padding: 80px 24px 40px;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu .close-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+        }
+
+        .mobile-menu ul li {
+            margin-bottom: 4px;
+        }
+
+        .mobile-menu ul a {
+            display: block;
+            padding: 16px 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gray-light);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .mobile-menu ul a:hover {
+            color: var(--primary);
+            padding-left: 12px;
+        }
+
+        .mobile-menu .actions {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .mobile-menu .actions .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ============================================================
+           АДАПТИВ
+           ============================================================ */
+
+        @media (max-width: 1024px) {
+            .floating-container {
+                width: 83%;
+                height: 83%;
+                left: 8%;
+                top: 9%;
+            }
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-illustration {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .floating-container {
+                padding: 12px 16px;
+                gap: 6px 10px;
+            }
+
+            .floating-container .floating-card .text {
+                font-size: 11px;
+            }
+
+            .floating-container .floating-card .text small {
+                font-size: 9px;
+            }
+
+            .floating-container .floating-card .icon {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .about-content .features {
+                justify-content: center;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .floating-container {
+                width: 65%;
+                height: 65%;
+                left: 17%;
+                top: 8%;
+            }
+            .nav-links {
+                display: none;
+            }
+
+            .nav-actions .btn {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero {
+                padding: 100px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+
+            .hero-stats {
+                gap: 24px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-stats .stat h3 {
+                font-size: 1.6rem;
+            }
+
+            .floating-container {
+                padding: 10px 14px;
+                gap: 4px 8px;
+                border-radius: var(--radius-md);
+            }
+
+            .floating-container .floating-card {
+                padding: 2px 6px;
+                gap: 6px;
+            }
+
+            .floating-container .floating-card .text {
+                font-size: 10px;
+            }
+
+            .floating-container .floating-card .text small {
+                font-size: 8px;
+            }
+
+            .floating-container .floating-card .icon {
+                width: 24px;
+                height: 24px;
+                font-size: 10px;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content .features {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .modal {
+                padding: 28px;
+            }
+
+            .modal-subjects-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .detail-modal {
+                padding: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .floating-container {
+                width: 65%;
+                height: 65%;
+                left: 17%;
+                top: 8%;
+            }
+            .modal-subjects-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .modal-subject-card {
+                padding: 18px 14px;
+            }
+
+            .modal-subject-card .icon {
+                font-size: 24px;
+            }
+
+            .modal-subject-card h4 {
+                font-size: 13px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 50px 0;
+            }
+
+            .section-header {
+                margin-bottom: 32px;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .modal {
+                padding: 20px;
+            }
+
+            .modal-header h3 {
+                font-size: 22px;
+            }
+
+            .detail-modal {
+                padding: 20px;
+            }
+
+            .detail-modal .detail-icon {
+                font-size: 40px;
+            }
+
+            .detail-modal h3 {
+                font-size: 20px;
+            }
+
+            .floating-container {
+                padding: 8px 10px;
+                gap: 3px 6px;
+                border-radius: var(--radius-sm);
+            }
+
+            .floating-container .floating-card {
+                padding: 2px 4px;
+                gap: 4px;
+            }
+
+            .floating-container .floating-card .text {
+                font-size: 8px;
+            }
+
+            .floating-container .floating-card .text small {
+                font-size: 7px;
+            }
+
+            .floating-container .floating-card .icon {
+                width: 18px;
+                height: 18px;
+                font-size: 8px;
+                border-radius: 6px;
+            }
+        }
+
+        /* ============================================================
+           АНИМАЦИЯ ПОЯВЛЕНИЯ
+           ============================================================ */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .logo-icon img{
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    ШАПКА
+    ============================================================ -->
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo" onclick="goHome()">
+                <div class="logo-icon"><img src="icon.png"></div>
+                <span class="logo-text">Твоё <span>Окружение</span></span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a onclick="openSubjectsModal()">Предметы</a></li>
+                <li><a href="#process">Обучение</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#news">Новости</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="btn btn-primary" onclick="openForm()">
+                    <i class="fas fa-pen"></i> Записаться
+                </button>
+                <button class="mobile-menu-btn" id="mobileBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+    МОБИЛЬНОЕ МЕНЮ
+    ============================================================ -->
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-btn" id="mobileClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul>
+            <li><a onclick="closeMobile(); openSubjectsModal();">Предметы</a></li>
+            <li><a href="#process" onclick="closeMobile()">Обучение</a></li>
+            <li><a href="#about" onclick="closeMobile()">О нас</a></li>
+            <li><a href="#news" onclick="closeMobile()">Новости</a></li>
+        </ul>
+        <div class="actions">
+            <button class="btn btn-primary" onclick="closeMobile(); openForm();">
+                <i class="fas fa-pen"></i> Записаться
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    ГЕРОЙ
+    ============================================================ -->
+
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="dot"></span>
+                        Онлайн-класс нового поколения
+                    </div>
+                    <h1>
+                        Учись с <span class="highlight">удовольствием</span><br>
+                        и <span class="highlight-warm">достигай</span> вершин
+                    </h1>
+                    <p>
+                        Распахнутая дверь в мир знаний, где каждый ученик от 6 до 17 лет
+                        находит свой путь к успеху. Индивидуальный подход, современные
+                        методики и поддержка на каждом шагу.
+                    </p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="openForm()">
+                            <i class="fas fa-rocket"></i> Начать обучение
+                        </button>
+                        <button class="btn btn-outline" onclick="openSubjectsModal()">
+                            <i class="fas fa-book"></i> Выбрать предмет
+                        </button>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <h3>12 <span class="accent">+</span></h3>
+                            <p>направлений</p>
+                        </div>
+                        <div class="stat">
+                            <h3>98 <span class="accent">%</span></h3>
+                            <p>довольных учеников</p>
+                        </div>
+                        <div class="stat">
+                            <h3>5 <span class="accent">лет</span></h3>
+                            <p>успешной работы</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-illustration">
+
+                        <!-- 3D ПЛАНЕТА ЗЕМЛЯ -->
+                        <div class="planet-3d" id="planet3d"></div>
+
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    ПРОЦЕСС ОБУЧЕНИЯ
+    ============================================================ -->
+
+    <section class="section" id="process" style="background: white;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="tag">Как мы учим</span>
+                <h2>Выбери свой <span class="highlight">формат</span></h2>
+                <p>Гибкая система обучения, которая подстраивается под твои цели и график.</p>
+            </div>
+
+            <div class="process-grid">
+                <div class="process-card reveal reveal-delay-1">
+                    <span class="number">01</span>
+                    <span class="icon">👤</span>
+                    <h4>Индивидуальный формат</h4>
+                    <p>
+                        Персональные занятия один на один с преподавателем.
+                        Идеально для устранения пробелов, подготовки к экзаменам
+                        и олимпиадам. Гибкое расписание и индивидуальный темп.
+                    </p>
+                </div>
+
+                <div class="process-card reveal reveal-delay-2">
+                    <span class="number">02</span>
+                    <span class="icon">👥</span>
+                    <h4>Групповой формат</h4>
+                    <p>
+                        Занятия в мини-группах до 10 человек. Развиваем
+                        коммуникативные навыки, учимся работать в команде
+                        и обсуждать сложные темы вместе. Поддержка и обратная связь.
+                    </p>
+                </div>
+
+                <div class="process-card reveal reveal-delay-3">
+                    <span class="number">03</span>
+                    <span class="icon">🎯</span>
+                    <h4>Интенсивный формат</h4>
+                    <p>
+                        Ускоренные курсы для подготовки к экзаменам и олимпиадам.
+                        Погружение в предмет, решение сложных задач, разбор
+                        типичных ошибок и максимальная практика.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    О НАС
+    ============================================================ -->
+
+    <section class="section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image reveal">
+                    <div class="main-img" style="background: var(--gradient-main); display: flex; align-items: center; justify-content: center; font-size: 120px; color: rgba(255,255,255,0.15); border-radius: var(--radius-lg); aspect-ratio: 4/3;">
+                        🌟
+                    </div>
+                    <div class="floating-badge">
+                        <div class="big">5+ лет</div>
+                        <p>успешной работы</p>
+                    </div>
+                </div>
+
+                <div class="about-content reveal">
+                    <span class="tag">О нас</span>
+                    <h2>Почему <span class="highlight">"Твоё Окружение"</span>?</h2>
+                    <p>
+                        <strong>Погрузитесь в "Твое окружение" – онлайн-класс, где расцветают таланты детей,
+                        подростков от 6 до 17 лет!</strong> Мы стираем границы, предоставляя возможность учиться
+                        из любой точки мира, превращая образование в увлекательное путешествие.
+                    </p>
+                    <p>
+                        Здесь ученики не просто получают знания, а обретают компас, направляющий их
+                        по индивидуальной образовательной траектории. В "Твоем окружении" их ждет
+                        атмосфера тепла и вдохновения.
+                    </p>
+                    <div class="features">
+                        <div class="feature">
+                            <span class="check"><i class="fas fa-check"></i></span>
+                            Опытные преподаватели
+                        </div>
+                        <div class="feature">
+                            <span class="check"><i class="fas fa-check"></i></span>
+                            Индивидуальный подход
+                        </div>
+                        <div class="feature">
+                            <span class="check"><i class="fas fa-check"></i></span>
+                            Современные методики
+                        </div>
+                        <div class="feature">
+                            <span class="check"><i class="fas fa-check"></i></span>
+                            Поддержка 24/7
+                        </div>
+                    </div>
+                    <div style="margin-top: 24px;">
+                        <button class="btn btn-secondary" onclick="openForm()">
+                            <i class="fas fa-heart"></i> Записаться на пробный урок
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    НОВОСТИ
+    ============================================================ -->
+
+    <section class="section" id="news" style="background: white;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="tag">Новости и акции</span>
+                <h2>Будь в <span class="highlight">курсе</span></h2>
+                <p>Следи за последними событиями, акциями и специальными предложениями.</p>
+            </div>
+
+            <div class="news-grid">
+                <div class="news-card reveal reveal-delay-1">
+                    <div class="image" style="background: var(--gradient-warm);">
+                        🎁
+                    </div>
+                    <div class="body">
+                        <div class="date"><i class="far fa-calendar"></i> 15 октября 2023</div>
+                        <h4>Бесплатный пробный урок</h4>
+                        <p>Присоединяйтесь и получите бесплатный пробный урок по любому предмету!</p>
+                        <div class="tags">
+                            <span class="special">Акция</span>
+                            <span>Новости</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-card reveal reveal-delay-2">
+                    <div class="image" style="background: var(--gradient-main);">
+                        ❄️
+                    </div>
+                    <div class="body">
+                        <div class="date"><i class="far fa-calendar"></i> 5 ноября 2023</div>
+                        <h4>Зимний интенсив по ОГЭ</h4>
+                        <p>Специальный интенсивный курс подготовки к ОГЭ для выпускников 9 классов.</p>
+                        <div class="tags">
+                            <span>Курсы</span>
+                            <span>ОГЭ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-card reveal reveal-delay-3">
+                    <div class="image" style="background: var(--gray-light); color: var(--primary);">
+                        👨‍🏫
+                    </div>
+                    <div class="body">
+                        <div class="date"><i class="far fa-calendar"></i> 25 октября 2023</div>
+                        <h4>Новые преподаватели в команде</h4>
+                        <p>К нашей команде присоединились три опытных педагога по математике, физике и английскому.</p>
+                        <div class="tags">
+                            <span>Команда</span>
+                            <span>Развитие</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    ФУТЕР
+    ============================================================ -->
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="logo-text">Твоё <span>Окружение</span></span>
+                    <p>
+                        Онлайн-класс для детей и подростков от 6 до 17 лет.
+                        Индивидуальный подход, современные методики и поддержка на каждом шагу.
+                    </p>
+                </div>
+                <div>
+                    <h5>Навигация</h5>
+                    <ul>
+                        <li><a onclick="openSubjectsModal()" style="cursor:pointer;">Предметы</a></li>
+                        <li><a href="#process">Обучение</a></li>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#news">Новости</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Контакты</h5>
+                    <ul>
+                        <li><a href="tel:89506485799"><i class="fas fa-phone"></i> 8 (950) 648-57-99</a></li>
+                        <li><a href="mailto:tvoiokruzeni@ya.ru"><i class="fas fa-envelope"></i> tvoiokruzeni@ya.ru</a></li>
+                        <li><a href="#"><i class="fab fa-telegram"></i> @tvoiokruzeni</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Соцсети</h5>
+                    <div class="footer-socials">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2026 Твоё Окружение. Все права защищены.</span>
+                <button class="btn-ghost" style="background: none; border: none; color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;" onclick="openPolicy()">
+                    Политика конфиденциальности
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+    МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ
+    ============================================================ -->
+
+    <div class="modal-overlay" id="subjectsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>📚 Выбери <span class="highlight">предмет</span></h3>
+                <button class="modal-close" onclick="closeSubjectsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <p class="modal-subtitle">Широкий выбор курсов для детей и подростков. От подготовки к школе до олимпиадного уровня.</p>
+
+            <div class="modal-category-title">
+                <i class="fas fa-book" style="color: var(--primary);"></i> Основные предметы
+            </div>
+            <div class="modal-subjects-grid">
+                <div class="modal-subject-card" onclick="openDetail('Подготовка к школе', '📚', '6–7 лет', 'Комплексная программа для будущих первоклассников. Развитие логики, речи, моторики. Занятия в игровой форме помогают легко адаптироваться к школе.', 'popular')">
+                    <span class="icon">📚</span>
+                    <h4>Подготовка к школе</h4>
+                    <p>6–7 лет</p>
+                    <span class="badge popular">Популярный</span>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('Скорочтение', '⚡', '7–14 лет', 'Развитие навыков быстрого чтения с пониманием текста. Увеличиваем скорость чтения в 2-3 раза без потери понимания.', '')">
+                    <span class="icon">⚡</span>
+                    <h4>Скорочтение</h4>
+                    <p>7–14 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('Английский язык', '🌍', '6–17 лет', 'Изучение английского с нуля до продвинутого уровня. Развитие всех навыков: говорение, аудирование, чтение, письмо.', '')">
+                    <span class="icon">🌍</span>
+                    <h4>Английский язык</h4>
+                    <p>6–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('Русский язык', '📝', '7–17 лет', 'Качественная подготовка к экзаменам, повышение грамотности. Работаем над устранением ошибок и развитием речи.', '')">
+                    <span class="icon">📝</span>
+                    <h4>Русский язык</h4>
+                    <p>7–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('Математика', '🔢', '7–17 лет', 'Углубленное изучение математики для успешной сдачи ОГЭ и ЕГЭ, подготовка к олимпиадам. Объясняем сложные темы простым языком.', 'popular')">
+                    <span class="icon">🔢</span>
+                    <h4>Математика</h4>
+                    <p>7–17 лет</p>
+                    <span class="badge popular">Популярный</span>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('Физика', '⚛️', '10–17 лет', 'Изучение физики через практические эксперименты и решение задач. Подготовка к экзаменам и олимпиадам.', '')">
+                    <span class="icon">⚛️</span>
+                    <h4>Физика</h4>
+                    <p>10–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('Информатика', '💻', '10–17 лет', 'Изучение основ программирования, алгоритмов и компьютерных технологий. Подготовка к ЕГЭ по информатике.', '')">
+                    <span class="icon">💻</span>
+                    <h4>Информатика</h4>
+                    <p>10–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('Химия', '🧪', '12–17 лет', 'Увлекательное изучение химии с проведением безопасных экспериментов. Подготовка к ОГЭ и ЕГЭ.', '')">
+                    <span class="icon">🧪</span>
+                    <h4>Химия</h4>
+                    <p>12–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('Астрономия', '🌌', '10–17 лет', 'Знакомство с основами астрономии, изучение звездного неба, планет и космических явлений.', '')">
+                    <span class="icon">🌌</span>
+                    <h4>Астрономия</h4>
+                    <p>10–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('Программирование', '🤖', '10–17 лет', 'Курсы по программированию: от основ до создания собственных проектов. Изучаем Python, Scratch, веб-разработку.', '')">
+                    <span class="icon">🤖</span>
+                    <h4>Программирование</h4>
+                    <p>10–17 лет</p>
+                </div>
+            </div>
+
+            <div class="modal-category-title">
+                <i class="fas fa-graduation-cap" style="color: var(--secondary);"></i> Подготовка к ОГЭ/ЕГЭ
+            </div>
+            <div class="modal-subjects-grid">
+                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Физика', '⚛️', '9–11 класс', 'Интенсивная подготовка к экзаменам по физике: решение типовых задач, разбор демоверсий, работа над сложными темами.', 'exam')">
+                    <span class="icon">⚛️</span>
+                    <h4>ОГЭ/ЕГЭ Физика</h4>
+                    <span class="badge exam">Экзамен</span>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Математика', '🔢', '9–11 класс', 'Подготовка к базовому и профильному уровню ЕГЭ по математике: повторение программы, отработка типовых заданий.', 'exam')">
+                    <span class="icon">🔢</span>
+                    <h4>ОГЭ/ЕГЭ Математика</h4>
+                    <span class="badge exam">Экзамен</span>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Информатика', '💻', '9–11 класс', 'Подготовка к экзаменам по информатике: программирование, алгоритмы, теория информации.', 'exam')">
+                    <span class="icon">💻</span>
+                    <h4>ОГЭ/ЕГЭ Информатика</h4>
+                    <span class="badge exam">Экзамен</span>
+                </div>
+            </div>
+
+            <div class="modal-category-title">
+                <i class="fas fa-trophy" style="color: #10B981;"></i> Олимпиадная подготовка
+            </div>
+            <div class="modal-subjects-grid">
+                <div class="modal-subject-card" onclick="openDetail('Олимпиадная математика', '🏆', '7–17 лет', 'Специальный курс для подготовки к математическим олимпиадам различного уровня. Развитие нестандартного мышления.', 'olympiad')">
+                    <span class="icon">🏆</span>
+                    <h4>Олимпиадная математика</h4>
+                    <span class="badge olympiad">Олимпиада</span>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('Олимпиадная физика', '🏆', '7–17 лет', 'Углубленный курс физики для подготовки к олимпиадам: решение нестандартных задач, экспериментальная физика.', 'olympiad')">
+                    <span class="icon">🏆</span>
+                    <h4>Олимпиадная физика</h4>
+                    <span class="badge olympiad">Олимпиада</span>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('Олимпиадная астрономия', '🏆', '7–17 лет', 'Подготовка к астрономическим олимпиадам: небесная механика, астрофизика, работа с телескопами.', 'olympiad')">
+                    <span class="icon">🏆</span>
+                    <h4>Олимпиадная астрономия</h4>
+                    <span class="badge olympiad">Олимпиада</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    МОДАЛЬНОЕ ОКНО ДЕТАЛЕЙ ПРЕДМЕТА
+    ============================================================ -->
+
+    <div class="detail-overlay" id="detailModal">
+        <div class="detail-modal" style="position: relative;">
+            <button class="detail-close" onclick="closeDetail()">
+                <i class="fas fa-times"></i>
+            </button>
+            <span class="detail-icon" id="detailIcon">📚</span>
+            <h3 id="detailTitle">Название предмета</h3>
+            <div class="detail-sub" id="detailSub">Возрастная группа</div>
+            <div class="detail-desc" id="detailDesc">Описание предмета</div>
+            <div class="detail-tags" id="detailTags"></div>
+            <button class="btn btn-primary" onclick="closeDetail(); openForm();">
+                <i class="fas fa-pen"></i> Записаться на курс
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    МОДАЛЬНОЕ ОКНО ФОРМЫ ЗАПИСИ
+    ============================================================ -->
+
+    <div class="modal-overlay" id="formModal">
+        <div class="modal form-modal">
+            <div class="modal-header">
+                <h3>📝 Запись на курс</h3>
+                <button class="modal-close" onclick="closeForm()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="enrollForm" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label for="fullName">Ваше имя (родителя) *</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Иванов Иван Иванович" required>
+                </div>
+                <div class="form-group">
+                    <label for="childName">Имя ребенка *</label>
+                    <input type="text" id="childName" name="childName" placeholder="Иван" required>
+                </div>
+                <div class="form-group">
+                    <label for="childAge">Возраст ребенка *</label>
+                    <input type="text" id="childAge" name="childAge" placeholder="Например: 14 лет" required>
+                </div>
+                <div class="form-group">
+                    <label for="direction">Направление *</label>
+                    <select id="direction" name="direction" required>
+                        <option value="">Выберите направление</option>
+                        <option value="Подготовка к школе">Подготовка к школе</option>
+                        <option value="Скорочтение">Скорочтение</option>
+                        <option value="Английский язык">Английский язык</option>
+                        <option value="Русский язык">Русский язык</option>
+                        <option value="Математика">Математика</option>
+                        <option value="Физика">Физика</option>
+                        <option value="Информатика">Информатика</option>
+                        <option value="Программирование">Программирование</option>
+                        <option value="Химия">Химия</option>
+                        <option value="Астрономия">Астрономия</option>
+                        <option value="ОГЭ/ЕГЭ">ОГЭ/ЕГЭ</option>
+                        <option value="Олимпиадная подготовка">Олимпиадная подготовка</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Номер телефона *</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+7 (950) 648-57-99" required>
+                </div>
+                <button type="submit" class="form-submit">
+                    <i class="fas fa-paper-plane"></i> Отправить заявку
+                </button>
+            </form>
+
+            <div class="form-success" id="formSuccess">
+                <span class="icon">✅</span>
+                <h4>Заявка отправлена!</h4>
+                <p>Мы свяжемся с вами в ближайшее время, чтобы подобрать курс.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    МОДАЛЬНОЕ ОКНО ПОЛИТИКИ
+    ============================================================ -->
+
+    <div class="modal-overlay" id="policyModal">
+        <div class="modal form-modal">
+            <div class="modal-header">
+                <h3>📄 Политика конфиденциальности</h3>
+                <button class="modal-close" onclick="closePolicy()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div style="color: var(--gray); line-height: 1.8; font-size: 14px;">
+                <p><strong>1. Общие положения</strong></p>
+                <p>Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. № 152-ФЗ «О персональных данных».</p>
+                <br>
+                <p><strong>2. Цели обработки персональных данных</strong></p>
+                <p>Сбор и обработка персональных данных осуществляется для заключения и исполнения договоров с клиентами, а также для информирования о наших услугах и акциях.</p>
+                <br>
+                <p><strong>3. Условия обработки персональных данных</strong></p>
+                <p>Обработка персональных данных осуществляется с согласия субъекта персональных данных на обработку его персональных данных.</p>
+                <br>
+                <p><strong>4. Контактная информация</strong></p>
+                <p>По всем вопросам, связанным с обработкой персональных данных, вы можете обратиться по email: tvoiokruzeni@ya.ru</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    КНОПКА НАВЕРХ
+    ============================================================ -->
+
+    <button class="to-top" id="toTop" aria-label="Наверх">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+
+    <script>
+        // ============================================================
+        // НАВИГАЦИЯ
+        // ============================================================
+
+        const navbar = document.getElementById('navbar');
+        const toTop = document.getElementById('toTop');
+
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY;
+            navbar.classList.toggle('scrolled', y > 20);
+            toTop.classList.toggle('show', y > 400);
+        }, { passive: true });
+
+        toTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        function goHome() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // МОБИЛЬНОЕ МЕНЮ
+        // ============================================================
+
+        const mobileBtn = document.getElementById('mobileBtn');
+        const mobileClose = document.getElementById('mobileClose');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        mobileClose.addEventListener('click', closeMobile);
+
+        function closeMobile() {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', (e) => {
+            if (mobileMenu.classList.contains('active') &&
+                !e.target.closest('.mobile-menu') &&
+                !e.target.closest('.mobile-menu-btn')) {
+                closeMobile();
+            }
+        });
+
+        // ============================================================
+        // МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ
+        // ============================================================
+
+        const subjectsModal = document.getElementById('subjectsModal');
+
+        function openSubjectsModal() {
+            subjectsModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSubjectsModal() {
+            subjectsModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        subjectsModal.addEventListener('click', e => {
+            if (e.target === subjectsModal) closeSubjectsModal();
+        });
+
+        // ============================================================
+        // МОДАЛЬНОЕ ОКНО ДЕТАЛЕЙ ПРЕДМЕТА
+        // ============================================================
+
+        const detailModal = document.getElementById('detailModal');
+
+        function openDetail(title, icon, sub, desc, tag) {
+            document.getElementById('detailIcon').textContent = icon;
+            document.getElementById('detailTitle').textContent = title;
+            document.getElementById('detailSub').textContent = sub;
+            document.getElementById('detailDesc').textContent = desc;
+
+            const tagsContainer = document.getElementById('detailTags');
+            tagsContainer.innerHTML = '';
+
+            if (tag === 'popular') {
+                const span = document.createElement('span');
+                span.className = 'special';
+                span.textContent = '⭐ Популярный';
+                tagsContainer.appendChild(span);
+            } else if (tag === 'exam') {
+                const span = document.createElement('span');
+                span.className = 'exam';
+                span.textContent = '📝 Экзамен';
+                tagsContainer.appendChild(span);
+            } else if (tag === 'olympiad') {
+                const span = document.createElement('span');
+                span.className = 'olympiad';
+                span.textContent = '🏆 Олимпиада';
+                tagsContainer.appendChild(span);
+            }
+
+            const ageSpan = document.createElement('span');
+            ageSpan.textContent = '👶 ' + sub;
+            tagsContainer.appendChild(ageSpan);
+
+            detailModal.classList.add('active');
+        }
+
+        function closeDetail() {
+            detailModal.classList.remove('active');
+        }
+
+        detailModal.addEventListener('click', e => {
+            if (e.target === detailModal) closeDetail();
+        });
+
+        // ============================================================
+        // МОДАЛЬНЫЕ ОКНА ФОРМЫ И ПОЛИТИКИ
+        // ============================================================
+
+        const formModal = document.getElementById('formModal');
+        const policyModal = document.getElementById('policyModal');
+
+        function openForm() {
+            document.getElementById('enrollForm').style.display = '';
+            document.getElementById('enrollForm').reset();
+            document.getElementById('formSuccess').classList.remove('show');
+            formModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeForm() {
+            formModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function openPolicy() {
+            policyModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePolicy() {
+            policyModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        formModal.addEventListener('click', e => {
+            if (e.target === formModal) closeForm();
+        });
+
+        policyModal.addEventListener('click', e => {
+            if (e.target === policyModal) closePolicy();
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                if (detailModal.classList.contains('active')) closeDetail();
+                if (subjectsModal.classList.contains('active')) closeSubjectsModal();
+                if (formModal.classList.contains('active')) closeForm();
+                if (policyModal.classList.contains('active')) closePolicy();
+            }
+        });
+
+        // ============================================================
+        // ПЛАВНЫЙ СКРОЛЛ К ЯКОРЯМ
+        // ============================================================
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    const offset = 80;
+                    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+                closeMobile();
+            });
+        });
+
+        // ============================================================
+        // REVEAL АНИМАЦИЯ
+        // ============================================================
+
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ============================================================
+        // ОТПРАВКА ФОРМЫ
+        // ============================================================
+
+        function submitForm(e) {
+            e.preventDefault();
+            const form = document.getElementById('enrollForm');
+            const btn = form.querySelector('.form-submit');
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                form.style.display = 'none';
+                document.getElementById('formSuccess').classList.add('show');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                fireConfetti();
+            }, 1500);
+        }
+
+        // ============================================================
+        // КОНФЕТТИ
+        // ============================================================
+
+        const confettiColors = ['#6C63F9', '#FF6B6B', '#FFD93D', '#10B981', '#8B83FF'];
+
+        function fireConfetti() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            const canvas = document.createElement('canvas');
+            canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999';
+            document.body.appendChild(canvas);
+
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = confettiColors;
+
+            for (let i = 0; i < 120; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    w: 6 + Math.random() * 8,
+                    h: 4 + Math.random() * 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: 2 + Math.random() * 4,
+                    rot: Math.random() * 360,
+                    vr: (Math.random() - 0.5) * 6,
+                    life: 1
+                });
+            }
+
+            let frame = 0;
+
+            function animate() {
+                frame++;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                let alive = false;
+
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.06;
+                    p.rot += p.vr;
+                    p.life -= 0.002;
+
+                    if (p.life > 0) {
+                        alive = true;
+                        ctx.save();
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate((p.rot * Math.PI) / 180);
+                        ctx.globalAlpha = Math.min(p.life, 1);
+                        ctx.fillStyle = p.color;
+                        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                        ctx.restore();
+                    }
+                });
+
+                if (alive && frame < 300) {
+                    requestAnimationFrame(animate);
+                } else {
+                    canvas.remove();
+                }
+            }
+
+            animate();
+        }
+
+        // ============================================================
+        // 3D ПЛАНЕТА ЗЕМЛЯ (Three.js)
+        // ============================================================
+
+        (function initPlanet() {
+            const container = document.getElementById('planet3d');
+            if (!container || typeof THREE === 'undefined') return;
+
+            // Сцена
+            const scene = new THREE.Scene();
+
+            // Камера
+            const camera = new THREE.PerspectiveCamera(
+                45,
+                container.clientWidth / container.clientHeight,
+                0.1,
+                1000
+            );
+            camera.position.z = 3.2;
+
+            // Рендерер
+            const renderer = new THREE.WebGLRenderer({
+                antialias: true,
+                alpha: true
+            });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // ============================================================
+            // ОСВЕЩЕНИЕ
+            // ============================================================
+
+            const sunLight = new THREE.DirectionalLight(0xffffff, 1.4);
+            sunLight.position.set(5, 3, 5);
+            scene.add(sunLight);
+
+            const ambientLight = new THREE.AmbientLight(0x5566aa, 0.6);
+            scene.add(ambientLight);
+
+            const backLight = new THREE.DirectionalLight(0x6C63F9, 0.4);
+            backLight.position.set(-5, -3, -5);
+            scene.add(backLight);
+
+            // ============================================================
+            // ЗЕМЛЯ
+            // ============================================================
+
+            const earthGroup = new THREE.Group();
+            scene.add(earthGroup);
+
+            const earthGeo = new THREE.SphereGeometry(1, 64, 64);
+            const textureLoader = new THREE.TextureLoader();
+            textureLoader.setCrossOrigin('anonymous');
+
+            // Основная текстура Земли
+            const earthTexture = textureLoader.load(
+                'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
+            );
+
+            // Рельеф (bump map) для объёма
+            const bumpTexture = textureLoader.load(
+                'https://unpkg.com/three-globe/example/img/earth-topology.png'
+            );
+
+            // Ночные огни
+            const nightTexture = textureLoader.load(
+                'https://unpkg.com/three-globe/example/img/earth-night.jpg'
+            );
+
+            // Используем более простой материал для надёжности
+            const earthMaterial = new THREE.MeshPhongMaterial({
+                map: earthTexture,
+                bumpMap: bumpTexture,
+                bumpScale: 0.04,
+                shininess: 8,
+                specular: new THREE.Color(0x222233)
+            });
+
+            const earth = new THREE.Mesh(earthGeo, earthMaterial);
+            earthGroup.add(earth);
+
+            // ============================================================
+            // ОБЛАКА
+            // ============================================================
+
+            const cloudTexture = textureLoader.load(
+                'https://unpkg.com/three-globe/example/img/clouds.png'
+            );
+
+            const cloudMaterial = new THREE.MeshPhongMaterial({
+                map: cloudTexture,
+                transparent: true,
+                opacity: 0.4,
+                depthWrite: false
+            });
+
+            const clouds = new THREE.Mesh(
+                new THREE.SphereGeometry(1.008, 64, 64),
+                cloudMaterial
+            );
+            earthGroup.add(clouds);
+
+            // ============================================================
+            // АТМОСФЕРА
+            // ============================================================
+
+            const atmosphereMaterial = new THREE.MeshBasicMaterial({
+                color: 0x6C9EFF,
+                transparent: true,
+                opacity: 0.15,
+                side: THREE.BackSide
+            });
+
+            const atmosphere = new THREE.Mesh(
+                new THREE.SphereGeometry(1.15, 64, 64),
+                atmosphereMaterial
+            );
+            earthGroup.add(atmosphere);
+
+            // ============================================================
+            // УПРАВЛЕНИЕ МЫШКОЙ / ПАЛЬЦЕМ
+            // ============================================================
+
+            let isDragging = false;
+            let previousX = 0;
+            let previousY = 0;
+            let targetRotX = 0;
+            let targetRotY = 0;
+            let currentRotX = 0;
+            let currentRotY = 0;
+            let autoRotate = true;
+            const autoRotateSpeed = 0.002;
+
+            function onPointerDown(e) {
+                isDragging = true;
+                autoRotate = false;
+                const point = e.touches ? e.touches[0] : e;
+                previousX = point.clientX;
+                previousY = point.clientY;
+            }
+
+            function onPointerMove(e) {
+                if (!isDragging) return;
+                const point = e.touches ? e.touches[0] : e;
+                const deltaX = point.clientX - previousX;
+                const deltaY = point.clientY - previousY;
+
+                targetRotY += deltaX * 0.005;
+                targetRotX += deltaY * 0.005;
+
+                targetRotX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, targetRotX));
+
+                previousX = point.clientX;
+                previousY = point.clientY;
+            }
+
+            function onPointerUp() {
+                isDragging = false;
+                setTimeout(() => {
+                    if (!isDragging) autoRotate = true;
+                }, 2000);
+            }
+
+            container.addEventListener('mousedown', onPointerDown);
+            window.addEventListener('mousemove', onPointerMove);
+            window.addEventListener('mouseup', onPointerUp);
+
+            container.addEventListener('touchstart', onPointerDown, { passive: true });
+            window.addEventListener('touchmove', onPointerMove, { passive: true });
+            window.addEventListener('touchend', onPointerUp);
+
+            // ============================================================
+            // АНИМАЦИЯ
+            // ============================================================
+
+            function animate() {
+                requestAnimationFrame(animate);
+
+                currentRotY += (targetRotY - currentRotY) * 0.08;
+                currentRotX += (targetRotX - currentRotX) * 0.08;
+
+                earthGroup.rotation.y = currentRotY;
+                earthGroup.rotation.x = currentRotX;
+
+                if (autoRotate && !isDragging) {
+                    targetRotY += autoRotateSpeed;
+                }
+
+                clouds.rotation.y += 0.0006;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // ============================================================
+            // АДАПТИВ
+            // ============================================================
+
+            window.addEventListener('resize', () => {
+                const w = container.clientWidth;
+                const h = container.clientHeight;
+                if (w === 0 || h === 0) return;
+                camera.aspect = w / h;
+                camera.updateProjectionMatrix();
+                renderer.setSize(w, h);
+            });
+        })();
+    </script>
+
+</body>
+</html>
