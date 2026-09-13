@@ -168,7 +168,6 @@
             display: block; width: 100% !important; height: 100% !important;
             border-radius: 50%;
         }
-        /* ВНУТРЕННЕЕ СВЕЧЕНИЕ (атмосфера планеты) */
         .planet-3d::before {
             content: ''; position: absolute; inset: 5%; border-radius: 50%;
             background: radial-gradient(
@@ -181,7 +180,6 @@
             animation: atmosphere-pulse 7s ease-in-out infinite;
             pointer-events: none; z-index: -1;
         }
-        /* ВНЕШНЕЕ СВЕЧЕНИЕ ЗА ПЛАНЕТОЙ (ореол / glow) */
         .hero-illustration::before {
             content: ''; position: absolute;
             top: 50%; left: 50%;
@@ -201,7 +199,6 @@
             z-index: 0;
             animation: outer-glow 6s ease-in-out infinite;
         }
-        /* Второй слой свечения — мягкие лучи */
         .hero-illustration::after {
             content: ''; position: absolute;
             top: 50%; left: 50%;
@@ -409,6 +406,7 @@
         }
         .footer ul a:hover { color: white; }
         .footer-qr { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+        .footer-qr a { display: block; }
         .footer-qr img {
             width: 120px; height: 120px; background: white;
             border-radius: var(--radius-sm); padding: 8px;
@@ -420,6 +418,13 @@
         }
         .footer-qr .qr-label { font-size: 12px; color: rgba(255, 255, 255, 0.55); line-height: 1.4; }
         .footer-qr .qr-label strong { color: white; display: block; font-size: 13px; margin-bottom: 2px; }
+        .footer-qr .qr-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: #C4B8F0; font-size: 12px; text-decoration: none;
+            font-weight: 600; margin-top: 4px;
+            transition: var(--transition);
+        }
+        .footer-qr .qr-link:hover { color: white; }
         .footer-bottom {
             display: flex; justify-content: space-between; align-items: center;
             flex-wrap: wrap; gap: 16px; font-size: 14px;
@@ -492,6 +497,70 @@
             margin: 30px 0 16px; display: flex; align-items: center; gap: 12px;
         }
         .modal-category-title::after { content: ''; flex: 1; height: 2px; background: var(--gray-light); }
+
+        /* КОНТАКТЫ */
+        .contacts-modal { max-width: 640px; }
+        .contacts-list {
+            display: grid; gap: 16px; margin-bottom: 24px;
+        }
+        .contact-item {
+            display: flex; align-items: center; gap: 16px;
+            padding: 18px 22px; background: var(--bg-pastel);
+            border-radius: var(--radius-md); text-decoration: none;
+            color: var(--dark); transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        .contact-item:hover {
+            border-color: var(--primary); background: white;
+            transform: translateY(-3px); box-shadow: var(--shadow-sm);
+        }
+        .contact-item .contact-icon {
+            width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; flex-shrink: 0; color: white;
+        }
+        .contact-item .contact-icon.phone { background: linear-gradient(135deg, #6C63F9 0%, #5A52D9 100%); }
+        .contact-item .contact-icon.email { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); }
+        .contact-item .contact-icon.telegram { background: linear-gradient(135deg, #2AABEE 0%, #229ED9 100%); }
+        .contact-item .contact-icon.max { background: linear-gradient(135deg, #5A52D9 0%, #8B83FF 100%); }
+        .contact-item .contact-text { flex: 1; }
+        .contact-item .contact-label {
+            font-size: 12px; color: var(--gray); font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .contact-item .contact-value {
+            font-size: 16px; font-weight: 700; color: var(--dark);
+        }
+        .contact-item .contact-arrow {
+            color: var(--gray); font-size: 16px;
+            transition: var(--transition);
+        }
+        .contact-item:hover .contact-arrow {
+            color: var(--primary); transform: translateX(4px);
+        }
+        .contacts-qr-block {
+            display: flex; align-items: center; gap: 20px;
+            padding: 22px; background: var(--bg-pastel);
+            border-radius: var(--radius-md); margin-top: 8px;
+        }
+        .contacts-qr-block img {
+            width: 120px; height: 120px;
+            background: white; border-radius: var(--radius-sm);
+            padding: 8px; object-fit: contain;
+            flex-shrink: 0;
+        }
+        .contacts-qr-block .qr-info h4 {
+            font-size: 16px; font-weight: 700; margin-bottom: 6px;
+            color: var(--dark);
+        }
+        .contacts-qr-block .qr-info p {
+            font-size: 13px; color: var(--gray); margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .contacts-qr-block .qr-info .btn {
+            padding: 8px 18px; font-size: 13px;
+        }
 
         .detail-overlay {
             display: none; position: fixed; inset: 0;
@@ -628,6 +697,8 @@
             .modal { padding: 28px; }
             .modal-subjects-grid { grid-template-columns: 1fr 1fr; }
             .detail-modal { padding: 28px; }
+            .contacts-qr-block { flex-direction: column; text-align: center; }
+            .contacts-qr-block .qr-info { text-align: center; }
         }
         @media (max-width: 480px) {
             .modal-subjects-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -669,6 +740,7 @@
                 <li><a href="#process">Обучение</a></li>
                 <li><a href="#about">О нас</a></li>
                 <li><a href="#news">Новости</a></li>
+                <li><a onclick="openContacts()">Контакты</a></li>
             </ul>
             <div class="nav-actions">
                 <button class="btn btn-primary" onclick="openForm()">
@@ -689,6 +761,7 @@
             <li><a href="#process" onclick="closeMobile()">Обучение</a></li>
             <li><a href="#about" onclick="closeMobile()">О нас</a></li>
             <li><a href="#news" onclick="closeMobile()">Новости</a></li>
+            <li><a onclick="closeMobile(); openContacts();">Контакты</a></li>
         </ul>
         <div class="actions">
             <button class="btn btn-primary" onclick="closeMobile(); openForm();">
@@ -880,6 +953,7 @@
                         <li><a href="#process">Обучение</a></li>
                         <li><a href="#about">О нас</a></li>
                         <li><a href="#news">Новости</a></li>
+                        <li><a onclick="openContacts()" style="cursor:pointer;">Контакты</a></li>
                     </ul>
                 </div>
                 <div>
@@ -887,14 +961,20 @@
                     <ul>
                         <li><a href="tel:89506485799"><i class="fas fa-phone"></i> 8 (950) 648-57-99</a></li>
                         <li><a href="mailto:tvoiokruzeni@ya.ru"><i class="fas fa-envelope"></i> tvoiokruzeni@ya.ru</a></li>
-                        <li><a href="#"><i class="fab fa-telegram"></i> @tvoiokruzeni</a></li>
+                        <li><a href="https://t.me/tvoiokruzeni" target="_blank" rel="noopener"><i class="fab fa-telegram"></i> @tvoiokruzeni</a></li>
+                        <li><a href="https://max.ru/join/FAdS4wI5dJ8F1kGxAdaEC2WlQhq_yJ6QuAJ3_MKyqnc" target="_blank" rel="noopener"><i class="fas fa-comments"></i> Чат в MAX</a></li>
                     </ul>
                 </div>
                 <div>
                     <h5>Чат в MAX</h5>
                     <div class="footer-qr">
-                        <img src="qr_max_img.png" alt="QR-код для чата в MAX">
-                        <div class="qr-label"><strong>Отсканируйте QR,</strong>чтобы попасть в наш чат в MAX</div>
+                        <a href="https://max.ru/join/FAdS4wI5dJ8F1kGxAdaEC2WlQhq_yJ6QuAJ3_MKyqnc" target="_blank" rel="noopener" title="Перейти в чат MAX">
+                            <img src="qr_max_img.png" alt="QR-код для чата в MAX">
+                        </a>
+                        <div class="qr-label"><strong>Отсканируйте QR</strong>чтобы попасть в наш чат в MAX</div>
+                        <a href="https://max.ru/join/FAdS4wI5dJ8F1kGxAdaEC2WlQhq_yJ6QuAJ3_MKyqnc" target="_blank" rel="noopener" class="qr-link">
+                            Открыть чат в MAX <i class="fas fa-arrow-up-right-from-square"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -982,6 +1062,71 @@
                 </div>
                 <div class="modal-subject-card" onclick="openDetail('Олимпиадная астрономия', '🏆', '7–17 лет', 'Подготовка к астрономическим олимпиадам.', 'olympiad')">
                     <span class="icon">🏆</span><h4>Олимпиадная астрономия</h4><span class="badge olympiad">Олимпиада</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО КОНТАКТОВ -->
+    <div class="modal-overlay" id="contactsModal">
+        <div class="modal contacts-modal">
+            <div class="modal-header">
+                <h3>📞 <span class="highlight">Контакты</span></h3>
+                <button class="modal-close" onclick="closeContacts()"><i class="fas fa-times"></i></button>
+            </div>
+            <p class="modal-subtitle">Свяжитесь с нами любым удобным способом — мы всегда рады помочь!</p>
+
+            <div class="contacts-list">
+                <!-- Телефон -->
+                <a href="tel:89506485799" class="contact-item">
+                    <div class="contact-icon phone"><i class="fas fa-phone"></i></div>
+                    <div class="contact-text">
+                        <div class="contact-label">Телефон</div>
+                        <div class="contact-value">8 (950) 648-57-99</div>
+                    </div>
+                    <i class="fas fa-arrow-right contact-arrow"></i>
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:tvoiokruzeni@ya.ru" class="contact-item">
+                    <div class="contact-icon email"><i class="fas fa-envelope"></i></div>
+                    <div class="contact-text">
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">tvoiokruzeni@ya.ru</div>
+                    </div>
+                    <i class="fas fa-arrow-right contact-arrow"></i>
+                </a>
+
+                <!-- Telegram -->
+                <a href="https://t.me/tvoiokruzeni" target="_blank" rel="noopener" class="contact-item">
+                    <div class="contact-icon telegram"><i class="fab fa-telegram"></i></div>
+                    <div class="contact-text">
+                        <div class="contact-label">Telegram</div>
+                        <div class="contact-value">@tvoiokruzeni</div>
+                    </div>
+                    <i class="fas fa-arrow-right contact-arrow"></i>
+                </a>
+
+                <!-- MAX -->
+                <a href="https://max.ru/join/FAdS4wI5dJ8F1kGxAdaEC2WlQhq_yJ6QuAJ3_MKyqnc" target="_blank" rel="noopener" class="contact-item">
+                    <div class="contact-icon max"><i class="fas fa-comments"></i></div>
+                    <div class="contact-text">
+                        <div class="contact-label">Чат в MAX</div>
+                        <div class="contact-value">Присоединиться к чату</div>
+                    </div>
+                    <i class="fas fa-arrow-right contact-arrow"></i>
+                </a>
+            </div>
+
+            <!-- QR-код для MAX -->
+            <div class="contacts-qr-block">
+                <img src="qr_max_img.png" alt="QR-код для чата в MAX">
+                <div class="qr-info">
+                    <h4>Чат в MAX</h4>
+                    <p>Отсканируйте QR-код камерой телефона, чтобы моментально попасть в наш чат в MAX и получать актуальные новости и акции.</p>
+                    <a href="https://max.ru/join/FAdS4wI5dJ8F1kGxAdaEC2WlQhq_yJ6QuAJ3_MKyqnc" target="_blank" rel="noopener" class="btn btn-primary">
+                        <i class="fas fa-comments"></i> Открыть чат
+                    </a>
                 </div>
             </div>
         </div>
@@ -1137,6 +1282,20 @@
             if (e.target === subjectsModal) closeSubjectsModal();
         });
 
+        // МОДАЛЬНОЕ ОКНО КОНТАКТОВ
+        const contactsModal = document.getElementById('contactsModal');
+        function openContacts() {
+            contactsModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeContacts() {
+            contactsModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        contactsModal.addEventListener('click', e => {
+            if (e.target === contactsModal) closeContacts();
+        });
+
         // ДЕТАЛИ
         const detailModal = document.getElementById('detailModal');
         function openDetail(title, icon, sub, desc, tag) {
@@ -1199,6 +1358,7 @@
             if (e.key === 'Escape') {
                 if (detailModal.classList.contains('active')) closeDetail();
                 if (subjectsModal.classList.contains('active')) closeSubjectsModal();
+                if (contactsModal.classList.contains('active')) closeContacts();
                 if (formModal.classList.contains('active')) closeForm();
                 if (policyModal.classList.contains('active')) closePolicy();
             }
@@ -1295,208 +1455,166 @@
         }
 
         // ============================================================
-// ГЛОБУС — ОЧЕНЬ СВЕТЛАЯ ТЕКСТУРА + ВНЕШНЕЕ СВЕЧЕНИЕ
-// ============================================================
-
-(function initGlobe() {
-    const container = document.getElementById('planet3d');
-    if (!container || typeof Globe === 'undefined') return;
-
-    // Филиалы
-    const branches = [
-    { name: 'Казань',           lat: 55.7887, lng: 49.1221  },
-    { name: 'Екатеринбург',     lat: 56.8519, lng: 60.6122  },
-    { name: 'Брянск',           lat: 53.2521, lng: 34.3717  },
-    { name: 'Нижний Тагил',     lat: 57.9194, lng: 59.9650  },
-    { name: 'Москва',           lat: 55.7558, lng: 37.6173  },
-    { name: 'Пермь',            lat: 58.0105, lng: 56.2502  },   // ← новый
-    { name: 'Хабаровск',        lat: 48.4827, lng: 135.084  },  // ← новый
-    { name: 'Санкт-Петербург',  lat: 59.9386, lng: 30.3141  },  // ← новый
-    { name: 'Сочи',             lat: 43.5855, lng: 39.7231  },  // ← новый
-    { name: 'Уфа',              lat: 54.7431, lng: 55.9678  }   // ← новый
-];
-
-    // ============================================================
-    // 1. ЗАГРУЖАЕМ И ПЕРЕКРАШИВАЕМ ТЕКСТУРУ ДО СОЗДАНИЯ ГЛОБУСА
-    // ============================================================
-    const originalUrl = 'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg';
-
-    function makeLightTexture(img) {
-    const canvas = document.createElement('canvas');
-    canvas.width = img.width;
-    canvas.height = img.height;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0);
-
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
-
-    for (let i = 0; i < data.length; i += 4) {
-        const r = data[i];
-        const g = data[i + 1];
-        const b = data[i + 2];
-
-        // Яркость
-        const gray = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
+        // ГЛОБУС — ОЧЕНЬ СВЕТЛАЯ ТЕКСТУРА + ВНЕШНЕЕ СВЕЧЕНИЕ
         // ============================================================
-        // ОПРЕДЕЛЯЕМ: ВОДА ИЛИ СУША
-        // В оригинальной текстуре NASA:
-        //   Вода: синяя (B > R) и тёмная
-        //   Суша: зелёная/коричневая (R ≈ G ≥ B) или светлая
-        // ============================================================
-        const isWater = b > r && b > g && gray < 0.55;
-        const isIce   = gray > 0.85; // льды/облака/снег
 
-        let outR, outG, outB;
+        (function initGlobe() {
+            const container = document.getElementById('planet3d');
+            if (!container || typeof Globe === 'undefined') return;
 
-        if (isIce) {
-            // ============================================================
-            // ЛЬДЫ И СНЕГ — самые светлые, почти белые
-            // ============================================================
-            outR = 252;
-            outG = 251;
-            outB = 250;
+            // Филиалы
+            const branches = [
+                { name: 'Казань',           lat: 55.7887, lng: 49.1221  },
+                { name: 'Екатеринбург',     lat: 56.8519, lng: 60.6122  },
+                { name: 'Брянск',           lat: 53.2521, lng: 34.3717  },
+                { name: 'Нижний Тагил',     lat: 57.9194, lng: 59.9650  },
+                { name: 'Москва',           lat: 55.7558, lng: 37.6173  },
+                { name: 'Пермь',            lat: 58.0105, lng: 56.2502  },
+                { name: 'Хабаровск',        lat: 48.4827, lng: 135.084  },
+                { name: 'Санкт-Петербург',  lat: 59.9386, lng: 30.3141  },
+                { name: 'Сочи',             lat: 43.5855, lng: 39.7231  },
+                { name: 'Уфа',              lat: 54.7431, lng: 55.9678  }
+            ];
 
-        } else if (isWater) {
-            // ============================================================
-            // ВОДА — светло-серо-голубая (холодная)
-            // Чем глубже вода, тем насыщеннее голубой
-            // ============================================================
-            const depth = 1 - gray / 0.55; // 0 — у берега, 1 — глубина
-            outR = 200 - depth * 25;   // 200 → 175
-            outG = 215 - depth * 20;   // 215 → 195
-            outB = 235 - depth * 10;   // 235 → 225
+            const originalUrl = 'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg';
 
-        } else {
-            // ============================================================
-            // СУША — светло-бежево-кремовая (тёплая)
-            // Чем выше рельеф, тем светлее
-            // ============================================================
-            const t = Math.pow(gray, 0.65);
-            const darkR  = 225, darkG  = 215, darkB  = 200;
-            const lightR = 254, lightG = 250, lightB = 242;
+            function makeLightTexture(img) {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
 
-            outR = darkR + (lightR - darkR) * t;
-            outG = darkG + (lightG - darkG) * t;
-            outB = darkB + (lightB - darkB) * t;
-        }
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
 
-        data[i]     = outR;
-        data[i + 1] = outG;
-        data[i + 2] = outB;
-    }
+                for (let i = 0; i < data.length; i += 4) {
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
 
-    ctx.putImageData(imageData, 0, 0);
-    return canvas.toDataURL('image/jpeg', 0.92);
-}
+                    const gray = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
-    // Загружаем и создаём глобус
-    const loader = new Image();
-    loader.crossOrigin = 'anonymous';
-    loader.onload = () => {
-        const lightUrl = makeLightTexture(loader);
-        createGlobe(lightUrl);
-    };
-    loader.onerror = () => {
-        // Если не удалось загрузить — делаем глобус с оригинальной текстурой
-        console.warn('Не удалось загрузить текстуру, используем оригинал');
-        createGlobe(originalUrl);
-    };
-    loader.src = originalUrl;
+                    const isWater = b > r && b > g && gray < 0.55;
+                    const isIce   = gray > 0.85;
 
-    // ============================================================
-    // 2. СОЗДАНИЕ ГЛОБУСА С ГОТОВОЙ СВЕТЛОЙ ТЕКСТУРОЙ
-    // ============================================================
-    function createGlobe(textureUrl) {
-        const world = Globe()(container)
-            .globeImageUrl(textureUrl)  // ← наша светлая текстура
-            .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
-            .backgroundColor('rgba(0,0,0,0)')
-            .showAtmosphere(true)
-            .atmosphereColor('#FBE8F0')  // очень нежное розовое свечение
-            .atmosphereAltitude(0.18)
-            .width(container.clientWidth)
-            .height(container.clientHeight);
+                    let outR, outG, outB;
 
-        // ============================================================
-        // РЕЛЬЕФ — усиливаем, чтобы горы читались
-        // ============================================================
-        setTimeout(() => {
-    const material = world.globeMaterial();
-    if (material && material.bumpMap) {
-        material.bumpScale = 0.7;
-        material.bumpMap.anisotropy = 16;
-        material.bumpMap.needsUpdate = true;
-    }
-    if (material) {
-        material.shininess = 3;
-        material.specular = new THREE.Color(0x111111);
-        material.needsUpdate = true;
-    }
+                    if (isIce) {
+                        outR = 252;
+                        outG = 251;
+                        outB = 250;
+                    } else if (isWater) {
+                        const depth = 1 - gray / 0.55;
+                        outR = 200 - depth * 25;
+                        outG = 215 - depth * 20;
+                        outB = 235 - depth * 10;
+                    } else {
+                        const t = Math.pow(gray, 0.65);
+                        const darkR  = 225, darkG  = 215, darkB  = 200;
+                        const lightR = 254, lightG = 250, lightB = 242;
 
-    // ⚡️ СВЕТ: ставим его спереди-сбоку от камеры,
-    // чтобы освещение было равномерным, а не «сверху ярко, снизу темно»
-    const scene = world.scene();
-    scene.traverse(obj => {
-        if (obj.isDirectionalLight) {
-            // Свет почти из камеры, чуть справа и сверху
-            // → вся видимая сторона планеты освещена ровно
-            obj.position.set(2, 1.5, 5);
-            obj.intensity = 1.5;
-        }
-        if (obj.isAmbientLight) {
-            // Возвращаем ambient на нормальный уровень,
-            // чтобы низ планеты не проваливался в тень
-            obj.intensity = 0.55;
-        }
-    });
-}, 800);
+                        outR = darkR + (lightR - darkR) * t;
+                        outG = darkG + (lightG - darkG) * t;
+                        outB = darkB + (lightB - darkB) * t;
+                    }
 
-        // ============================================================
-        // МАРКЕРЫ
-        // ============================================================
-        world
-            .htmlElementsData(branches)
-            .htmlLat(d => d.lat)
-            .htmlLng(d => d.lng)
-            .htmlAltitude(0.01)
-            .htmlElement(d => {
-                const el = document.createElement('div');
-                el.className = 'branch-marker';
-                el.innerHTML = `
-                    <div class="dot"></div>
-                    <div class="label">${d.name}</div>
-                `;
-                el.title = d.name;
-                return el;
-            });
+                    data[i]     = outR;
+                    data[i + 1] = outG;
+                    data[i + 2] = outB;
+                }
 
-        // УПРАВЛЕНИЕ
-        const controls = world.controls();
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 0.6;
-        controls.enableZoom = false;
-        controls.enablePan = false;
-        controls.minPolarAngle = Math.PI / 4;
-        controls.maxPolarAngle = 3 * Math.PI / 4;
+                ctx.putImageData(imageData, 0, 0);
+                return canvas.toDataURL('image/jpeg', 0.92);
+            }
 
-        controls.addEventListener('start', () => { controls.autoRotate = false; });
-        controls.addEventListener('end', () => {
-            setTimeout(() => { controls.autoRotate = true; }, 2000);
-        });
+            const loader = new Image();
+            loader.crossOrigin = 'anonymous';
+            loader.onload = () => {
+                const lightUrl = makeLightTexture(loader);
+                createGlobe(lightUrl);
+            };
+            loader.onerror = () => {
+                console.warn('Не удалось загрузить текстуру, используем оригинал');
+                createGlobe(originalUrl);
+            };
+            loader.src = originalUrl;
 
-        world.pointOfView({ lat: 55, lng: 60, altitude: 2.2 }, 0);
+            function createGlobe(textureUrl) {
+                const world = Globe()(container)
+                    .globeImageUrl(textureUrl)
+                    .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+                    .backgroundColor('rgba(0,0,0,0)')
+                    .showAtmosphere(true)
+                    .atmosphereColor('#FBE8F0')
+                    .atmosphereAltitude(0.18)
+                    .width(container.clientWidth)
+                    .height(container.clientHeight);
 
-        // АДАПТИВ
-        window.addEventListener('resize', () => {
-            const w = container.clientWidth;
-            const h = container.clientHeight;
-            if (w === 0 || h === 0) return;
-            world.width(w).height(h);
-        });
-    }
-})();
+                setTimeout(() => {
+                    const material = world.globeMaterial();
+                    if (material && material.bumpMap) {
+                        material.bumpScale = 0.7;
+                        material.bumpMap.anisotropy = 16;
+                        material.bumpMap.needsUpdate = true;
+                    }
+                    if (material) {
+                        material.shininess = 3;
+                        material.specular = new THREE.Color(0x111111);
+                        material.needsUpdate = true;
+                    }
+
+                    const scene = world.scene();
+                    scene.traverse(obj => {
+                        if (obj.isDirectionalLight) {
+                            obj.position.set(2, 1.5, 5);
+                            obj.intensity = 1.5;
+                        }
+                        if (obj.isAmbientLight) {
+                            obj.intensity = 0.55;
+                        }
+                    });
+                }, 800);
+
+                world
+                    .htmlElementsData(branches)
+                    .htmlLat(d => d.lat)
+                    .htmlLng(d => d.lng)
+                    .htmlAltitude(0.01)
+                    .htmlElement(d => {
+                        const el = document.createElement('div');
+                        el.className = 'branch-marker';
+                        el.innerHTML = `
+                            <div class="dot"></div>
+                            <div class="label">${d.name}</div>
+                        `;
+                        el.title = d.name;
+                        return el;
+                    });
+
+                const controls = world.controls();
+                controls.autoRotate = true;
+                controls.autoRotateSpeed = 0.6;
+                controls.enableZoom = false;
+                controls.enablePan = false;
+                controls.minPolarAngle = Math.PI / 4;
+                controls.maxPolarAngle = 3 * Math.PI / 4;
+
+                controls.addEventListener('start', () => { controls.autoRotate = false; });
+                controls.addEventListener('end', () => {
+                    setTimeout(() => { controls.autoRotate = true; }, 2000);
+                });
+
+                world.pointOfView({ lat: 55, lng: 60, altitude: 2.2 }, 0);
+
+                window.addEventListener('resize', () => {
+                    const w = container.clientWidth;
+                    const h = container.clientHeight;
+                    if (w === 0 || h === 0) return;
+                    world.width(w).height(h);
+                });
+            }
+        })();
     </script>
 
 </body>
