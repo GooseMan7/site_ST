@@ -9,14 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/globe.gl@2.34.0/dist/globe.gl.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #6C63F9;
             --primary-dark: #5A52D9;
@@ -24,30 +19,21 @@
             --secondary: #FF6B6B;
             --accent: #FFD93D;
             --dark: #1A1A2E;
-            --dark-2: #16213E;
             --gray: #6B7A8F;
             --gray-light: #E8ECF1;
             --white: #FFFFFF;
-            --bg: #F0EDFF;
             --bg-pastel: #F5F0FF;
             --gradient-main: linear-gradient(135deg, #6C63F9 0%, #5A52D9 50%, #4A42C9 100%);
             --gradient-warm: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
-            --gradient-pastel: linear-gradient(135deg, #F5F0FF 0%, #EDE4FF 50%, #E8DDFF 100%);
             --shadow-sm: 0 4px 20px rgba(108, 99, 249, 0.15);
             --shadow-md: 0 8px 40px rgba(108, 99, 249, 0.2);
             --shadow-lg: 0 20px 60px rgba(108, 99, 249, 0.25);
             --radius-sm: 12px;
             --radius-md: 20px;
             --radius-lg: 30px;
-            --radius-xl: 40px;
             --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 80px;
-        }
-
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-pastel);
@@ -55,1720 +41,635 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
+        ::selection { background: var(--primary); color: white; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-        ::selection {
-            background: var(--primary);
-            color: white;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* ============================================================
-           ШАПКА
-           ============================================================ */
-
+        /* ШАПКА */
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 16px 0;
-            transition: var(--transition);
-            background: transparent;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 16px 0; transition: var(--transition); background: transparent;
         }
-
         .navbar.scrolled {
             background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
-            padding: 12px 0;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06); padding: 12px 0;
         }
-
-        .navbar .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            flex-shrink: 0;
-        }
-
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; }
         .logo-icon {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(0,0,0,0);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
+            width: 50px; height: 50px; background-color: rgba(0,0,0,0);
+            border-radius: var(--radius-sm); display: flex; align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 22px;
-            font-weight: 800;
         }
-
-        .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--dark);
-            letter-spacing: -0.5px;
-        }
-
-        .logo-text span {
-            color: var(--primary);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            list-style: none;
-        }
-
+        .logo-text { font-size: 22px; font-weight: 800; color: var(--dark); letter-spacing: -0.5px; }
+        .logo-text span { color: var(--primary); }
+        .nav-links { display: flex; align-items: center; gap: 8px; list-style: none; }
         .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            font-size: 15px;
-            padding: 8px 18px;
-            border-radius: 50px;
-            transition: var(--transition);
-            position: relative;
-            cursor: pointer;
+            text-decoration: none; color: var(--dark); font-weight: 500; font-size: 15px;
+            padding: 8px 18px; border-radius: 50px; transition: var(--transition); cursor: pointer;
         }
-
-        .nav-links a:hover {
-            color: var(--primary);
-            background: rgba(108, 99, 249, 0.08);
-        }
-
-        .nav-links a.active {
-            color: var(--primary);
-            background: rgba(108, 99, 249, 0.1);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .nav-links a:hover { color: var(--primary); background: rgba(108, 99, 249, 0.08); }
+        .nav-actions { display: flex; align-items: center; gap: 12px; }
 
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            font-family: 'Inter', sans-serif;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 28px; border-radius: 50px; font-weight: 600; font-size: 14px;
+            border: none; cursor: pointer; transition: var(--transition);
+            text-decoration: none; font-family: 'Inter', sans-serif;
         }
-
-        .btn-primary {
-            background: var(--gradient-main);
-            color: white;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--dark);
-            border: 2px solid var(--gray-light);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: var(--gradient-warm);
-            color: white;
-            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(255, 107, 107, 0.4);
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-ghost:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: white;
-            transform: translateY(-2px);
-        }
+        .btn-primary { background: var(--gradient-main); color: white; box-shadow: var(--shadow-sm); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .btn-outline { background: transparent; color: var(--dark); border: 2px solid var(--gray-light); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+        .btn-secondary { background: var(--gradient-warm); color: white; box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3); }
+        .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 107, 107, 0.4); }
+        .btn-ghost { background: transparent; color: white; border: 2px solid rgba(255, 255, 255, 0.3); }
+        .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); border-color: white; }
 
         .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--dark);
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: var(--transition);
+            display: none; background: none; border: none; font-size: 24px;
+            color: var(--dark); cursor: pointer; padding: 8px; border-radius: 8px;
         }
 
-        .mobile-menu-btn:hover {
-            background: rgba(108, 99, 249, 0.08);
-        }
-
-        /* ============================================================
-           ГЕРОЙ
-           ============================================================ */
-
+        /* ГЕРОЙ */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 0 80px;
-            position: relative;
-            overflow: hidden;
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 120px 0 80px; position: relative; overflow: hidden;
             background: var(--bg-pastel);
         }
-
         .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 800px;
-            height: 800px;
+            content: ''; position: absolute; top: -50%; right: -20%;
+            width: 800px; height: 800px;
             background: radial-gradient(circle, rgba(108, 99, 249, 0.06) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
+            border-radius: 50%; pointer-events: none;
         }
-
         .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -10%;
-            width: 600px;
-            height: 600px;
+            content: ''; position: absolute; bottom: -30%; left: -10%;
+            width: 600px; height: 600px;
             background: radial-gradient(circle, rgba(255, 107, 107, 0.04) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
+            border-radius: 50%; pointer-events: none;
         }
-
         .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            position: relative;
-            z-index: 1;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+            align-items: center; position: relative; z-index: 1;
         }
-
-        .hero-content {
-            animation: fadeInUp 0.8s ease;
-        }
-
+        .hero-content { animation: fadeInUp 0.8s ease; }
         .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(108, 99, 249, 0.1);
-            color: var(--primary);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 24px;
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(108, 99, 249, 0.1); color: var(--primary);
+            padding: 6px 16px; border-radius: 50px; font-size: 13px;
+            font-weight: 600; margin-bottom: 24px;
         }
-
         .hero-badge .dot {
-            width: 6px;
-            height: 6px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: pulse-dot 2s infinite;
+            width: 6px; height: 6px; background: var(--primary);
+            border-radius: 50%; animation: pulse-dot 2s infinite;
         }
-
         @keyframes pulse-dot {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(0.8); }
         }
-
         .hero h1 {
-            font-size: clamp(2.8rem, 5vw, 4.2rem);
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -2px;
-            color: var(--dark);
+            font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 900;
+            line-height: 1.1; letter-spacing: -2px; color: var(--dark);
             margin-bottom: 20px;
         }
-
         .hero h1 .highlight {
-            background: var(--gradient-main);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            background: var(--gradient-main); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
         }
-
         .hero h1 .highlight-warm {
-            background: var(--gradient-warm);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            background: var(--gradient-warm); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
         }
-
         .hero p {
-            font-size: 1.15rem;
-            color: var(--gray);
-            max-width: 520px;
-            line-height: 1.8;
-            margin-bottom: 32px;
+            font-size: 1.15rem; color: var(--gray); max-width: 520px;
+            line-height: 1.8; margin-bottom: 32px;
         }
-
-        .hero-actions {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
         .hero-stats {
-            display: flex;
-            gap: 48px;
-            margin-top: 48px;
-            padding-top: 32px;
+            display: flex; gap: 48px; margin-top: 48px; padding-top: 32px;
             border-top: 2px solid var(--gray-light);
         }
-
         .hero-stats .stat h3 {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--dark);
-            letter-spacing: -1px;
+            font-size: 2rem; font-weight: 800; color: var(--dark); letter-spacing: -1px;
         }
+        .hero-stats .stat h3 .accent { color: var(--primary); }
+        .hero-stats .stat p { font-size: 0.9rem; color: var(--gray); margin-bottom: 0; }
+        .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+        .hero-illustration { position: relative; width: 100%; max-width: 480px; aspect-ratio: 1; }
 
-        .hero-stats .stat h3 .accent {
-            color: var(--primary);
-        }
-
-        .hero-stats .stat p {
-            font-size: 0.9rem;
-            color: var(--gray);
-            margin-bottom: 0;
-        }
-
-        .hero-visual {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero-illustration {
-            position: relative;
-            width: 100%;
-            max-width: 480px;
-            aspect-ratio: 1;
-        }
-
-        /* ============================================================
-           3D ПЛАНЕТА ЗЕМЛЯ
-           ============================================================ */
-
+        /* ГЛОБУС */
         .planet-3d {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            cursor: grab;
-            touch-action: none;
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            z-index: 1; cursor: grab; touch-action: none;
         }
-
-        .planet-3d:active {
-            cursor: grabbing;
-        }
-
+        .planet-3d:active { cursor: grabbing; }
         .planet-3d canvas {
-            display: block;
-            width: 100% !important;
-            height: 100% !important;
-            filter: drop-shadow(0 20px 60px rgba(40, 80, 200, 0.5));
+            display: block; width: 100% !important; height: 100% !important;
+            border-radius: 50%;
         }
-
-        /* Мягкое свечение атмосферы позади планеты */
+        /* ВНУТРЕННЕЕ СВЕЧЕНИЕ (атмосфера планеты) */
         .planet-3d::before {
-            content: '';
-            position: absolute;
-            inset: 5%;
+            content: ''; position: absolute; inset: 5%; border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                rgba(255, 235, 240, 0.5) 0%,
+                rgba(240, 230, 250, 0.25) 40%,
+                transparent 70%
+            );
+            filter: blur(35px);
+            animation: atmosphere-pulse 7s ease-in-out infinite;
+            pointer-events: none; z-index: -1;
+        }
+        /* ВНЕШНЕЕ СВЕЧЕНИЕ ЗА ПЛАНЕТОЙ (ореол / glow) */
+        .hero-illustration::before {
+            content: ''; position: absolute;
+            top: 50%; left: 50%;
+            width: 130%; height: 130%;
+            transform: translate(-50%, -50%);
             border-radius: 50%;
             background: radial-gradient(
                 circle,
-                rgba(108, 99, 249, 0.35) 0%,
-                rgba(90, 130, 255, 0.2) 40%,
+                rgba(140, 120, 255, 0.28) 0%,
+                rgba(180, 150, 255, 0.18) 25%,
+                rgba(255, 180, 220, 0.12) 45%,
+                rgba(200, 180, 255, 0.05) 65%,
+                transparent 80%
+            );
+            filter: blur(45px);
+            pointer-events: none;
+            z-index: 0;
+            animation: outer-glow 6s ease-in-out infinite;
+        }
+        /* Второй слой свечения — мягкие лучи */
+        .hero-illustration::after {
+            content: ''; position: absolute;
+            top: 50%; left: 50%;
+            width: 155%; height: 155%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                rgba(108, 99, 249, 0.10) 0%,
+                rgba(255, 107, 107, 0.06) 35%,
                 transparent 70%
             );
-            filter: blur(30px);
-            animation: atmosphere-pulse 6s ease-in-out infinite;
+            filter: blur(60px);
             pointer-events: none;
-            z-index: -1;
+            z-index: 0;
+            animation: outer-glow-2 8s ease-in-out infinite;
         }
-
+        @keyframes outer-glow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.85; }
+            50% { transform: translate(-50%, -50%) scale(1.06); opacity: 1; }
+        }
+        @keyframes outer-glow-2 {
+            0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.1) rotate(180deg); opacity: 1; }
+        }
         @keyframes atmosphere-pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
+            0%, 100% { transform: scale(1); opacity: 0.75; }
+            50% { transform: scale(1.12); opacity: 1; }
         }
 
-        /* ============================================================
-           БЕЛЫЙ ПРЯМОУГОЛЬНИК floating-container
-           ============================================================ */
-
-        .floating-container {
-            width: 83%;
-            height: 83%;
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 16px 20px;
-            display: flex;
-            flex-wrap: wrap;
-            align-content: center;
-            justify-content: center;
-            gap: 8px 14px;
-            z-index: 2;
-            animation: float-container 8s ease-in-out infinite;
-            left: 40px;
-            top: 40px;
+        /* МАРКЕРЫ */
+        .branch-marker {
+            position: relative; transform: translate(-50%, -50%);
+            pointer-events: auto; cursor: pointer; user-select: none;
         }
-
-        @keyframes float-container {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+        .branch-marker .dot {
+            width: 14px; height: 14px; border-radius: 50%;
+            background: #C4B8F0; border: 3px solid #ffffff;
+            box-shadow: 0 0 0 0 rgba(196, 184, 240, 0.7),
+                        0 4px 14px rgba(196, 184, 240, 0.5);
+            animation: marker-pulse 2s infinite;
+            transition: transform 0.25s ease;
         }
-
-        .floating-container .floating-card {
-            position: relative;
-            top: auto;
-            left: auto;
-            right: auto;
-            bottom: auto;
-            animation: none;
-            background: transparent;
-            box-shadow: none;
-            backdrop-filter: none;
-            border: none;
-            padding: 4px 10px;
-            min-width: auto;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex: 0 1 auto;
+        .branch-marker:hover .dot {
+            transform: scale(1.35);
+            background: #FFC5D0;
         }
-
-        .floating-container .floating-card .icon {
-            width: 32px;
-            height: 32px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            flex-shrink: 0;
+        @keyframes marker-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(196, 184, 240, 0.7), 0 4px 14px rgba(196, 184, 240, 0.5); }
+            70% { box-shadow: 0 0 0 16px rgba(196, 184, 240, 0), 0 4px 14px rgba(196, 184, 240, 0.5); }
+            100% { box-shadow: 0 0 0 0 rgba(196, 184, 240, 0), 0 4px 14px rgba(196, 184, 240, 0.5); }
         }
-
-        .floating-container .floating-card .icon.purple {
-            background: rgba(108, 99, 249, 0.12);
-            color: var(--primary);
+        .branch-marker .label {
+            position: absolute; top: 24px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            color: #1A1A2E; font-size: 12px; font-weight: 700;
+            padding: 5px 12px; border-radius: 50px; white-space: nowrap;
+            box-shadow: 0 4px 14px rgba(196, 184, 240, 0.2);
+            border: 1px solid rgba(196, 184, 240, 0.25);
+            opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
         }
-
-        .floating-container .floating-card .icon.warm {
-            background: rgba(255, 107, 107, 0.12);
-            color: var(--secondary);
+        .branch-marker:hover .label {
+            opacity: 1; transform: translateX(-50%) translateY(-3px);
         }
-
-        .floating-container .floating-card .icon.gold {
-            background: rgba(255, 217, 61, 0.2);
-            color: #F59E0B;
-        }
-
-        .floating-container .floating-card .icon.green {
-            background: rgba(16, 185, 129, 0.12);
-            color: #10B981;
-        }
-
-        .floating-container .floating-card .icon.blue {
-            background: rgba(59, 130, 246, 0.12);
-            color: #3B82F6;
-        }
-
-        .floating-container .floating-card .text {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--dark);
-            white-space: nowrap;
-        }
-
-        .floating-container .floating-card .text small {
-            display: block;
-            font-weight: 400;
-            font-size: 10px;
-            color: var(--gray);
-        }
-
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ============================================================
-           СЕКЦИИ
-           ============================================================ */
-
-        .section {
-            padding: 80px 0;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 56px;
-        }
-
+        /* СЕКЦИИ */
+        .section { padding: 80px 0; }
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 56px; }
         .section-header .tag {
-            display: inline-block;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--primary);
-            background: rgba(108, 99, 249, 0.1);
-            padding: 4px 16px;
-            border-radius: 50px;
-            margin-bottom: 16px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            display: inline-block; font-size: 13px; font-weight: 600;
+            color: var(--primary); background: rgba(108, 99, 249, 0.1);
+            padding: 4px 16px; border-radius: 50px; margin-bottom: 16px;
+            letter-spacing: 0.5px; text-transform: uppercase;
         }
-
         .section-header h2 {
-            font-size: clamp(2rem, 3.5vw, 2.8rem);
-            font-weight: 800;
-            letter-spacing: -1px;
-            line-height: 1.2;
-            color: var(--dark);
+            font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 800;
+            letter-spacing: -1px; line-height: 1.2; color: var(--dark);
             margin-bottom: 16px;
         }
-
         .section-header h2 .highlight {
-            background: var(--gradient-main);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            background: var(--gradient-main); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
         }
+        .section-header p { color: var(--gray); font-size: 1.1rem; line-height: 1.7; }
 
-        .section-header p {
-            color: var(--gray);
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
-
-        /* ============================================================
-           ПРОЦЕСС ОБУЧЕНИЯ
-           ============================================================ */
-
-        .process-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
+        /* ПРОЦЕСС */
+        .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .process-card {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 36px 28px;
-            text-align: center;
-            transition: var(--transition);
+            background: white; border-radius: var(--radius-md); padding: 36px 28px;
+            text-align: center; transition: var(--transition);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
         .process-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-main);
-            opacity: 0;
-            transition: var(--transition);
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: var(--gradient-main); opacity: 0; transition: var(--transition);
         }
-
-        .process-card:hover::before {
-            opacity: 1;
-        }
-
-        .process-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-md);
-        }
-
+        .process-card:hover::before { opacity: 1; }
+        .process-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
         .process-card .number {
-            font-size: 48px;
-            font-weight: 900;
-            background: var(--gradient-main);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: 0.15;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-family: 'Inter', sans-serif;
+            font-size: 48px; font-weight: 900;
+            background: var(--gradient-main); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+            opacity: 0.15; position: absolute; top: 10px; right: 20px;
         }
+        .process-card .icon { font-size: 48px; margin-bottom: 16px; display: block; }
+        .process-card h4 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--dark); }
+        .process-card p { font-size: 14px; color: var(--gray); line-height: 1.7; margin-bottom: 0; }
 
-        .process-card .icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .process-card h4 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--dark);
-        }
-
-        .process-card p {
-            font-size: 14px;
-            color: var(--gray);
-            line-height: 1.7;
-            margin-bottom: 0;
-        }
-
-        /* ============================================================
-           О НАС
-           ============================================================ */
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .about-image {
-            position: relative;
-        }
-
+        /* О НАС */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .about-image { position: relative; }
         .about-image .main-img {
-            width: 100%;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            aspect-ratio: 4/3;
-            object-fit: cover;
-            background: var(--gradient-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+            aspect-ratio: 4/3; object-fit: cover;
+            display: flex; align-items: center; justify-content: center;
             font-size: 100px;
-            color: rgba(255, 255, 255, 0.2);
         }
-
         .about-image .floating-badge {
-            position: absolute;
-            bottom: -20px;
-            right: -20px;
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 20px 24px;
-            box-shadow: var(--shadow-md);
-            text-align: center;
+            position: absolute; bottom: -20px; right: -20px; background: white;
+            border-radius: var(--radius-md); padding: 20px 24px;
+            box-shadow: var(--shadow-md); text-align: center;
         }
-
-        .about-image .floating-badge .big {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--primary);
-        }
-
-        .about-image .floating-badge p {
-            font-size: 13px;
-            color: var(--gray);
-            margin-bottom: 0;
-        }
-
+        .about-image .floating-badge .big { font-size: 28px; font-weight: 800; color: var(--primary); }
+        .about-image .floating-badge p { font-size: 13px; color: var(--gray); margin-bottom: 0; }
         .about-content .tag {
-            display: inline-block;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--primary);
-            background: rgba(108, 99, 249, 0.1);
-            padding: 4px 16px;
-            border-radius: 50px;
-            margin-bottom: 16px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            display: inline-block; font-size: 13px; font-weight: 600;
+            color: var(--primary); background: rgba(108, 99, 249, 0.1);
+            padding: 4px 16px; border-radius: 50px; margin-bottom: 16px;
+            letter-spacing: 0.5px; text-transform: uppercase;
         }
-
         .about-content h2 {
-            font-size: clamp(2rem, 3vw, 2.6rem);
-            font-weight: 800;
-            letter-spacing: -1px;
-            line-height: 1.2;
-            margin-bottom: 20px;
+            font-size: clamp(2rem, 3vw, 2.6rem); font-weight: 800;
+            letter-spacing: -1px; line-height: 1.2; margin-bottom: 20px;
         }
-
-        .about-content p {
-            color: var(--gray);
-            font-size: 1.05rem;
-            line-height: 1.8;
-            margin-bottom: 16px;
-        }
-
+        .about-content p { color: var(--gray); font-size: 1.05rem; line-height: 1.8; margin-bottom: 16px; }
         .about-content .features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 24px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px;
         }
-
         .about-content .feature {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-            color: var(--dark);
+            display: flex; align-items: center; gap: 12px; font-weight: 600; color: var(--dark);
         }
-
         .about-content .feature .check {
-            width: 28px;
-            height: 28px;
-            background: var(--gradient-main);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 14px;
-            flex-shrink: 0;
+            width: 28px; height: 28px; background: var(--gradient-main);
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; color: white; font-size: 14px; flex-shrink: 0;
         }
 
-        /* ============================================================
-           НОВОСТИ
-           ============================================================ */
-
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
+        /* НОВОСТИ */
+        .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .news-card {
-            background: white;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            transition: var(--transition);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            background: white; border-radius: var(--radius-md); overflow: hidden;
+            transition: var(--transition); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            display: flex; flex-direction: column;
         }
-
-        .news-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-md);
-        }
-
+        .news-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
         .news-card .image {
-            height: 200px;
-            background: var(--gradient-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            color: rgba(255, 255, 255, 0.2);
+            height: 200px; display: flex; align-items: center; justify-content: center;
+            font-size: 48px; flex-shrink: 0;
         }
-
-        .news-card .body {
-            padding: 24px;
-        }
-
+        .news-card .body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
         .news-card .body .date {
-            font-size: 13px;
-            color: var(--gray);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 8px;
+            font-size: 13px; color: var(--gray); display: flex;
+            align-items: center; gap: 6px; margin-bottom: 8px;
         }
-
-        .news-card .body h4 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 8px;
-        }
-
-        .news-card .body p {
-            font-size: 14px;
-            color: var(--gray);
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-
-        .news-card .body .tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
+        .news-card .body h4 { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+        .news-card .body p { font-size: 14px; color: var(--gray); line-height: 1.6; margin-bottom: 16px; flex: 1; }
+        .news-card .body .tags { display: flex; gap: 8px; flex-wrap: wrap; }
         .news-card .body .tags span {
-            font-size: 11px;
-            font-weight: 600;
-            padding: 2px 12px;
-            border-radius: 50px;
-            background: var(--gray-light);
-            color: var(--gray);
+            font-size: 11px; font-weight: 600; padding: 2px 12px;
+            border-radius: 50px; background: var(--gray-light); color: var(--gray);
         }
-
         .news-card .body .tags span.special {
-            background: rgba(255, 107, 107, 0.12);
-            color: var(--secondary);
+            background: rgba(255, 107, 107, 0.12); color: var(--secondary);
+        }
+        .news-card .body .tags span.pink {
+            background: rgba(236, 72, 153, 0.12); color: #EC4899;
         }
 
-        /* ============================================================
-           ФУТЕР
-           ============================================================ */
-
+        /* ФУТЕР */
         .footer {
-            background: var(--dark);
-            color: rgba(255, 255, 255, 0.7);
-            padding: 60px 0 30px;
-            margin-top: 40px;
+            background: var(--dark); color: rgba(255, 255, 255, 0.7);
+            padding: 60px 0 30px; margin-top: 40px;
         }
-
         .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 40px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            margin-bottom: 30px;
+            display: grid; grid-template-columns: 2fr 1fr 1.2fr 1fr;
+            gap: 40px; padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06); margin-bottom: 30px;
         }
-
-        .footer-brand .logo-text {
-            color: white;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .footer-brand p {
-            font-size: 14px;
-            line-height: 1.7;
-            max-width: 300px;
-        }
-
-        .footer h5 {
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .footer ul {
-            list-style: none;
-        }
-
-        .footer ul li {
-            margin-bottom: 10px;
-        }
-
+        .footer-brand .logo-text { color: white; margin-bottom: 12px; display: block; }
+        .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 300px; }
+        .footer h5 { color: white; font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+        .footer ul { list-style: none; }
+        .footer ul li { margin-bottom: 10px; }
         .footer ul a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 14px;
-            transition: var(--transition);
+            color: rgba(255, 255, 255, 0.6); text-decoration: none;
+            font-size: 14px; transition: var(--transition);
         }
-
-        .footer ul a:hover {
-            color: white;
+        .footer ul a:hover { color: white; }
+        .footer-qr { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+        .footer-qr img {
+            width: 120px; height: 120px; background: white;
+            border-radius: var(--radius-sm); padding: 8px;
+            object-fit: contain; transition: var(--transition);
         }
-
+        .footer-qr img:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(108, 99, 249, 0.4);
+        }
+        .footer-qr .qr-label { font-size: 12px; color: rgba(255, 255, 255, 0.55); line-height: 1.4; }
+        .footer-qr .qr-label strong { color: white; display: block; font-size: 13px; margin-bottom: 2px; }
         .footer-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-            font-size: 14px;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 16px; font-size: 14px;
         }
 
-        .footer-socials {
-            display: flex;
-            gap: 12px;
-        }
-
-        .footer-socials a {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.06);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-socials a:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* ============================================================
-           МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ
-           ============================================================ */
-
+        /* МОДАЛЬНЫЕ */
         .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
+            display: none; position: fixed; inset: 0;
             background: rgba(26, 26, 46, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-            z-index: 2000;
-            animation: fadeInModal 0.3s ease;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            justify-content: center; align-items: center; padding: 24px;
+            z-index: 2000; animation: fadeInModal 0.3s ease;
         }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        @keyframes fadeInModal {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
+        .modal-overlay.active { display: flex; }
+        @keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
         .modal {
-            background: white;
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            max-width: 900px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
+            background: white; border-radius: var(--radius-lg); padding: 40px;
+            max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto;
             animation: slideUpModal 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+            scrollbar-width: none; -ms-overflow-style: none;
         }
-
-        .modal::-webkit-scrollbar {
-            display: none;
-        }
-
+        .modal::-webkit-scrollbar { display: none; }
         @keyframes slideUpModal {
             from { opacity: 0; transform: translateY(30px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
-
         .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 28px;
-            flex-wrap: wrap;
-            gap: 16px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 28px; flex-wrap: wrap; gap: 16px;
         }
-
-        .modal-header h3 {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--dark);
-        }
-
+        .modal-header h3 { font-size: 28px; font-weight: 800; color: var(--dark); }
         .modal-header h3 .highlight {
-            background: var(--gradient-main);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            background: var(--gradient-main); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
         }
-
         .modal-close {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--gray);
-            cursor: pointer;
-            transition: var(--transition);
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: none; border: none; font-size: 24px; color: var(--gray);
+            cursor: pointer; transition: var(--transition); width: 44px; height: 44px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
             background: var(--gray-light);
         }
-
-        .modal-close:hover {
-            background: var(--primary);
-            color: white;
-            transform: rotate(90deg);
-        }
-
-        .modal-subtitle {
-            color: var(--gray);
-            font-size: 1.05rem;
-            margin-bottom: 30px;
-        }
-
+        .modal-close:hover { background: var(--primary); color: white; transform: rotate(90deg); }
+        .modal-subtitle { color: var(--gray); font-size: 1.05rem; margin-bottom: 30px; }
         .modal-subjects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 16px;
         }
-
         .modal-subject-card {
-            background: var(--bg-pastel);
-            border-radius: var(--radius-md);
-            padding: 24px 20px;
-            text-align: center;
-            transition: var(--transition);
-            border: 2px solid transparent;
-            cursor: pointer;
+            background: var(--bg-pastel); border-radius: var(--radius-md);
+            padding: 24px 20px; text-align: center; transition: var(--transition);
+            border: 2px solid transparent; cursor: pointer;
         }
-
         .modal-subject-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary);
-            box-shadow: var(--shadow-sm);
-            background: white;
+            transform: translateY(-4px); border-color: var(--primary);
+            box-shadow: var(--shadow-sm); background: white;
         }
-
-        .modal-subject-card .icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .modal-subject-card h4 {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 4px;
-        }
-
-        .modal-subject-card p {
-            font-size: 12px;
-            color: var(--gray);
-            margin-bottom: 0;
-        }
-
+        .modal-subject-card .icon { font-size: 32px; margin-bottom: 10px; display: block; }
+        .modal-subject-card h4 { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+        .modal-subject-card p { font-size: 12px; color: var(--gray); margin-bottom: 0; }
         .modal-subject-card .badge {
-            display: inline-block;
-            font-size: 9px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 2px 10px;
-            border-radius: 50px;
-            margin-top: 6px;
+            display: inline-block; font-size: 9px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            padding: 2px 10px; border-radius: 50px; margin-top: 6px;
         }
-
-        .modal-subject-card .badge.exam {
-            background: rgba(255, 107, 107, 0.12);
-            color: var(--secondary);
-        }
-
-        .modal-subject-card .badge.olympiad {
-            background: rgba(52, 211, 153, 0.12);
-            color: #10B981;
-        }
-
-        .modal-subject-card .badge.popular {
-            background: rgba(108, 99, 249, 0.12);
-            color: var(--primary);
-        }
-
+        .modal-subject-card .badge.exam { background: rgba(255, 107, 107, 0.12); color: var(--secondary); }
+        .modal-subject-card .badge.olympiad { background: rgba(52, 211, 153, 0.12); color: #10B981; }
+        .modal-subject-card .badge.popular { background: rgba(108, 99, 249, 0.12); color: var(--primary); }
         .modal-category-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--dark);
-            margin: 30px 0 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 18px; font-weight: 700; color: var(--dark);
+            margin: 30px 0 16px; display: flex; align-items: center; gap: 12px;
         }
-
-        .modal-category-title::after {
-            content: '';
-            flex: 1;
-            height: 2px;
-            background: var(--gray-light);
-        }
-
-        /* ============================================================
-           МОДАЛЬНОЕ ОКНО ДЕТАЛЕЙ ПРЕДМЕТА
-           ============================================================ */
+        .modal-category-title::after { content: ''; flex: 1; height: 2px; background: var(--gray-light); }
 
         .detail-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
+            display: none; position: fixed; inset: 0;
             background: rgba(26, 26, 46, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-            z-index: 2100;
-            animation: fadeInModal 0.3s ease;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            justify-content: center; align-items: center; padding: 24px;
+            z-index: 2100; animation: fadeInModal 0.3s ease;
         }
-
-        .detail-overlay.active {
-            display: flex;
-        }
-
+        .detail-overlay.active { display: flex; }
         .detail-modal {
-            background: white;
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            max-width: 520px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
+            background: white; border-radius: var(--radius-lg); padding: 40px;
+            max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto;
             animation: slideUpModal 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-
-        .detail-modal .detail-icon {
-            font-size: 56px;
-            text-align: center;
-            display: block;
-            margin-bottom: 12px;
-        }
-
-        .detail-modal h3 {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--dark);
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        .detail-modal .detail-sub {
-            text-align: center;
-            color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-
+        .detail-modal .detail-icon { font-size: 56px; text-align: center; display: block; margin-bottom: 12px; }
+        .detail-modal h3 { font-size: 24px; font-weight: 800; color: var(--dark); text-align: center; margin-bottom: 8px; }
+        .detail-modal .detail-sub { text-align: center; color: var(--gray); font-size: 14px; margin-bottom: 16px; }
         .detail-modal .detail-desc {
-            color: var(--gray);
-            font-size: 15px;
-            line-height: 1.8;
-            padding: 20px;
-            background: var(--bg-pastel);
-            border-radius: var(--radius-sm);
-            margin-bottom: 24px;
+            color: var(--gray); font-size: 15px; line-height: 1.8;
+            padding: 20px; background: var(--bg-pastel);
+            border-radius: var(--radius-sm); margin-bottom: 24px;
         }
-
         .detail-modal .detail-tags {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+            display: flex; gap: 8px; justify-content: center;
+            margin-bottom: 20px; flex-wrap: wrap;
         }
-
         .detail-modal .detail-tags span {
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 14px;
-            border-radius: 50px;
-            background: var(--gray-light);
-            color: var(--gray);
+            font-size: 11px; font-weight: 600; padding: 4px 14px;
+            border-radius: 50px; background: var(--gray-light); color: var(--gray);
         }
-
-        .detail-modal .detail-tags span.special {
-            background: rgba(108, 99, 249, 0.12);
-            color: var(--primary);
-        }
-
-        .detail-modal .detail-tags span.exam {
-            background: rgba(255, 107, 107, 0.12);
-            color: var(--secondary);
-        }
-
-        .detail-modal .detail-tags span.olympiad {
-            background: rgba(52, 211, 153, 0.12);
-            color: #10B981;
-        }
-
+        .detail-modal .detail-tags span.special { background: rgba(108, 99, 249, 0.12); color: var(--primary); }
+        .detail-modal .detail-tags span.exam { background: rgba(255, 107, 107, 0.12); color: var(--secondary); }
+        .detail-modal .detail-tags span.olympiad { background: rgba(52, 211, 153, 0.12); color: #10B981; }
         .detail-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--gray);
-            cursor: pointer;
-            transition: var(--transition);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute; top: 16px; right: 16px; background: none;
+            border: none; font-size: 24px; color: var(--gray); cursor: pointer;
+            transition: var(--transition); width: 40px; height: 40px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
         }
+        .detail-close:hover { background: var(--gray-light); color: var(--dark); }
+        .detail-modal .btn { width: 100%; justify-content: center; }
 
-        .detail-close:hover {
-            background: var(--gray-light);
-            color: var(--dark);
-        }
-
-        .detail-modal .btn {
-            width: 100%;
-            justify-content: center;
-        }
-
-        /* ============================================================
-           ФОРМА ЗАПИСИ
-           ============================================================ */
-
-        .form-modal {
-            max-width: 520px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
+        .form-modal { max-width: 520px; }
+        .form-group { margin-bottom: 20px; }
         .form-group label {
-            display: block;
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--dark);
-            margin-bottom: 6px;
+            display: block; font-weight: 600; font-size: 14px;
+            color: var(--dark); margin-bottom: 6px;
         }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 14px 18px;
-            border: 2px solid var(--gray-light);
-            border-radius: var(--radius-sm);
-            font-size: 15px;
-            font-family: 'Inter', sans-serif;
-            transition: var(--transition);
-            background: var(--bg-pastel);
-            color: var(--dark);
+        .form-group input, .form-group select {
+            width: 100%; padding: 14px 18px; border: 2px solid var(--gray-light);
+            border-radius: var(--radius-sm); font-size: 15px;
+            font-family: 'Inter', sans-serif; transition: var(--transition);
+            background: var(--bg-pastel); color: var(--dark);
         }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(108, 99, 249, 0.1);
-            background: white;
+        .form-group input:focus, .form-group select:focus {
+            outline: none; border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(108, 99, 249, 0.1); background: white;
         }
-
-        .form-group input::placeholder {
-            color: var(--gray);
-        }
-
+        .form-group input::placeholder { color: var(--gray); }
         .form-submit {
-            width: 100%;
-            padding: 16px;
-            background: var(--gradient-main);
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
+            width: 100%; padding: 16px; background: var(--gradient-main);
+            color: white; border: none; border-radius: var(--radius-sm);
+            font-size: 16px; font-weight: 700; cursor: pointer;
+            transition: var(--transition); font-family: 'Inter', sans-serif;
         }
-
-        .form-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .form-success {
-            display: none;
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .form-success.show {
-            display: block;
-            animation: slideUpModal 0.4s ease;
-        }
-
-        .form-success .icon {
-            font-size: 56px;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .form-success h4 {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 8px;
-        }
-
-        .form-success p {
-            color: var(--gray);
-        }
-
-        /* ============================================================
-           КНОПКА НАВЕРХ
-           ============================================================ */
+        .form-submit:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .form-success { display: none; text-align: center; padding: 20px 0; }
+        .form-success.show { display: block; animation: slideUpModal 0.4s ease; }
+        .form-success .icon { font-size: 56px; margin-bottom: 16px; display: block; }
+        .form-success h4 { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+        .form-success p { color: var(--gray); }
 
         .to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 900;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: var(--gradient-main);
-            color: white;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: var(--shadow-md);
-            opacity: 0;
-            transform: translateY(20px) scale(0.8);
-            transition: var(--transition);
-            pointer-events: none;
+            position: fixed; bottom: 30px; right: 30px; z-index: 900;
+            width: 52px; height: 52px; border-radius: 50%;
+            background: var(--gradient-main); color: white; border: none;
+            font-size: 20px; cursor: pointer; box-shadow: var(--shadow-md);
+            opacity: 0; transform: translateY(20px) scale(0.8);
+            transition: var(--transition); pointer-events: none;
         }
-
         .to-top.show {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            pointer-events: auto;
+            opacity: 1; transform: translateY(0) scale(1); pointer-events: auto;
         }
-
-        .to-top:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        /* ============================================================
-           МОБИЛЬНОЕ МЕНЮ
-           ============================================================ */
+        .to-top:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
         .mobile-menu {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: white;
-            z-index: 999;
-            padding: 80px 24px 40px;
-            transform: translateX(100%);
+            display: none; position: fixed; inset: 0; background: white;
+            z-index: 999; padding: 80px 24px 40px; transform: translateX(100%);
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             overflow-y: auto;
         }
-
-        .mobile-menu.active {
-            transform: translateX(0);
-        }
-
+        .mobile-menu.active { transform: translateX(0); }
         .mobile-menu .close-btn {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            background: none;
-            border: none;
-            font-size: 28px;
-            color: var(--dark);
-            cursor: pointer;
+            position: absolute; top: 24px; right: 24px; background: none;
+            border: none; font-size: 28px; color: var(--dark); cursor: pointer;
         }
-
-        .mobile-menu ul {
-            list-style: none;
-        }
-
-        .mobile-menu ul li {
-            margin-bottom: 4px;
-        }
-
+        .mobile-menu ul { list-style: none; }
+        .mobile-menu ul li { margin-bottom: 4px; }
         .mobile-menu ul a {
-            display: block;
-            padding: 16px 0;
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--dark);
-            text-decoration: none;
-            border-bottom: 1px solid var(--gray-light);
-            transition: var(--transition);
-            cursor: pointer;
+            display: block; padding: 16px 0; font-size: 20px; font-weight: 600;
+            color: var(--dark); text-decoration: none; border-bottom: 1px solid var(--gray-light);
+            transition: var(--transition); cursor: pointer;
         }
-
-        .mobile-menu ul a:hover {
-            color: var(--primary);
-            padding-left: 12px;
-        }
-
-        .mobile-menu .actions {
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .mobile-menu .actions .btn {
-            width: 100%;
-            justify-content: center;
-        }
-
-        /* ============================================================
-           АДАПТИВ
-           ============================================================ */
+        .mobile-menu ul a:hover { color: var(--primary); padding-left: 12px; }
+        .mobile-menu .actions { margin-top: 30px; display: flex; flex-direction: column; gap: 12px; }
+        .mobile-menu .actions .btn { width: 100%; justify-content: center; }
 
         @media (max-width: 1024px) {
-            .floating-container {
-                width: 83%;
-                height: 83%;
-                left: 8%;
-                top: 9%;
-            }
-            .hero-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero p {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .hero-actions {
-                justify-content: center;
-            }
-
-            .hero-stats {
-                justify-content: center;
-            }
-
-            .hero-illustration {
-                max-width: 400px;
-                margin: 0 auto;
-            }
-
-            .floating-container {
-                padding: 12px 16px;
-                gap: 6px 10px;
-            }
-
-            .floating-container .floating-card .text {
-                font-size: 11px;
-            }
-
-            .floating-container .floating-card .text small {
-                font-size: 9px;
-            }
-
-            .floating-container .floating-card .icon {
-                width: 28px;
-                height: 28px;
-                font-size: 12px;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .about-content .features {
-                justify-content: center;
-            }
-
-            .process-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .news-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero p { margin-left: auto; margin-right: auto; }
+            .hero-actions { justify-content: center; }
+            .hero-stats { justify-content: center; }
+            .hero-illustration { max-width: 400px; margin: 0 auto; }
+            .about-grid { grid-template-columns: 1fr; text-align: center; }
+            .about-content .features { justify-content: center; }
+            .process-grid { grid-template-columns: 1fr 1fr; }
+            .news-grid { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
         }
-
         @media (max-width: 768px) {
-            .floating-container {
-                width: 65%;
-                height: 65%;
-                left: 17%;
-                top: 8%;
-            }
-            .nav-links {
-                display: none;
-            }
-
-            .nav-actions .btn {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .mobile-menu {
-                display: block;
-            }
-
-            .hero {
-                padding: 100px 0 60px;
-            }
-
-            .hero h1 {
-                font-size: 2.4rem;
-            }
-
-            .hero-stats {
-                gap: 24px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .hero-stats .stat h3 {
-                font-size: 1.6rem;
-            }
-
-            .floating-container {
-                padding: 10px 14px;
-                gap: 4px 8px;
-                border-radius: var(--radius-md);
-            }
-
-            .floating-container .floating-card {
-                padding: 2px 6px;
-                gap: 6px;
-            }
-
-            .floating-container .floating-card .text {
-                font-size: 10px;
-            }
-
-            .floating-container .floating-card .text small {
-                font-size: 8px;
-            }
-
-            .floating-container .floating-card .icon {
-                width: 24px;
-                height: 24px;
-                font-size: 10px;
-            }
-
-            .process-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .news-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .about-content .features {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .modal {
-                padding: 28px;
-            }
-
-            .modal-subjects-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .detail-modal {
-                padding: 28px;
-            }
+            .nav-links { display: none; }
+            .nav-actions .btn { display: none; }
+            .mobile-menu-btn { display: block; }
+            .mobile-menu { display: block; }
+            .hero { padding: 100px 0 60px; }
+            .hero h1 { font-size: 2.4rem; }
+            .hero-stats { gap: 24px; flex-wrap: wrap; justify-content: center; }
+            .hero-stats .stat h3 { font-size: 1.6rem; }
+            .process-grid { grid-template-columns: 1fr; }
+            .news-grid { grid-template-columns: 1fr; }
+            .about-content .features { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .modal { padding: 28px; }
+            .modal-subjects-grid { grid-template-columns: 1fr 1fr; }
+            .detail-modal { padding: 28px; }
         }
-
         @media (max-width: 480px) {
-            .floating-container {
-                width: 65%;
-                height: 65%;
-                left: 17%;
-                top: 8%;
-            }
-            .modal-subjects-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-
-            .modal-subject-card {
-                padding: 18px 14px;
-            }
-
-            .modal-subject-card .icon {
-                font-size: 24px;
-            }
-
-            .modal-subject-card h4 {
-                font-size: 13px;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .section {
-                padding: 50px 0;
-            }
-
-            .section-header {
-                margin-bottom: 32px;
-            }
-
-            .section-header h2 {
-                font-size: 1.8rem;
-            }
-
-            .modal {
-                padding: 20px;
-            }
-
-            .modal-header h3 {
-                font-size: 22px;
-            }
-
-            .detail-modal {
-                padding: 20px;
-            }
-
-            .detail-modal .detail-icon {
-                font-size: 40px;
-            }
-
-            .detail-modal h3 {
-                font-size: 20px;
-            }
-
-            .floating-container {
-                padding: 8px 10px;
-                gap: 3px 6px;
-                border-radius: var(--radius-sm);
-            }
-
-            .floating-container .floating-card {
-                padding: 2px 4px;
-                gap: 4px;
-            }
-
-            .floating-container .floating-card .text {
-                font-size: 8px;
-            }
-
-            .floating-container .floating-card .text small {
-                font-size: 7px;
-            }
-
-            .floating-container .floating-card .icon {
-                width: 18px;
-                height: 18px;
-                font-size: 8px;
-                border-radius: 6px;
-            }
+            .modal-subjects-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .modal-subject-card { padding: 18px 14px; }
+            .modal-subject-card .icon { font-size: 24px; }
+            .modal-subject-card h4 { font-size: 13px; }
+            .hero h1 { font-size: 2rem; }
+            .section { padding: 50px 0; }
+            .section-header { margin-bottom: 32px; }
+            .section-header h2 { font-size: 1.8rem; }
+            .modal { padding: 20px; }
+            .modal-header h3 { font-size: 22px; }
+            .detail-modal { padding: 20px; }
+            .detail-modal .detail-icon { font-size: 40px; }
+            .detail-modal h3 { font-size: 20px; }
         }
-
-        /* ============================================================
-           АНИМАЦИЯ ПОЯВЛЕНИЯ
-           ============================================================ */
-
         .reveal {
-            opacity: 0;
-            transform: translateY(30px);
+            opacity: 0; transform: translateY(30px);
             transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        .reveal.visible { opacity: 1; transform: translateY(0); }
         .reveal-delay-1 { transition-delay: 0.1s; }
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
-        .logo-icon img{
-            width: 60px;
-            height: 60px;
-        }
+        .logo-icon img { width: 60px; height: 60px; }
     </style>
 </head>
 <body>
 
-    <!-- ============================================================
-    ШАПКА
-    ============================================================ -->
-
+    <!-- ШАПКА -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="#" class="logo" onclick="goHome()">
                 <div class="logo-icon"><img src="icon.png"></div>
                 <span class="logo-text">Твоё <span>Окружение</span></span>
             </a>
-
             <ul class="nav-links">
                 <li><a onclick="openSubjectsModal()">Предметы</a></li>
                 <li><a href="#process">Обучение</a></li>
                 <li><a href="#about">О нас</a></li>
                 <li><a href="#news">Новости</a></li>
             </ul>
-
             <div class="nav-actions">
                 <button class="btn btn-primary" onclick="openForm()">
                     <i class="fas fa-pen"></i> Записаться
@@ -1780,14 +681,9 @@
         </div>
     </nav>
 
-    <!-- ============================================================
-    МОБИЛЬНОЕ МЕНЮ
-    ============================================================ -->
-
+    <!-- МОБИЛЬНОЕ МЕНЮ -->
     <div class="mobile-menu" id="mobileMenu">
-        <button class="close-btn" id="mobileClose">
-            <i class="fas fa-times"></i>
-        </button>
+        <button class="close-btn" id="mobileClose"><i class="fas fa-times"></i></button>
         <ul>
             <li><a onclick="closeMobile(); openSubjectsModal();">Предметы</a></li>
             <li><a href="#process" onclick="closeMobile()">Обучение</a></li>
@@ -1801,10 +697,7 @@
         </div>
     </div>
 
-    <!-- ============================================================
-    ГЕРОЙ
-    ============================================================ -->
-
+    <!-- ГЕРОЙ -->
     <section class="hero" id="hero">
         <div class="container">
             <div class="hero-grid">
@@ -1845,25 +738,16 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="hero-visual">
                     <div class="hero-illustration">
-
-                        <!-- 3D ПЛАНЕТА ЗЕМЛЯ -->
                         <div class="planet-3d" id="planet3d"></div>
-
-                        
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ============================================================
-    ПРОЦЕСС ОБУЧЕНИЯ
-    ============================================================ -->
-
+    <!-- ПРОЦЕСС -->
     <section class="section" id="process" style="background: white;">
         <div class="container">
             <div class="section-header reveal">
@@ -1871,53 +755,35 @@
                 <h2>Выбери свой <span class="highlight">формат</span></h2>
                 <p>Гибкая система обучения, которая подстраивается под твои цели и график.</p>
             </div>
-
             <div class="process-grid">
                 <div class="process-card reveal reveal-delay-1">
                     <span class="number">01</span>
                     <span class="icon">👤</span>
                     <h4>Индивидуальный формат</h4>
-                    <p>
-                        Персональные занятия один на один с преподавателем.
-                        Идеально для устранения пробелов, подготовки к экзаменам
-                        и олимпиадам. Гибкое расписание и индивидуальный темп.
-                    </p>
+                    <p>Персональные занятия один на один с преподавателем. Идеально для устранения пробелов, подготовки к экзаменам и олимпиадам. Гибкое расписание и индивидуальный темп.</p>
                 </div>
-
                 <div class="process-card reveal reveal-delay-2">
                     <span class="number">02</span>
                     <span class="icon">👥</span>
                     <h4>Групповой формат</h4>
-                    <p>
-                        Занятия в мини-группах до 10 человек. Развиваем
-                        коммуникативные навыки, учимся работать в команде
-                        и обсуждать сложные темы вместе. Поддержка и обратная связь.
-                    </p>
+                    <p>Занятия в мини-группах до 10 человек. Развиваем коммуникативные навыки, учимся работать в команде и обсуждать сложные темы вместе. Поддержка и обратная связь.</p>
                 </div>
-
                 <div class="process-card reveal reveal-delay-3">
                     <span class="number">03</span>
                     <span class="icon">🎯</span>
                     <h4>Интенсивный формат</h4>
-                    <p>
-                        Ускоренные курсы для подготовки к экзаменам и олимпиадам.
-                        Погружение в предмет, решение сложных задач, разбор
-                        типичных ошибок и максимальная практика.
-                    </p>
+                    <p>Ускоренные курсы для подготовки к экзаменам и олимпиадам. Погружение в предмет, решение сложных задач, разбор типичных ошибок и максимальная практика.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ============================================================
-    О НАС
-    ============================================================ -->
-
+    <!-- О НАС -->
     <section class="section" id="about">
         <div class="container">
             <div class="about-grid">
                 <div class="about-image reveal">
-                    <div class="main-img" style="background: var(--gradient-main); display: flex; align-items: center; justify-content: center; font-size: 120px; color: rgba(255,255,255,0.15); border-radius: var(--radius-lg); aspect-ratio: 4/3;">
+                    <div class="main-img" style="background: var(--gradient-main); color: rgba(255,255,255,0.15); border-radius: var(--radius-lg); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; font-size: 120px;">
                         🌟
                     </div>
                     <div class="floating-badge">
@@ -1925,37 +791,16 @@
                         <p>успешной работы</p>
                     </div>
                 </div>
-
                 <div class="about-content reveal">
                     <span class="tag">О нас</span>
                     <h2>Почему <span class="highlight">"Твоё Окружение"</span>?</h2>
-                    <p>
-                        <strong>Погрузитесь в "Твое окружение" – онлайн-класс, где расцветают таланты детей,
-                        подростков от 6 до 17 лет!</strong> Мы стираем границы, предоставляя возможность учиться
-                        из любой точки мира, превращая образование в увлекательное путешествие.
-                    </p>
-                    <p>
-                        Здесь ученики не просто получают знания, а обретают компас, направляющий их
-                        по индивидуальной образовательной траектории. В "Твоем окружении" их ждет
-                        атмосфера тепла и вдохновения.
-                    </p>
+                    <p><strong>Погрузитесь в "Твое окружение" – онлайн-класс, где расцветают таланты детей, подростков от 6 до 17 лет!</strong> Мы стираем границы, предоставляя возможность учиться из любой точки мира, превращая образование в увлекательное путешествие.</p>
+                    <p>Здесь ученики не просто получают знания, а обретают компас, направляющий их по индивидуальной образовательной траектории. В "Твоем окружении" их ждет атмосфера тепла и вдохновения.</p>
                     <div class="features">
-                        <div class="feature">
-                            <span class="check"><i class="fas fa-check"></i></span>
-                            Опытные преподаватели
-                        </div>
-                        <div class="feature">
-                            <span class="check"><i class="fas fa-check"></i></span>
-                            Индивидуальный подход
-                        </div>
-                        <div class="feature">
-                            <span class="check"><i class="fas fa-check"></i></span>
-                            Современные методики
-                        </div>
-                        <div class="feature">
-                            <span class="check"><i class="fas fa-check"></i></span>
-                            Поддержка 24/7
-                        </div>
+                        <div class="feature"><span class="check"><i class="fas fa-check"></i></span>Опытные преподаватели</div>
+                        <div class="feature"><span class="check"><i class="fas fa-check"></i></span>Индивидуальный подход</div>
+                        <div class="feature"><span class="check"><i class="fas fa-check"></i></span>Современные методики</div>
+                        <div class="feature"><span class="check"><i class="fas fa-check"></i></span>Поддержка 24/7</div>
                     </div>
                     <div style="margin-top: 24px;">
                         <button class="btn btn-secondary" onclick="openForm()">
@@ -1967,10 +812,7 @@
         </div>
     </section>
 
-    <!-- ============================================================
-    НОВОСТИ
-    ============================================================ -->
-
+    <!-- НОВОСТИ -->
     <section class="section" id="news" style="background: white;">
         <div class="container">
             <div class="section-header reveal">
@@ -1978,69 +820,58 @@
                 <h2>Будь в <span class="highlight">курсе</span></h2>
                 <p>Следи за последними событиями, акциями и специальными предложениями.</p>
             </div>
-
             <div class="news-grid">
                 <div class="news-card reveal reveal-delay-1">
-                    <div class="image" style="background: var(--gradient-warm);">
-                        🎁
+                    <div class="image" style="background: linear-gradient(135deg, #F472B6 0%, #EC4899 50%, #DB2777 100%); color: rgba(255,255,255,0.3);">🏆</div>
+                    <div class="body">
+                        <div class="date"><i class="far fa-calendar"></i> Новый набор 2025</div>
+                        <h4>Набор на «Олимпиадную математику»</h4>
+                        <p>Образовательный класс «Твоё окружение» ведёт набор на курс «Олимпиадная математика» для <strong>5–6 классов</strong>. Формат — мини-группа. Занятия еженедельно. Ждём самых мотивированных и интересующихся математиков!</p>
+                        <div class="tags">
+                            <span class="special">🔥 Осталось 1 место</span>
+                            <span class="pink">Олимпиада</span>
+                            <span>Математика</span>
+                        </div>
                     </div>
+                </div>
+                <div class="news-card reveal reveal-delay-2">
+                    <div class="image" style="background: var(--gradient-warm); color: rgba(255,255,255,0.3);">🎁</div>
                     <div class="body">
                         <div class="date"><i class="far fa-calendar"></i> 15 октября 2023</div>
                         <h4>Бесплатный пробный урок</h4>
                         <p>Присоединяйтесь и получите бесплатный пробный урок по любому предмету!</p>
-                        <div class="tags">
-                            <span class="special">Акция</span>
-                            <span>Новости</span>
-                        </div>
+                        <div class="tags"><span class="special">Акция</span><span>Новости</span></div>
                     </div>
                 </div>
-
-                <div class="news-card reveal reveal-delay-2">
-                    <div class="image" style="background: var(--gradient-main);">
-                        ❄️
-                    </div>
+                <div class="news-card reveal reveal-delay-3">
+                    <div class="image" style="background: var(--gradient-main); color: rgba(255,255,255,0.3);">❄️</div>
                     <div class="body">
                         <div class="date"><i class="far fa-calendar"></i> 5 ноября 2023</div>
                         <h4>Зимний интенсив по ОГЭ</h4>
                         <p>Специальный интенсивный курс подготовки к ОГЭ для выпускников 9 классов.</p>
-                        <div class="tags">
-                            <span>Курсы</span>
-                            <span>ОГЭ</span>
-                        </div>
+                        <div class="tags"><span>Курсы</span><span>ОГЭ</span></div>
                     </div>
                 </div>
-
-                <div class="news-card reveal reveal-delay-3">
-                    <div class="image" style="background: var(--gray-light); color: var(--primary);">
-                        👨‍🏫
-                    </div>
+                <div class="news-card reveal reveal-delay-1">
+                    <div class="image" style="background: var(--gray-light); color: var(--primary);">👨‍🏫</div>
                     <div class="body">
                         <div class="date"><i class="far fa-calendar"></i> 25 октября 2023</div>
                         <h4>Новые преподаватели в команде</h4>
                         <p>К нашей команде присоединились три опытных педагога по математике, физике и английскому.</p>
-                        <div class="tags">
-                            <span>Команда</span>
-                            <span>Развитие</span>
-                        </div>
+                        <div class="tags"><span>Команда</span><span>Развитие</span></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ============================================================
-    ФУТЕР
-    ============================================================ -->
-
+    <!-- ФУТЕР -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
                     <span class="logo-text">Твоё <span>Окружение</span></span>
-                    <p>
-                        Онлайн-класс для детей и подростков от 6 до 17 лет.
-                        Индивидуальный подход, современные методики и поддержка на каждом шагу.
-                    </p>
+                    <p>Онлайн-класс для детей и подростков от 6 до 17 лет. Индивидуальный подход, современные методики и поддержка на каждом шагу.</p>
                 </div>
                 <div>
                     <h5>Навигация</h5>
@@ -2060,16 +891,13 @@
                     </ul>
                 </div>
                 <div>
-                    <h5>Соцсети</h5>
-                    <div class="footer-socials">
-                        <a href="#"><i class="fab fa-vk"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    <h5>Чат в MAX</h5>
+                    <div class="footer-qr">
+                        <img src="qr_max_img.png" alt="QR-код для чата в MAX">
+                        <div class="qr-label"><strong>Отсканируйте QR</strong>чтобы попасть в наш чат в MAX</div>
                     </div>
                 </div>
             </div>
-
             <div class="footer-bottom">
                 <span>© 2026 Твоё Окружение. Все права защищены.</span>
                 <button class="btn-ghost" style="background: none; border: none; color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;" onclick="openPolicy()">
@@ -2079,131 +907,90 @@
         </div>
     </footer>
 
-    <!-- ============================================================
-    МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ
-    ============================================================ -->
-
+    <!-- МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ -->
     <div class="modal-overlay" id="subjectsModal">
         <div class="modal">
             <div class="modal-header">
                 <h3>📚 Выбери <span class="highlight">предмет</span></h3>
-                <button class="modal-close" onclick="closeSubjectsModal()">
-                    <i class="fas fa-times"></i>
-                </button>
+                <button class="modal-close" onclick="closeSubjectsModal()"><i class="fas fa-times"></i></button>
             </div>
             <p class="modal-subtitle">Широкий выбор курсов для детей и подростков. От подготовки к школе до олимпиадного уровня.</p>
-
-            <div class="modal-category-title">
-                <i class="fas fa-book" style="color: var(--primary);"></i> Основные предметы
-            </div>
+            <div class="modal-category-title"><i class="fas fa-book" style="color: var(--primary);"></i> Основные предметы</div>
             <div class="modal-subjects-grid">
-                <div class="modal-subject-card" onclick="openDetail('Подготовка к школе', '📚', '6–7 лет', 'Комплексная программа для будущих первоклассников. Развитие логики, речи, моторики. Занятия в игровой форме помогают легко адаптироваться к школе.', 'popular')">
-                    <span class="icon">📚</span>
-                    <h4>Подготовка к школе</h4>
-                    <p>6–7 лет</p>
-                    <span class="badge popular">Популярный</span>
+                <div class="modal-subject-card" onclick="openDetail('Подготовка к школе', '📚', '6–7 лет', 'Комплексная программа для будущих первоклассников. Развитие логики, речи, моторики.', 'popular')">
+                    <span class="icon">📚</span><h4>Подготовка к школе</h4><p>6–7 лет</p><span class="badge popular">Популярный</span>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('Скорочтение', '⚡', '7–14 лет', 'Развитие навыков быстрого чтения с пониманием текста. Увеличиваем скорость чтения в 2-3 раза без потери понимания.', '')">
-                    <span class="icon">⚡</span>
-                    <h4>Скорочтение</h4>
-                    <p>7–14 лет</p>
+                <div class="modal-subject-card" onclick="openDetail('Скорочтение', '⚡', '7–14 лет', 'Развитие навыков быстрого чтения с пониманием текста.', '')">
+                    <span class="icon">⚡</span><h4>Скорочтение</h4><p>7–14 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('Английский язык', '🌍', '6–17 лет', 'Изучение английского с нуля до продвинутого уровня. Развитие всех навыков: говорение, аудирование, чтение, письмо.', '')">
-                    <span class="icon">🌍</span>
-                    <h4>Английский язык</h4>
-                    <p>6–17 лет</p>
+                <div class="modal-subject-card" onclick="openDetail('Английский язык', '🌍', '6–17 лет', 'Изучение английского с нуля до продвинутого уровня.', '')">
+                    <span class="icon">🌍</span><h4>Английский язык</h4><p>6–17 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('Русский язык', '📝', '7–17 лет', 'Качественная подготовка к экзаменам, повышение грамотности. Работаем над устранением ошибок и развитием речи.', '')">
-                    <span class="icon">📝</span>
-                    <h4>Русский язык</h4>
-                    <p>7–17 лет</p>
+                <div class="modal-subject-card" onclick="openDetail('Русский язык', '📝', '7–17 лет', 'Качественная подготовка к экзаменам, повышение грамотности.', '')">
+                    <span class="icon">📝</span><h4>Русский язык</h4><p>7–17 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('Математика', '🔢', '7–17 лет', 'Углубленное изучение математики для успешной сдачи ОГЭ и ЕГЭ, подготовка к олимпиадам. Объясняем сложные темы простым языком.', 'popular')">
-                    <span class="icon">🔢</span>
-                    <h4>Математика</h4>
-                    <p>7–17 лет</p>
-                    <span class="badge popular">Популярный</span>
+                <div class="modal-subject-card" onclick="openDetail('Математика', '🔢', '7–17 лет', 'Углубленное изучение математики для сдачи ОГЭ и ЕГЭ.', 'popular')">
+                    <span class="icon">🔢</span><h4>Математика</h4><p>7–17 лет</p><span class="badge popular">Популярный</span>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('Физика', '⚛️', '10–17 лет', 'Изучение физики через практические эксперименты и решение задач. Подготовка к экзаменам и олимпиадам.', '')">
-                    <span class="icon">⚛️</span>
-                    <h4>Физика</h4>
-                    <p>10–17 лет</p>
+                <div class="modal-subject-card" onclick="openDetail('Физика', '⚛️', '10–17 лет', 'Изучение физики через эксперименты и решение задач.', '')">
+                    <span class="icon">⚛️</span><h4>Физика</h4><p>10–17 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('Информатика', '💻', '10–17 лет', 'Изучение основ программирования, алгоритмов и компьютерных технологий. Подготовка к ЕГЭ по информатике.', '')">
-                    <span class="icon">💻</span>
-                    <h4>Информатика</h4>
-                    <p>10–17 лет</p>
+                <div class="modal-subject-card" onclick="openDetail('Информатика', '💻', '10–17 лет', 'Основы программирования, алгоритмов и компьютерных технологий.', '')">
+                    <span class="icon">💻</span><h4>Информатика</h4><p>10–17 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('Химия', '🧪', '12–17 лет', 'Увлекательное изучение химии с проведением безопасных экспериментов. Подготовка к ОГЭ и ЕГЭ.', '')">
-                    <span class="icon">🧪</span>
-                    <h4>Химия</h4>
-                    <p>12–17 лет</p>
+                <div class="modal-subject-card" onclick="openDetail('Химия', '🧪', '12–17 лет', 'Увлекательное изучение химии с безопасными экспериментами.', '')">
+                    <span class="icon">🧪</span><h4>Химия</h4><p>12–17 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('Астрономия', '🌌', '10–17 лет', 'Знакомство с основами астрономии, изучение звездного неба, планет и космических явлений.', '')">
-                    <span class="icon">🌌</span>
-                    <h4>Астрономия</h4>
-                    <p>10–17 лет</p>
+                <div class="modal-subject-card" onclick="openDetail('Биология', '🧬', '12–17 лет', 'Изучение живой природы, клеток, организмов и экосистем.', '')">
+                    <span class="icon">🧬</span><h4>Биология</h4><p>12–17 лет</p>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('Программирование', '🤖', '10–17 лет', 'Курсы по программированию: от основ до создания собственных проектов. Изучаем Python, Scratch, веб-разработку.', '')">
-                    <span class="icon">🤖</span>
-                    <h4>Программирование</h4>
-                    <p>10–17 лет</p>
+                <div class="modal-subject-card" onclick="openDetail('Астрономия', '🌌', '10–17 лет', 'Знакомство с основами астрономии и изучение звёздного неба.', '')">
+                    <span class="icon">🌌</span><h4>Астрономия</h4><p>10–17 лет</p>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('Программирование', '🤖', '10–17 лет', 'Курсы по программированию: от основ до собственных проектов.', '')">
+                    <span class="icon">🤖</span><h4>Программирование</h4><p>10–17 лет</p>
                 </div>
             </div>
-
-            <div class="modal-category-title">
-                <i class="fas fa-graduation-cap" style="color: var(--secondary);"></i> Подготовка к ОГЭ/ЕГЭ
-            </div>
+            <div class="modal-category-title"><i class="fas fa-graduation-cap" style="color: var(--secondary);"></i> Подготовка к ОГЭ/ЕГЭ</div>
             <div class="modal-subjects-grid">
-                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Физика', '⚛️', '9–11 класс', 'Интенсивная подготовка к экзаменам по физике: решение типовых задач, разбор демоверсий, работа над сложными темами.', 'exam')">
-                    <span class="icon">⚛️</span>
-                    <h4>ОГЭ/ЕГЭ Физика</h4>
-                    <span class="badge exam">Экзамен</span>
+                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Физика', '⚛️', '9–11 класс', 'Интенсивная подготовка к экзаменам по физике.', 'exam')">
+                    <span class="icon">⚛️</span><h4>ОГЭ/ЕГЭ Физика</h4><span class="badge exam">Экзамен</span>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Математика', '🔢', '9–11 класс', 'Подготовка к базовому и профильному уровню ЕГЭ по математике: повторение программы, отработка типовых заданий.', 'exam')">
-                    <span class="icon">🔢</span>
-                    <h4>ОГЭ/ЕГЭ Математика</h4>
-                    <span class="badge exam">Экзамен</span>
+                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Математика', '🔢', '9–11 класс', 'Подготовка к базовому и профильному ЕГЭ по математике.', 'exam')">
+                    <span class="icon">🔢</span><h4>ОГЭ/ЕГЭ Математика</h4><span class="badge exam">Экзамен</span>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Информатика', '💻', '9–11 класс', 'Подготовка к экзаменам по информатике: программирование, алгоритмы, теория информации.', 'exam')">
-                    <span class="icon">💻</span>
-                    <h4>ОГЭ/ЕГЭ Информатика</h4>
-                    <span class="badge exam">Экзамен</span>
+                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Информатика', '💻', '9–11 класс', 'Подготовка к экзаменам по информатике.', 'exam')">
+                    <span class="icon">💻</span><h4>ОГЭ/ЕГЭ Информатика</h4><span class="badge exam">Экзамен</span>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Русский язык', '📝', '9–11 класс', 'Подготовка к экзаменам по русскому языку.', 'exam')">
+                    <span class="icon">📝</span><h4>ОГЭ/ЕГЭ Русский язык</h4><span class="badge exam">Экзамен</span>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Химия', '🧪', '9–11 класс', 'Подготовка к экзаменам по химии.', 'exam')">
+                    <span class="icon">🧪</span><h4>ОГЭ/ЕГЭ Химия</h4><span class="badge exam">Экзамен</span>
+                </div>
+                <div class="modal-subject-card" onclick="openDetail('ОГЭ/ЕГЭ Биология', '🧬', '9–11 класс', 'Подготовка к экзаменам по биологии.', 'exam')">
+                    <span class="icon">🧬</span><h4>ОГЭ/ЕГЭ Биология</h4><span class="badge exam">Экзамен</span>
                 </div>
             </div>
-
-            <div class="modal-category-title">
-                <i class="fas fa-trophy" style="color: #10B981;"></i> Олимпиадная подготовка
-            </div>
+            <div class="modal-category-title"><i class="fas fa-trophy" style="color: #10B981;"></i> Олимпиадная подготовка</div>
             <div class="modal-subjects-grid">
-                <div class="modal-subject-card" onclick="openDetail('Олимпиадная математика', '🏆', '7–17 лет', 'Специальный курс для подготовки к математическим олимпиадам различного уровня. Развитие нестандартного мышления.', 'olympiad')">
-                    <span class="icon">🏆</span>
-                    <h4>Олимпиадная математика</h4>
-                    <span class="badge olympiad">Олимпиада</span>
+                <div class="modal-subject-card" onclick="openDetail('Олимпиадная математика', '🏆', '5–6 класс', 'Курс «Олимпиадная математика» для 5–6 классов. Формат — мини-группа. Осталось 1 место!', 'olympiad')">
+                    <span class="icon">🏆</span><h4>Олимпиадная математика</h4><span class="badge olympiad">Осталось 1 место</span>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('Олимпиадная физика', '🏆', '7–17 лет', 'Углубленный курс физики для подготовки к олимпиадам: решение нестандартных задач, экспериментальная физика.', 'olympiad')">
-                    <span class="icon">🏆</span>
-                    <h4>Олимпиадная физика</h4>
-                    <span class="badge olympiad">Олимпиада</span>
+                <div class="modal-subject-card" onclick="openDetail('Олимпиадная физика', '🏆', '7–17 лет', 'Углубленный курс физики для подготовки к олимпиадам.', 'olympiad')">
+                    <span class="icon">🏆</span><h4>Олимпиадная физика</h4><span class="badge olympiad">Олимпиада</span>
                 </div>
-                <div class="modal-subject-card" onclick="openDetail('Олимпиадная астрономия', '🏆', '7–17 лет', 'Подготовка к астрономическим олимпиадам: небесная механика, астрофизика, работа с телескопами.', 'olympiad')">
-                    <span class="icon">🏆</span>
-                    <h4>Олимпиадная астрономия</h4>
-                    <span class="badge olympiad">Олимпиада</span>
+                <div class="modal-subject-card" onclick="openDetail('Олимпиадная астрономия', '🏆', '7–17 лет', 'Подготовка к астрономическим олимпиадам.', 'olympiad')">
+                    <span class="icon">🏆</span><h4>Олимпиадная астрономия</h4><span class="badge olympiad">Олимпиада</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ============================================================
-    МОДАЛЬНОЕ ОКНО ДЕТАЛЕЙ ПРЕДМЕТА
-    ============================================================ -->
-
+    <!-- МОДАЛЬНОЕ ОКНО ДЕТАЛЕЙ -->
     <div class="detail-overlay" id="detailModal">
         <div class="detail-modal" style="position: relative;">
-            <button class="detail-close" onclick="closeDetail()">
-                <i class="fas fa-times"></i>
-            </button>
+            <button class="detail-close" onclick="closeDetail()"><i class="fas fa-times"></i></button>
             <span class="detail-icon" id="detailIcon">📚</span>
             <h3 id="detailTitle">Название предмета</h3>
             <div class="detail-sub" id="detailSub">Возрастная группа</div>
@@ -2215,19 +1002,13 @@
         </div>
     </div>
 
-    <!-- ============================================================
-    МОДАЛЬНОЕ ОКНО ФОРМЫ ЗАПИСИ
-    ============================================================ -->
-
+    <!-- МОДАЛЬНОЕ ОКНО ФОРМЫ -->
     <div class="modal-overlay" id="formModal">
         <div class="modal form-modal">
             <div class="modal-header">
                 <h3>📝 Запись на курс</h3>
-                <button class="modal-close" onclick="closeForm()">
-                    <i class="fas fa-times"></i>
-                </button>
+                <button class="modal-close" onclick="closeForm()"><i class="fas fa-times"></i></button>
             </div>
-
             <form id="enrollForm" onsubmit="submitForm(event)">
                 <div class="form-group">
                     <label for="fullName">Ваше имя (родителя) *</label>
@@ -2254,6 +1035,7 @@
                         <option value="Информатика">Информатика</option>
                         <option value="Программирование">Программирование</option>
                         <option value="Химия">Химия</option>
+                        <option value="Биология">Биология</option>
                         <option value="Астрономия">Астрономия</option>
                         <option value="ОГЭ/ЕГЭ">ОГЭ/ЕГЭ</option>
                         <option value="Олимпиадная подготовка">Олимпиадная подготовка</option>
@@ -2267,7 +1049,6 @@
                     <i class="fas fa-paper-plane"></i> Отправить заявку
                 </button>
             </form>
-
             <div class="form-success" id="formSuccess">
                 <span class="icon">✅</span>
                 <h4>Заявка отправлена!</h4>
@@ -2276,17 +1057,12 @@
         </div>
     </div>
 
-    <!-- ============================================================
-    МОДАЛЬНОЕ ОКНО ПОЛИТИКИ
-    ============================================================ -->
-
+    <!-- МОДАЛЬНОЕ ОКНО ПОЛИТИКИ -->
     <div class="modal-overlay" id="policyModal">
         <div class="modal form-modal">
             <div class="modal-header">
                 <h3>📄 Политика конфиденциальности</h3>
-                <button class="modal-close" onclick="closePolicy()">
-                    <i class="fas fa-times"></i>
-                </button>
+                <button class="modal-close" onclick="closePolicy()"><i class="fas fa-times"></i></button>
             </div>
             <div style="color: var(--gray); line-height: 1.8; font-size: 14px;">
                 <p><strong>1. Общие положения</strong></p>
@@ -2296,31 +1072,19 @@
                 <p>Сбор и обработка персональных данных осуществляется для заключения и исполнения договоров с клиентами, а также для информирования о наших услугах и акциях.</p>
                 <br>
                 <p><strong>3. Условия обработки персональных данных</strong></p>
-                <p>Обработка персональных данных осуществляется с согласия субъекта персональных данных на обработку его персональных данных.</p>
+                <p>Обработка персональных данных осуществляется с согласия субъекта персональных данных.</p>
                 <br>
                 <p><strong>4. Контактная информация</strong></p>
-                <p>По всем вопросам, связанным с обработкой персональных данных, вы можете обратиться по email: tvoiokruzeni@ya.ru</p>
+                <p>По всем вопросам обращайтесь по email: tvoiokruzeni@ya.ru</p>
             </div>
         </div>
     </div>
 
-    <!-- ============================================================
-    КНОПКА НАВЕРХ
-    ============================================================ -->
+    <button class="to-top" id="toTop" aria-label="Наверх"><i class="fas fa-arrow-up"></i></button>
 
-    <button class="to-top" id="toTop" aria-label="Наверх">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <!-- ============================================================
-    JAVASCRIPT
-    ============================================================ -->
-
+    <!-- JAVASCRIPT -->
     <script>
-        // ============================================================
         // НАВИГАЦИЯ
-        // ============================================================
-
         const navbar = document.getElementById('navbar');
         const toTop = document.getElementById('toTop');
 
@@ -2334,14 +1098,9 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        function goHome() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        function goHome() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        // ============================================================
         // МОБИЛЬНОЕ МЕНЮ
-        // ============================================================
-
         const mobileBtn = document.getElementById('mobileBtn');
         const mobileClose = document.getElementById('mobileClose');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -2361,82 +1120,56 @@
         document.addEventListener('click', (e) => {
             if (mobileMenu.classList.contains('active') &&
                 !e.target.closest('.mobile-menu') &&
-                !e.target.closest('.mobile-menu-btn')) {
-                closeMobile();
-            }
+                !e.target.closest('.mobile-menu-btn')) closeMobile();
         });
 
-        // ============================================================
         // МОДАЛЬНОЕ ОКНО ПРЕДМЕТОВ
-        // ============================================================
-
         const subjectsModal = document.getElementById('subjectsModal');
-
         function openSubjectsModal() {
             subjectsModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closeSubjectsModal() {
             subjectsModal.classList.remove('active');
             document.body.style.overflow = '';
         }
-
         subjectsModal.addEventListener('click', e => {
             if (e.target === subjectsModal) closeSubjectsModal();
         });
 
-        // ============================================================
-        // МОДАЛЬНОЕ ОКНО ДЕТАЛЕЙ ПРЕДМЕТА
-        // ============================================================
-
+        // ДЕТАЛИ
         const detailModal = document.getElementById('detailModal');
-
         function openDetail(title, icon, sub, desc, tag) {
             document.getElementById('detailIcon').textContent = icon;
             document.getElementById('detailTitle').textContent = title;
             document.getElementById('detailSub').textContent = sub;
             document.getElementById('detailDesc').textContent = desc;
-
             const tagsContainer = document.getElementById('detailTags');
             tagsContainer.innerHTML = '';
-
             if (tag === 'popular') {
                 const span = document.createElement('span');
-                span.className = 'special';
-                span.textContent = '⭐ Популярный';
+                span.className = 'special'; span.textContent = '⭐ Популярный';
                 tagsContainer.appendChild(span);
             } else if (tag === 'exam') {
                 const span = document.createElement('span');
-                span.className = 'exam';
-                span.textContent = '📝 Экзамен';
+                span.className = 'exam'; span.textContent = '📝 Экзамен';
                 tagsContainer.appendChild(span);
             } else if (tag === 'olympiad') {
                 const span = document.createElement('span');
-                span.className = 'olympiad';
-                span.textContent = '🏆 Олимпиада';
+                span.className = 'olympiad'; span.textContent = '🏆 Олимпиада';
                 tagsContainer.appendChild(span);
             }
-
             const ageSpan = document.createElement('span');
             ageSpan.textContent = '👶 ' + sub;
             tagsContainer.appendChild(ageSpan);
-
             detailModal.classList.add('active');
         }
-
-        function closeDetail() {
-            detailModal.classList.remove('active');
-        }
-
+        function closeDetail() { detailModal.classList.remove('active'); }
         detailModal.addEventListener('click', e => {
             if (e.target === detailModal) closeDetail();
         });
 
-        // ============================================================
-        // МОДАЛЬНЫЕ ОКНА ФОРМЫ И ПОЛИТИКИ
-        // ============================================================
-
+        // ФОРМА И ПОЛИТИКА
         const formModal = document.getElementById('formModal');
         const policyModal = document.getElementById('policyModal');
 
@@ -2447,29 +1180,20 @@
             formModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closeForm() {
             formModal.classList.remove('active');
             document.body.style.overflow = '';
         }
-
         function openPolicy() {
             policyModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closePolicy() {
             policyModal.classList.remove('active');
             document.body.style.overflow = '';
         }
-
-        formModal.addEventListener('click', e => {
-            if (e.target === formModal) closeForm();
-        });
-
-        policyModal.addEventListener('click', e => {
-            if (e.target === policyModal) closePolicy();
-        });
+        formModal.addEventListener('click', e => { if (e.target === formModal) closeForm(); });
+        policyModal.addEventListener('click', e => { if (e.target === policyModal) closePolicy(); });
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
@@ -2480,10 +1204,7 @@
             }
         });
 
-        // ============================================================
-        // ПЛАВНЫЙ СКРОЛЛ К ЯКОРЯМ
-        // ============================================================
-
+        // ПЛАВНЫЙ СКРОЛЛ
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
@@ -2491,46 +1212,30 @@
                 e.preventDefault();
                 const target = document.querySelector(href);
                 if (target) {
-                    const offset = 80;
-                    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
                     window.scrollTo({ top, behavior: 'smooth' });
                 }
                 closeMobile();
             });
         });
 
-        // ============================================================
-        // REVEAL АНИМАЦИЯ
-        // ============================================================
-
+        // REVEAL
         const revealElements = document.querySelectorAll('.reveal');
-
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // ============================================================
         // ОТПРАВКА ФОРМЫ
-        // ============================================================
-
         function submitForm(e) {
             e.preventDefault();
             const form = document.getElementById('enrollForm');
             const btn = form.querySelector('.form-submit');
             const originalText = btn.innerHTML;
-
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
             btn.disabled = true;
-
             setTimeout(() => {
                 form.style.display = 'none';
                 document.getElementById('formSuccess').classList.add('show');
@@ -2540,33 +1245,24 @@
             }, 1500);
         }
 
-        // ============================================================
         // КОНФЕТТИ
-        // ============================================================
-
-        const confettiColors = ['#6C63F9', '#FF6B6B', '#FFD93D', '#10B981', '#8B83FF'];
-
+        const confettiColors = ['#FFE5EC', '#FFC8D8', '#DDD0F0', '#FFEBC9', '#E0EAF7'];
         function fireConfetti() {
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
             const canvas = document.createElement('canvas');
             canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999';
             document.body.appendChild(canvas);
-
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-
             const particles = [];
-            const colors = confettiColors;
-
             for (let i = 0; i < 120; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height - canvas.height,
                     w: 6 + Math.random() * 8,
                     h: 4 + Math.random() * 6,
-                    color: colors[Math.floor(Math.random() * colors.length)],
+                    color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
                     vx: (Math.random() - 0.5) * 4,
                     vy: 2 + Math.random() * 4,
                     rot: Math.random() * 360,
@@ -2574,22 +1270,13 @@
                     life: 1
                 });
             }
-
             let frame = 0;
-
             function animate() {
                 frame++;
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-
                 let alive = false;
-
                 particles.forEach(p => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    p.vy += 0.06;
-                    p.rot += p.vr;
-                    p.life -= 0.002;
-
+                    p.x += p.vx; p.y += p.vy; p.vy += 0.06; p.rot += p.vr; p.life -= 0.002;
                     if (p.life > 0) {
                         alive = true;
                         ctx.save();
@@ -2601,226 +1288,210 @@
                         ctx.restore();
                     }
                 });
-
-                if (alive && frame < 300) {
-                    requestAnimationFrame(animate);
-                } else {
-                    canvas.remove();
-                }
+                if (alive && frame < 300) requestAnimationFrame(animate);
+                else canvas.remove();
             }
-
             animate();
         }
 
         // ============================================================
-        // 3D ПЛАНЕТА ЗЕМЛЯ (Three.js)
+// ГЛОБУС — ОЧЕНЬ СВЕТЛАЯ ТЕКСТУРА + ВНЕШНЕЕ СВЕЧЕНИЕ
+// ============================================================
+
+(function initGlobe() {
+    const container = document.getElementById('planet3d');
+    if (!container || typeof Globe === 'undefined') return;
+
+    // Филиалы
+    const branches = [
+        { name: 'Казань',        lat: 55.7887, lng: 49.1221 },
+        { name: 'Екатеринбург',  lat: 56.8519, lng: 60.6122 },
+        { name: 'Брянск',        lat: 53.2521, lng: 34.3717 },
+        { name: 'Нижний Тагил',  lat: 57.9194, lng: 59.9650 },
+        { name: 'Москва',        lat: 55.7558, lng: 37.6173 }
+    ];
+
+    // ============================================================
+    // 1. ЗАГРУЖАЕМ И ПЕРЕКРАШИВАЕМ ТЕКСТУРУ ДО СОЗДАНИЯ ГЛОБУСА
+    // ============================================================
+    const originalUrl = 'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg';
+
+    function makeLightTexture(img) {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+
+        // Яркость
+        const gray = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
         // ============================================================
+        // ОПРЕДЕЛЯЕМ: ВОДА ИЛИ СУША
+        // В оригинальной текстуре NASA:
+        //   Вода: синяя (B > R) и тёмная
+        //   Суша: зелёная/коричневая (R ≈ G ≥ B) или светлая
+        // ============================================================
+        const isWater = b > r && b > g && gray < 0.55;
+        const isIce   = gray > 0.85; // льды/облака/снег
 
-        (function initPlanet() {
-            const container = document.getElementById('planet3d');
-            if (!container || typeof THREE === 'undefined') return;
+        let outR, outG, outB;
 
-            // Сцена
-            const scene = new THREE.Scene();
+        if (isIce) {
+            // ============================================================
+            // ЛЬДЫ И СНЕГ — самые светлые, почти белые
+            // ============================================================
+            outR = 252;
+            outG = 251;
+            outB = 250;
 
-            // Камера
-            const camera = new THREE.PerspectiveCamera(
-                45,
-                container.clientWidth / container.clientHeight,
-                0.1,
-                1000
-            );
-            camera.position.z = 3.2;
+        } else if (isWater) {
+            // ============================================================
+            // ВОДА — светло-серо-голубая (холодная)
+            // Чем глубже вода, тем насыщеннее голубой
+            // ============================================================
+            const depth = 1 - gray / 0.55; // 0 — у берега, 1 — глубина
+            outR = 200 - depth * 25;   // 200 → 175
+            outG = 215 - depth * 20;   // 215 → 195
+            outB = 235 - depth * 10;   // 235 → 225
 
-            // Рендерер
-            const renderer = new THREE.WebGLRenderer({
-                antialias: true,
-                alpha: true
+        } else {
+            // ============================================================
+            // СУША — светло-бежево-кремовая (тёплая)
+            // Чем выше рельеф, тем светлее
+            // ============================================================
+            const t = Math.pow(gray, 0.65);
+            const darkR  = 225, darkG  = 215, darkB  = 200;
+            const lightR = 254, lightG = 250, lightB = 242;
+
+            outR = darkR + (lightR - darkR) * t;
+            outG = darkG + (lightG - darkG) * t;
+            outB = darkB + (lightB - darkB) * t;
+        }
+
+        data[i]     = outR;
+        data[i + 1] = outG;
+        data[i + 2] = outB;
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    return canvas.toDataURL('image/jpeg', 0.92);
+}
+
+    // Загружаем и создаём глобус
+    const loader = new Image();
+    loader.crossOrigin = 'anonymous';
+    loader.onload = () => {
+        const lightUrl = makeLightTexture(loader);
+        createGlobe(lightUrl);
+    };
+    loader.onerror = () => {
+        // Если не удалось загрузить — делаем глобус с оригинальной текстурой
+        console.warn('Не удалось загрузить текстуру, используем оригинал');
+        createGlobe(originalUrl);
+    };
+    loader.src = originalUrl;
+
+    // ============================================================
+    // 2. СОЗДАНИЕ ГЛОБУСА С ГОТОВОЙ СВЕТЛОЙ ТЕКСТУРОЙ
+    // ============================================================
+    function createGlobe(textureUrl) {
+        const world = Globe()(container)
+            .globeImageUrl(textureUrl)  // ← наша светлая текстура
+            .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+            .backgroundColor('rgba(0,0,0,0)')
+            .showAtmosphere(true)
+            .atmosphereColor('#FBE8F0')  // очень нежное розовое свечение
+            .atmosphereAltitude(0.18)
+            .width(container.clientWidth)
+            .height(container.clientHeight);
+
+        // ============================================================
+        // РЕЛЬЕФ — усиливаем, чтобы горы читались
+        // ============================================================
+        setTimeout(() => {
+    const material = world.globeMaterial();
+    if (material && material.bumpMap) {
+        material.bumpScale = 0.7;
+        material.bumpMap.anisotropy = 16;
+        material.bumpMap.needsUpdate = true;
+    }
+    if (material) {
+        material.shininess = 3;
+        material.specular = new THREE.Color(0x111111);
+        material.needsUpdate = true;
+    }
+
+    // ⚡️ СВЕТ: ставим его спереди-сбоку от камеры,
+    // чтобы освещение было равномерным, а не «сверху ярко, снизу темно»
+    const scene = world.scene();
+    scene.traverse(obj => {
+        if (obj.isDirectionalLight) {
+            // Свет почти из камеры, чуть справа и сверху
+            // → вся видимая сторона планеты освещена ровно
+            obj.position.set(2, 1.5, 5);
+            obj.intensity = 1.5;
+        }
+        if (obj.isAmbientLight) {
+            // Возвращаем ambient на нормальный уровень,
+            // чтобы низ планеты не проваливался в тень
+            obj.intensity = 0.55;
+        }
+    });
+}, 800);
+
+        // ============================================================
+        // МАРКЕРЫ
+        // ============================================================
+        world
+            .htmlElementsData(branches)
+            .htmlLat(d => d.lat)
+            .htmlLng(d => d.lng)
+            .htmlAltitude(0.01)
+            .htmlElement(d => {
+                const el = document.createElement('div');
+                el.className = 'branch-marker';
+                el.innerHTML = `
+                    <div class="dot"></div>
+                    <div class="label">${d.name}</div>
+                `;
+                el.title = d.name;
+                return el;
             });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            container.appendChild(renderer.domElement);
 
-            // ============================================================
-            // ОСВЕЩЕНИЕ
-            // ============================================================
+        // УПРАВЛЕНИЕ
+        const controls = world.controls();
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.6;
+        controls.enableZoom = false;
+        controls.enablePan = false;
+        controls.minPolarAngle = Math.PI / 4;
+        controls.maxPolarAngle = 3 * Math.PI / 4;
 
-            const sunLight = new THREE.DirectionalLight(0xffffff, 1.4);
-            sunLight.position.set(5, 3, 5);
-            scene.add(sunLight);
+        controls.addEventListener('start', () => { controls.autoRotate = false; });
+        controls.addEventListener('end', () => {
+            setTimeout(() => { controls.autoRotate = true; }, 2000);
+        });
 
-            const ambientLight = new THREE.AmbientLight(0x5566aa, 0.6);
-            scene.add(ambientLight);
+        world.pointOfView({ lat: 55, lng: 60, altitude: 2.2 }, 0);
 
-            const backLight = new THREE.DirectionalLight(0x6C63F9, 0.4);
-            backLight.position.set(-5, -3, -5);
-            scene.add(backLight);
-
-            // ============================================================
-            // ЗЕМЛЯ
-            // ============================================================
-
-            const earthGroup = new THREE.Group();
-            scene.add(earthGroup);
-
-            const earthGeo = new THREE.SphereGeometry(1, 64, 64);
-            const textureLoader = new THREE.TextureLoader();
-            textureLoader.setCrossOrigin('anonymous');
-
-            // Основная текстура Земли
-            const earthTexture = textureLoader.load(
-                'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
-            );
-
-            // Рельеф (bump map) для объёма
-            const bumpTexture = textureLoader.load(
-                'https://unpkg.com/three-globe/example/img/earth-topology.png'
-            );
-
-            // Ночные огни
-            const nightTexture = textureLoader.load(
-                'https://unpkg.com/three-globe/example/img/earth-night.jpg'
-            );
-
-            // Используем более простой материал для надёжности
-            const earthMaterial = new THREE.MeshPhongMaterial({
-                map: earthTexture,
-                bumpMap: bumpTexture,
-                bumpScale: 0.04,
-                shininess: 8,
-                specular: new THREE.Color(0x222233)
-            });
-
-            const earth = new THREE.Mesh(earthGeo, earthMaterial);
-            earthGroup.add(earth);
-
-            // ============================================================
-            // ОБЛАКА
-            // ============================================================
-
-            const cloudTexture = textureLoader.load(
-                'https://unpkg.com/three-globe/example/img/clouds.png'
-            );
-
-            const cloudMaterial = new THREE.MeshPhongMaterial({
-                map: cloudTexture,
-                transparent: true,
-                opacity: 0.4,
-                depthWrite: false
-            });
-
-            const clouds = new THREE.Mesh(
-                new THREE.SphereGeometry(1.008, 64, 64),
-                cloudMaterial
-            );
-            earthGroup.add(clouds);
-
-            // ============================================================
-            // АТМОСФЕРА
-            // ============================================================
-
-            const atmosphereMaterial = new THREE.MeshBasicMaterial({
-                color: 0x6C9EFF,
-                transparent: true,
-                opacity: 0.15,
-                side: THREE.BackSide
-            });
-
-            const atmosphere = new THREE.Mesh(
-                new THREE.SphereGeometry(1.15, 64, 64),
-                atmosphereMaterial
-            );
-            earthGroup.add(atmosphere);
-
-            // ============================================================
-            // УПРАВЛЕНИЕ МЫШКОЙ / ПАЛЬЦЕМ
-            // ============================================================
-
-            let isDragging = false;
-            let previousX = 0;
-            let previousY = 0;
-            let targetRotX = 0;
-            let targetRotY = 0;
-            let currentRotX = 0;
-            let currentRotY = 0;
-            let autoRotate = true;
-            const autoRotateSpeed = 0.002;
-
-            function onPointerDown(e) {
-                isDragging = true;
-                autoRotate = false;
-                const point = e.touches ? e.touches[0] : e;
-                previousX = point.clientX;
-                previousY = point.clientY;
-            }
-
-            function onPointerMove(e) {
-                if (!isDragging) return;
-                const point = e.touches ? e.touches[0] : e;
-                const deltaX = point.clientX - previousX;
-                const deltaY = point.clientY - previousY;
-
-                targetRotY += deltaX * 0.005;
-                targetRotX += deltaY * 0.005;
-
-                targetRotX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, targetRotX));
-
-                previousX = point.clientX;
-                previousY = point.clientY;
-            }
-
-            function onPointerUp() {
-                isDragging = false;
-                setTimeout(() => {
-                    if (!isDragging) autoRotate = true;
-                }, 2000);
-            }
-
-            container.addEventListener('mousedown', onPointerDown);
-            window.addEventListener('mousemove', onPointerMove);
-            window.addEventListener('mouseup', onPointerUp);
-
-            container.addEventListener('touchstart', onPointerDown, { passive: true });
-            window.addEventListener('touchmove', onPointerMove, { passive: true });
-            window.addEventListener('touchend', onPointerUp);
-
-            // ============================================================
-            // АНИМАЦИЯ
-            // ============================================================
-
-            function animate() {
-                requestAnimationFrame(animate);
-
-                currentRotY += (targetRotY - currentRotY) * 0.08;
-                currentRotX += (targetRotX - currentRotX) * 0.08;
-
-                earthGroup.rotation.y = currentRotY;
-                earthGroup.rotation.x = currentRotX;
-
-                if (autoRotate && !isDragging) {
-                    targetRotY += autoRotateSpeed;
-                }
-
-                clouds.rotation.y += 0.0006;
-
-                renderer.render(scene, camera);
-            }
-
-            animate();
-
-            // ============================================================
-            // АДАПТИВ
-            // ============================================================
-
-            window.addEventListener('resize', () => {
-                const w = container.clientWidth;
-                const h = container.clientHeight;
-                if (w === 0 || h === 0) return;
-                camera.aspect = w / h;
-                camera.updateProjectionMatrix();
-                renderer.setSize(w, h);
-            });
-        })();
+        // АДАПТИВ
+        window.addEventListener('resize', () => {
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            if (w === 0 || h === 0) return;
+            world.width(w).height(h);
+        });
+    }
+})();
     </script>
 
 </body>
