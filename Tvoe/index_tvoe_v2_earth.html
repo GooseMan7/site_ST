@@ -162,6 +162,8 @@
         .planet-3d {
             position: absolute; inset: 0; width: 100%; height: 100%;
             z-index: 1; cursor: grab; touch-action: none;
+            transform: scale(1.18);
+            transform-origin: center center;
         }
         .planet-3d:active { cursor: grabbing; }
         .planet-3d canvas {
@@ -319,10 +321,24 @@
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
         .about-image { position: relative; }
         .about-image .main-img {
-            width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
-            aspect-ratio: 4/3; object-fit: cover;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 100px;
+            width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fce1e8;
+            overflow: hidden;
+            padding: 24px;
+            min-height: 480px;
+        }
+        .about-image .main-img img {
+            width: 100%;
+            height: auto;
+            max-height: 640px;
+            object-fit: contain;
+            display: block;
+            border-radius: var(--radius-md);
         }
         .about-image .floating-badge {
             position: absolute; bottom: -20px; right: -20px; background: white;
@@ -364,7 +380,10 @@
         .news-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
         .news-card .image {
             height: 200px; display: flex; align-items: center; justify-content: center;
-            font-size: 48px; flex-shrink: 0;
+            font-size: 48px; flex-shrink: 0; overflow: hidden;
+        }
+        .news-card .image img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
         }
         .news-card .body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
         .news-card .body .date {
@@ -627,11 +646,19 @@
             transition: var(--transition); font-family: 'Inter', sans-serif;
         }
         .form-submit:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .form-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
         .form-success { display: none; text-align: center; padding: 20px 0; }
         .form-success.show { display: block; animation: slideUpModal 0.4s ease; }
         .form-success .icon { font-size: 56px; margin-bottom: 16px; display: block; }
         .form-success h4 { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
         .form-success p { color: var(--gray); }
+        .form-error {
+            display: none; text-align: center; padding: 16px;
+            background: rgba(255, 107, 107, 0.1); color: var(--secondary);
+            border-radius: var(--radius-sm); font-size: 14px; font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .form-error.show { display: block; }
 
         .to-top {
             position: fixed; bottom: 30px; right: 30px; z-index: 900;
@@ -732,7 +759,7 @@
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="#" class="logo" onclick="goHome()">
-                <div class="logo-icon"><img src="icon.png"></div>
+                <div class="logo-icon"><img src="icon.png" alt="Логотип"></div>
                 <span class="logo-text">Твоё <span>Окружение</span></span>
             </a>
             <ul class="nav-links">
@@ -856,8 +883,8 @@
         <div class="container">
             <div class="about-grid">
                 <div class="about-image reveal">
-                    <div class="main-img" style="background: var(--gradient-main); color: rgba(255,255,255,0.15); border-radius: var(--radius-lg); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; font-size: 120px;">
-                        🌟
+                    <div class="main-img">
+                        <img src="main-img-logo.png" alt="Твоё Окружение">
                     </div>
                     <div class="floating-badge">
                         <div class="big">5+ лет</div>
@@ -895,7 +922,9 @@
             </div>
             <div class="news-grid">
                 <div class="news-card reveal reveal-delay-1">
-                    <div class="image" style="background: linear-gradient(135deg, #F472B6 0%, #EC4899 50%, #DB2777 100%); color: rgba(255,255,255,0.3);">🏆</div>
+                    <div class="image">
+                        <img src="olimp-math.png" alt="Олимпиадная математика">
+                    </div>
                     <div class="body">
                         <div class="date"><i class="far fa-calendar"></i> Новый набор 10.01.2026</div>
                         <h4>Набор на «Олимпиадную математику»</h4>
@@ -912,8 +941,8 @@
                     <div class="body">
                         <div class="date"><i class="far fa-calendar"></i> 15 октября 2023</div>
                         <h4>Бесплатный пробный урок</h4>
-                        <p>Присоединяйтесь и получите бесплатный пробный урок по любому предмету!</p>
-                        <div class="tags"><span class="special">Акция</span><span>Новости</span></div>
+                        <p>Присоединяйтесь и получите бесплатный пробный урок по любому предмету! <strong>А за каждого приведённого друга — дополнительный бонус: скидка 10% на первый месяц обучения для вас и вашего друга!</strong></p>
+                        <div class="tags"><span class="special">Акция</span><span>Бонус за друга</span><span>Новости</span></div>
                     </div>
                 </div>
                 <div class="news-card reveal reveal-delay-3">
@@ -1077,7 +1106,6 @@
             <p class="modal-subtitle">Свяжитесь с нами любым удобным способом — мы всегда рады помочь!</p>
 
             <div class="contacts-list">
-                <!-- Телефон -->
                 <a href="tel:89506485799" class="contact-item">
                     <div class="contact-icon phone"><i class="fas fa-phone"></i></div>
                     <div class="contact-text">
@@ -1086,8 +1114,6 @@
                     </div>
                     <i class="fas fa-arrow-right contact-arrow"></i>
                 </a>
-
-                <!-- Email -->
                 <a href="mailto:tvoiokruzeni@ya.ru" class="contact-item">
                     <div class="contact-icon email"><i class="fas fa-envelope"></i></div>
                     <div class="contact-text">
@@ -1096,8 +1122,6 @@
                     </div>
                     <i class="fas fa-arrow-right contact-arrow"></i>
                 </a>
-
-                <!-- Telegram -->
                 <a href="https://t.me/tvoiokruzeni" target="_blank" rel="noopener" class="contact-item">
                     <div class="contact-icon telegram"><i class="fab fa-telegram"></i></div>
                     <div class="contact-text">
@@ -1106,8 +1130,6 @@
                     </div>
                     <i class="fas fa-arrow-right contact-arrow"></i>
                 </a>
-
-                <!-- MAX -->
                 <a href="https://max.ru/join/FAdS4wI5dJ8F1kGxAdaEC2WlQhq_yJ6QuAJ3_MKyqnc" target="_blank" rel="noopener" class="contact-item">
                     <div class="contact-icon max"><i class="fas fa-comments"></i></div>
                     <div class="contact-text">
@@ -1118,7 +1140,6 @@
                 </a>
             </div>
 
-            <!-- QR-код для MAX -->
             <div class="contacts-qr-block">
                 <img src="qr_max_img.png" alt="QR-код для чата в MAX">
                 <div class="qr-info">
@@ -1154,6 +1175,7 @@
                 <h3>📝 Запись на курс</h3>
                 <button class="modal-close" onclick="closeForm()"><i class="fas fa-times"></i></button>
             </div>
+            <div class="form-error" id="formError"></div>
             <form id="enrollForm" onsubmit="submitForm(event)">
                 <div class="form-group">
                     <label for="fullName">Ваше имя (родителя) *</label>
@@ -1331,11 +1353,14 @@
         // ФОРМА И ПОЛИТИКА
         const formModal = document.getElementById('formModal');
         const policyModal = document.getElementById('policyModal');
+        const formError = document.getElementById('formError');
 
         function openForm() {
             document.getElementById('enrollForm').style.display = '';
             document.getElementById('enrollForm').reset();
             document.getElementById('formSuccess').classList.remove('show');
+            formError.classList.remove('show');
+            formError.textContent = '';
             formModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -1388,21 +1413,46 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // ОТПРАВКА ФОРМЫ
+        // ОТПРАВКА ФОРМЫ (реальная, через send.php)
         function submitForm(e) {
             e.preventDefault();
             const form = document.getElementById('enrollForm');
             const btn = form.querySelector('.form-submit');
             const originalText = btn.innerHTML;
+
+            formError.classList.remove('show');
+            formError.textContent = '';
+
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
             btn.disabled = true;
-            setTimeout(() => {
-                form.style.display = 'none';
-                document.getElementById('formSuccess').classList.add('show');
+
+            const formData = new FormData(form);
+
+            fetch('send.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
-                fireConfetti();
-            }, 1500);
+
+                if (data.ok) {
+                    form.style.display = 'none';
+                    document.getElementById('formSuccess').classList.add('show');
+                    fireConfetti();
+                } else {
+                    formError.textContent = 'Ошибка: ' + (data.error || 'не удалось отправить заявку');
+                    formError.classList.add('show');
+                }
+            })
+            .catch(err => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                formError.textContent = 'Ошибка сети. Проверьте подключение и попробуйте снова.';
+                formError.classList.add('show');
+                console.error(err);
+            });
         }
 
         // КОНФЕТТИ
@@ -1462,7 +1512,6 @@
             const container = document.getElementById('planet3d');
             if (!container || typeof Globe === 'undefined') return;
 
-            // Филиалы
             const branches = [
                 { name: 'Казань',           lat: 55.7887, lng: 49.1221  },
                 { name: 'Екатеринбург',     lat: 56.8519, lng: 60.6122  },
@@ -1473,12 +1522,12 @@
                 { name: 'Хабаровск',        lat: 48.4827, lng: 135.084  },
                 { name: 'Санкт-Петербург',  lat: 59.9386, lng: 30.3141  },
                 { name: 'Сочи',             lat: 43.5855, lng: 39.7231  },
-                { name: 'Оттава',          lat: 45.4112,  lng: -75.6981 },
-{ name: 'о. Русский',      lat: 43.0000,  lng: 131.9000 },
-{ name: 'Луанда',          lat: -8.8368,  lng: 13.2343 },
-{ name: 'Березовский',     lat: 56.9083,  lng: 60.8019 },
-{ name: 'Чайковский',      lat: 56.7529,  lng: 54.1078 },
-{ name: 'Иерусалим',       lat: 31.7690,  lng: 35.2163 },
+                { name: 'Оттава',           lat: 45.4112, lng: -75.6981 },
+                { name: 'о. Русский',       lat: 43.0000, lng: 131.9000 },
+                { name: 'Луанда',           lat: -8.8368, lng: 13.2343  },
+                { name: 'Березовский',      lat: 56.9083, lng: 60.8019  },
+                { name: 'Чайковский',       lat: 56.7529, lng: 54.1078  },
+                { name: 'Иерусалим',        lat: 31.7690, lng: 35.2163  },
                 { name: 'Уфа',              lat: 54.7431, lng: 55.9678  }
             ];
 
